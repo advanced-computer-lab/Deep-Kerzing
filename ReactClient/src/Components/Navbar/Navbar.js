@@ -1,26 +1,19 @@
 import { useState } from "react";
 import { Route, NavLink } from "react-router-dom";
-import "./Navbar.css";
+import styles from "./Navbar.css";
 import Login from "../../Pages/Login/Login";
-import Image from "./logosmall.png";
+import logo1 from "./logo.png";
+import logo2 from "./logo2.png";
+
 import { useSelector, useDispatch } from "react-redux";
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
-
-  
-  
-  
-  const dispatch = useDispatch();
-  const counter = useSelector((state) => state.counter);
-
-
-
-
-
-  const IncrementHandler = () => {
-    dispatch({ type: "increment" });
-  };
+  // const dispatch = useDispatch();
+  // const counter = useSelector((state) => state.counter);
+  // const IncrementHandler = () => {
+  //   dispatch({ type: "increment" });
+  // };
   const changeBackground = () => {
     console.log(window.scrollY);
     if (window.scrollY >= 80) {
@@ -32,24 +25,34 @@ const Navbar = () => {
   window.addEventListener("scroll", changeBackground);
   return (
     <div>
-      <nav className="header">
-        <ul>
-          {/* <h1>{counter}</h1> */}
-          {/* <button onClick={IncrementHandler}> Increment</button> */}
-          <li>
-            <img src={Image} alt="Logo" />
-          </li>
-          <li>
-            <NavLink activeClassName="header active" to="/login">
-              Login
-            </NavLink>
-          </li>
-        </ul>
+      {/* <h1>{counter}</h1>
+      {/* <button onClick={IncrementHandler}> Increment</button> */}
+
+      <nav className={navbar ? "headerScrolled" : "header"}>
+        <div>
+          <NavLink to="/">
+            {!navbar && (
+              <img src={logo1} className="image" alt="Deep Kerzing" />
+            )}
+            {navbar && <img src={logo2} className="image" alt="Deep Kerzing" />}
+          </NavLink>
+          <NavLink to="/login">
+            {!navbar && <button className="buttonIN">Login</button>}
+            {navbar && <button className="buttonIN2">Login</button>}
+          </NavLink>
+          <NavLink to="/register">
+            {!navbar && <button className="buttonUP">Register</button>}
+            {navbar && <button className="buttonUP2">Register</button>}
+          </NavLink>
+        </div>
       </nav>
 
       <Route path="/login">
         <Login />
       </Route>
+      {/* <Route path="/register">
+
+      </Route> */}
     </div>
   );
 };

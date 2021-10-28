@@ -149,7 +149,7 @@ const AdminSearchFlight = () => {
             </tr>
             <tr>
               <td colspan="2">
-                <button>Search</button>
+                <button className="button">Search</button>
               </td>
             </tr>
           </tbody>
