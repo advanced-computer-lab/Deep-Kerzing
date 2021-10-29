@@ -1,16 +1,23 @@
 import { BrowserRouter } from "react-router-dom";
-import Navbar from "./Components/Navbar/Navbar";
+import AdminNavbar from "./Components/AdminNavbar/AdminNavbar";
+import Navbar from "./Components/GuestNavbar/Navbar";
 import AdminSearchFlight from "./Components/searchFlight/adminSearchFlight";
-import Image from "./L.png";
 
 const App = () => {
   return (
     <div>
-      <BrowserRouter>
-        <Navbar></Navbar>
-      </BrowserRouter>
-      <AdminSearchFlight></AdminSearchFlight>
-      <img src={Image} alt="Logo" />
+      <div>
+        <BrowserRouter>
+          {true? <AdminNavbar/>:<Navbar/>}
+        </BrowserRouter>
+      </div>
+      <div>
+        <AdminSearchFlight></AdminSearchFlight>
+      </div>
+      <div>
+        <AdminSearchFlight></AdminSearchFlight>
+        <AdminSearchFlight></AdminSearchFlight>
+      </div>
     </div>
   );
 };
