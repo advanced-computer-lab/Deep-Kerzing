@@ -1,18 +1,27 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import './Login.css'
+import "./Login.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const LoginHandler = (event) => {
     event.preventDefault();
     console.log(username, password);
   };
-  
+
+  const [allFlights, setAllFlights] = useState("");
+  var flag = false;
+  const onStart = () => {
+    console.log(flag)
+    flag = true;
+    setAllFlights("hello");
+  };
+
   return (
     <div>
+      {flag && onStart()}
+      <h1>{allFlights}</h1>
       <form className="container" onSubmit={LoginHandler}>
         <div className="mb-3">
           <label for="exampleInputEmail1">Email address</label>
