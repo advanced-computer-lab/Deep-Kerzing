@@ -1,5 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
-import Navbar from "./Components/Navbar/Navbar";
+import AdminNavbar from "./Components/AdminNavbar/AdminNavbar";
+import Navbar from "./Components/GuestNavbar/Navbar";
 import AdminSearchFlight from "./Components/searchFlight/adminSearchFlight";
 
 const App = () => {
@@ -7,7 +8,7 @@ const App = () => {
     <div>
       <div>
         <BrowserRouter>
-          <Navbar></Navbar>
+          {true? <AdminNavbar/>:<Navbar/>}
         </BrowserRouter>
       </div>
       <div>

@@ -44,6 +44,15 @@ const Navbar = () => {
             {!navbar && <button className="buttonUP">Register</button>}
             {navbar && <button className="buttonUP2">Register</button>}
           </NavLink>
+
+          <NavLink to="/Contact-Us">
+            {!navbar && <button className="NavbarOptions"> Contact Us </button>}
+            {navbar && <button className="NavbarOptions2"> Contact Us </button>}
+          </NavLink>
+          <NavLink to="/TrackFlight">
+            {!navbar && (<button className="NavbarOptions"> Track Flight </button>)}
+            {navbar && (<button className="NavbarOptions2"> Track Flight </button>)}
+          </NavLink>
         </div>
       </nav>
 
