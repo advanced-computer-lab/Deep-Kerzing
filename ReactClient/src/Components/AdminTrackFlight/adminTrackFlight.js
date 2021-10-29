@@ -13,40 +13,40 @@ import {
     FaTicketAlt,
   } from "react-icons/fa";
 
-  import { IoIosAddCircleOutline } from "react-icons/io";
+  import { AiFillEye } from "react-icons/ai";
 
 
-const AdminCreateFlight=()=>{
+const AdminTrackFlight=()=>{
 
-    const [departureAirport, setDepartureAirport] = useState("");
-    const [arrivalAirport, setArrivalAirport] = useState("");
+    // const [departureAirport, setDepartureAirport] = useState("");
+    // const [arrivalAirport, setArrivalAirport] = useState("");
     const [flightNumber, setFlightNumber] = useState("");
-    const [departureTime, setDepartureTime] = useState("");
-    const [arrivalTime, setArrivalTime] = useState("");
-    const [economySeats, setEconomySeats] = useState("");
-    const [businessSeats, setBusinessSeats] = useState("");
-    const [departureDate, setDepartureDate] = useState("");
-    const [arrivalDate, setArrivalDate] = useState("");
+    // const [departureTime, setDepartureTime] = useState("");
+    // const [arrivalTime, setArrivalTime] = useState("");
+    // const [economySeats, setEconomySeats] = useState("");
+    // const [businessSeats, setBusinessSeats] = useState("");
+    // const [departureDate, setDepartureDate] = useState("");
+    // const [arrivalDate, setArrivalDate] = useState("");
 
-    const createHandler = (event) => {
+    const trackHandler = (event) => {
         event.preventDefault();
         const inputs = {
-          departureAirport: departureAirport,
-          arrivalAirport: arrivalAirport,
+        //   departureAirport: departureAirport,
+        //   arrivalAirport: arrivalAirport,
           flightNumber: flightNumber,
-          departureTime: departureTime,
-          arrivalTime: arrivalTime,
-          economySeats: economySeats,
-          businessSeats: businessSeats,
-          departureDate: departureDate,
-          arrivalDate: arrivalDate,
+        //   departureTime: departureTime,
+        //   arrivalTime: arrivalTime,
+        //   economySeats: economySeats,
+        //   businessSeats: businessSeats,
+        //   departureDate: departureDate,
+        //   arrivalDate: arrivalDate,
         };
-       // console.log(inputs);
+        //console.log(inputs);
     }
 
 return(
     <div className="containerCard">
-       <form onSubmit={createHandler}>
+       <form onSubmit={trackHandler}>
 
   {/* <h1><div>Icons made by <a href="https://www.flaticon.com/authors/icongeek26" 
   title="Icongeek26">Icongeek26</a>
@@ -54,9 +54,9 @@ return(
    title="Flaticon">www.flaticon.com</a></div></h1> */}
 
         {/* <div style="position: relative;"> */}
-        <h1><IoIosAddCircleOutline/></h1>
-        <h1>  Create Flight</h1>
-{/* </div> */}
+        <h1><AiFillEye/></h1>
+        <h1>Track Flight</h1>
+        {/* </div> */}
         <div class="input-group input-group-icon">
           <input
             onChange={(event) => setFlightNumber(event.target.value)}
@@ -69,7 +69,7 @@ return(
         </div>
 
 
-        <div className="searchFields">
+        {/* <div className="searchFields">
           <div class="input-group input-group-icon">
             <input
               onChange={(event) => setDepartureTime(event.target.value)}
@@ -192,12 +192,12 @@ return(
         
         
 
-      
+       */}
 
-        <button className="button">Create</button>
+        <button className="button">Track</button>
       </form> 
     </div>
 )
 
 }
-export default AdminCreateFlight;
+export default AdminTrackFlight;

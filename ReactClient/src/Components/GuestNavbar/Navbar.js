@@ -6,6 +6,7 @@ import logo1 from "./logo.png";
 import logo2 from "./logo2.png";
 
 import { useSelector, useDispatch } from "react-redux";
+import AdminTrackFlight from "../AdminTrackFlight/adminTrackFlight";
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
@@ -59,9 +60,9 @@ const Navbar = () => {
       <Route path="/login">
         <Login />
       </Route>
-      {/* <Route path="/register">
-
-      </Route> */}
+       <Route path="/TrackFlight">
+             <AdminTrackFlight></AdminTrackFlight> 
+      </Route> 
     </div>
   );
 };
