@@ -2,13 +2,14 @@ import { BrowserRouter } from "react-router-dom";
 import AdminNavbar from "./Components/AdminNavbar/AdminNavbar";
 import Navbar from "./Components/GuestNavbar/Navbar";
 import AdminSearchFlight from "./Components/searchFlight/adminSearchFlight";
+import AdminCreateFlight from "./Components/AdminCreateFlight/adminCreateFlight";
 
 const App = () => {
   return (
     <div>
       <div>
         <BrowserRouter>
-          {true? <AdminNavbar/>:<Navbar/>}
+          {false? <AdminNavbar/>:<Navbar/>}
         </BrowserRouter>
       </div>
       <div>
@@ -17,6 +18,9 @@ const App = () => {
       <div>
         <AdminSearchFlight></AdminSearchFlight>
         <AdminSearchFlight></AdminSearchFlight>
+      </div>
+      <div>
+        <AdminCreateFlight></AdminCreateFlight>
       </div>
     </div>
   );
