@@ -14,6 +14,109 @@
   border-radius: 8px;
   box-shadow: 0px 3px 10px -2px rgba(0, 0, 0, 0.2);
 }
+.flightCard {
+  min-width: 100%;
+  max-width: 100%;
+  background-color: #ffffff;
+  display: grid;
+  grid-template-columns: repeat(30, 0.7fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  align-items: center;
+  border: #232b38;
+  position: relative;
+  padding: 2em;
+  margin: 1rem;
+  font-family: "Ubuntu", sans-serif;
+  color: #364f6b;
+  border-radius: 8px;
+  box-shadow: 0px 3px 10px -2px rgba(0, 0, 0, 0.2);
+}
+.departureTime {
+  grid-column: 1;
+  grid-row: 1;
+}
+.arrivalTime {
+  grid-column: 5;
+  grid-row: 1;
+}
+.departure {
+  grid-column: 1;
+  grid-row: 2;
+}
+.arrival {
+  grid-column: 5;
+  grid-row: 2;
+}
+.Icon {
+  grid-column: 3;
+  grid-row: 2;
+}
+.flightNum {
+  grid-column: 3;
+  grid-row: 1;
+}
+.depDate {
+  grid-column: 7/16;
+  grid-row: 1;
+}
+.arrDate {
+  grid-column: 7/16;
+  grid-row: 2;
+}
+.economy {
+  grid-column: 16 /22;
+  grid-row: 1;
+}
+.business {
+  grid-column: 16/22;
+  grid-row: 2;
+}
+.Update {
+  grid-column: 22/30;
+  grid-row: 1;
+  border: solid #232b38;
+  border-width: 0.1rem;
+  height: 100%;
+  background-color: transparent;
+  color: #232b38;
+  border-radius: 10px;
+  float: right;
+  transition: all 0.4s ease-in-out;
+}
+.Update:hover {
+  grid-column: 22/30;
+  grid-row: 1;
+  transition-duration: 0.4s;
+  height: 100%;
+  background-color: #232b38;
+  color: #f5f5f5;
+  border-radius: 10px;
+  float: right;
+  border: solid #232b38;
+  border-width: 0.1rem;
+}
+.Delete {
+  grid-column: 22/30;
+  grid-row: 2;
+  height: 100%;
+  background-color: #e81932;
+  color: #f5f5f5;
+  border: none;
+  transition: all 0.4s ease-in-out;
+  border-radius: 8px;
+}
+.Delete:hover {
+  grid-column: 22/30;
+  grid-row: 2;
+  height: 100%;
+  transition: 0.4s ease-in-out;
+  background-color: #b11426;
+  color: #f5f5f5;
+  border: none;
+  border-radius: 8px;
+}
+
 .button {
   width: 100%;
   height: 2.5rem;
