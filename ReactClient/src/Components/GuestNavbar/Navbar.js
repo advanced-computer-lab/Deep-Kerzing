@@ -1,12 +1,8 @@
 import { useState } from "react";
-import { Route, NavLink } from "react-router-dom";
-import styles from "./Navbar.css";
-import Login from "../../Pages/Login/Login";
+import {  NavLink } from "react-router-dom";
 import logo1 from "./logo.png";
 import logo2 from "./logo2.png";
 
-import { useSelector, useDispatch } from "react-redux";
-import AdminTrackFlight from "../AdminTrackFlight/adminTrackFlight";
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
@@ -56,13 +52,6 @@ const Navbar = () => {
           </NavLink>
         </div>
       </nav>
-
-      <Route path="/login">
-        <Login />
-      </Route>
-       <Route path="/TrackFlight">
-             <AdminTrackFlight></AdminTrackFlight> 
-      </Route> 
     </div>
   );
 };

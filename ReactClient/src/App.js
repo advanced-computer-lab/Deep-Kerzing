@@ -1,35 +1,42 @@
-import { BrowserRouter } from "react-router-dom";
-import AdminNavbar from "./Components/AdminNavbar/AdminNavbar";
-import Navbar from "./Components/GuestNavbar/Navbar";
-import AdminSearchFlight from "./Components/searchFlight/adminSearchFlight";
+import { Switch, Route } from "react-router";
+import UpdateFlight from "./Components/UpdateFlight/UpdateFlight";
+import Layout from "./Components/layout/Layout";
+import AddAdmin from "./Components/AddAdmin/AddAdmin";
 import AdminCreateFlight from "./Components/AdminCreateFlight/adminCreateFlight";
+import AdminFlights from "./Pages/AdminFlights/AdminFlights";
+import Login from "./Pages/Login/Login";
 import AdminTrackFlight from "./Components/AdminTrackFlight/adminTrackFlight";
-import FlightDetails from "./Components/FlightDetails/FlightDetails";
-
+import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 const App = () => {
   return (
-    <div>
-      <div>
-        <BrowserRouter>
-          {false? <AdminNavbar/>:<Navbar/>}
-        </BrowserRouter>
-      </div>
-      <FlightDetails/>
-      <div>
-        <AdminSearchFlight></AdminSearchFlight>
-      </div>
-      <div>
-        <AdminSearchFlight></AdminSearchFlight>
-        <AdminSearchFlight></AdminSearchFlight>
-      </div>
-      <div>
-        <AdminCreateFlight></AdminCreateFlight>
-      </div>
-      <div>
-        <AdminTrackFlight></AdminTrackFlight>
-      </div>
-    </div>
-
+    <Layout>
+      <Switch>
+        <Route path="/" exact>
+          <h1>Hello</h1>
+        </Route>
+        <Route exact path="/AddAdmin">
+          <AddAdmin></AddAdmin>
+        </Route>
+        <Route exact path="/ViewFlights">
+          <AdminFlights></AdminFlights>
+        </Route>
+        <Route exact path="/AddFlight">
+          <AdminCreateFlight></AdminCreateFlight>
+        </Route>
+        <Route path="/UpdateFlight" exact>
+          <UpdateFlight />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/TrackFlight">
+          <AdminTrackFlight></AdminTrackFlight>
+        </Route>
+        <Route path="/forgetpassword">
+          <ForgetPassword />
+        </Route>
+      </Switch>
+    </Layout>
   );
 };
 

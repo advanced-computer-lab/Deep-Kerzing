@@ -1,55 +1,61 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import "./Login.css";
+import "../../Components/searchFlight/adminSearchFlight.css";
+import axios from "axios";
+import { FaUser, FaAt } from "react-icons/fa";
+import { useHistory } from "react-router";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
+  const forgetPasswordHandler =()=>{
+    history.push("/forgetpassword")
+  }
   const LoginHandler = (event) => {
     event.preventDefault();
-    console.log(username, password);
-  };
-
-  const [allFlights, setAllFlights] = useState("");
-  var flag = false;
-  const onStart = () => {
-    console.log(flag)
-    flag = true;
-    setAllFlights("hello");
+    const input = {
+      username: username,
+      password: password,
+    };
+    axios("", { input }).then((res) => {
+      console.log(res);
+      console.log(res.data);
+    });
   };
 
   return (
     <div>
-      {flag && onStart()}
-      <h1>{allFlights}</h1>
-      <form className="container" onSubmit={LoginHandler}>
-        <div className="mb-3">
-          <label for="exampleInputEmail1">Email address</label>
+      <form class="containerCard" onSubmit={LoginHandler}>
+        <div class="input-group input-group-icon">
           <input
             onChange={(event) => setUsername(event.target.value)}
-            type="email"
-            className="form-control"
-            aria-describedby="emailHelp"
+            type="text"
+            placeholder="Email"
+            required
           />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+          <div class="input-icon">
+            <FaUser></FaUser>
           </div>
         </div>
-        <div className="mb-3">
-          <label for="exampleInputPassword1">Password</label>
+
+        <div class="input-group input-group-icon">
           <input
             onChange={(event) => setPassword(event.target.value)}
             type="password"
-            className="form-control"
+            placeholder=" Password"
+            required
           />
+          <div class="input-icon">
+            <FaAt></FaAt>
+          </div>
         </div>
-        <div className="mb-3 form-check">
-          <input type="checkbox" className="form-check-input" />
-          <label className="form-check-label">Check me out</label>
+        <div>
+          <button className="button" onClick={forgetPasswordHandler}>ForgetPassword!</button>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
+        <br/>
+
+        <button className="button">Submit</button>
       </form>
     </div>
   );

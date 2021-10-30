@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Route, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../GuestNavbar/Navbar.css";
 import logo1 from "../GuestNavbar/logo.png";
 import logo2 from "../GuestNavbar/logo2.png";
 import { FaUser } from "react-icons/fa";
-import AddAdmin from "../AddAdmin/AddAdmin";
+
 const AdminNavbar = () => {
   const [navbar, setNavbar] = useState(false);
 
@@ -35,7 +35,6 @@ const AdminNavbar = () => {
             {!navbar && <button className="buttonIN">Add Admin</button>}
             {navbar && <button className="buttonIN2">Add Admin</button>}
           </NavLink>
-
           {!navbar && (
             <div class="dropdown">
               <button class="buttonUP">
@@ -43,7 +42,7 @@ const AdminNavbar = () => {
               </button>
               <div class="dropdown-content">
                 <NavLink to="/MyProfile">My Profile</NavLink>
-                <NavLink onClick={logoutHandler} to="/">
+                <NavLink to="/">
                   Logout
                 </NavLink>
               </div>
@@ -56,21 +55,27 @@ const AdminNavbar = () => {
               </button>
               <div class="dropdown-content2">
                 <NavLink to="/MyProfile">My Profile</NavLink>
-                <NavLink onClick={logoutHandler} to="/">
+                <NavLink to="/">
                   Logout
                 </NavLink>
               </div>
             </div>
           )}
+          <NavLink to="/ViewFlights">
+            {!navbar && (
+              <button className="NavbarOptions"> View Flights</button>
+            )}
+            {navbar && (
+              <button className="NavbarOptions2"> View Flights </button>
+            )}
+          </NavLink>
+          <NavLink to="/AddFlight">
+            {!navbar && <button className="NavbarOptions"> New Flight</button>}
+            {navbar && <button className="NavbarOptions2"> New Flight </button>}
+          </NavLink>
         </div>
       </nav>
-
-      <Route path="/AddAdmin">
-        <AddAdmin></AddAdmin>
-      </Route>
-      {/* <Route path="/register">
-
-      </Route> */}
+        
     </div>
   );
 };
