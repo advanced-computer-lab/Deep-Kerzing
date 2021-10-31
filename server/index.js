@@ -4,12 +4,13 @@ if (process.env.NODE_ENV !== "production") {
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const Flight = require('./models/flight');
-const dbUrl = process.env.DB_URL
+const dbUrl = process.env.DB_URL;
 
 
-;
-
+const auth = require('./routes/auth');
+const flights = require('./routes/flights');
 
 
 const app = express();
@@ -29,11 +30,12 @@ db.once("open", () => {
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/',async(req,res)=>{
-    const l=await Flight.find({})
-    res.json(l)
 
-})
+
+app.use('/', auth);
+app.use('/flights',flights);
+
+app.use(cookieParser());
 
 app.listen(8000, () => {
     console.log('Serving on port 8000')
