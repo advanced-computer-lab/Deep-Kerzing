@@ -7,7 +7,7 @@ import { FaUser } from "react-icons/fa";
 
 const AdminNavbar = () => {
   const [navbar, setNavbar] = useState(false);
-
+  const [homePage, setHomePage] = useState(true)
   const logoutHandler = () => {
     console.log("Logout");
   };
@@ -68,10 +68,6 @@ const AdminNavbar = () => {
           <NavLink to="/AddFlight">
             {!navbar && <button className="NavbarOptions"> New Flight</button>}
             {navbar && <button className="NavbarOptions2"> New Flight </button>}
-          </NavLink>
-          <NavLink to="/SearchFlights">
-            {!navbar && <button className="NavbarOptions"> Search Flights</button>}
-            {navbar && <button className="NavbarOptions2"> Search Flights </button>}
           </NavLink>
         </div>
       </nav>

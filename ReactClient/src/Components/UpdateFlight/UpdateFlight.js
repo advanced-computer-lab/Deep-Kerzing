@@ -175,6 +175,7 @@ const UpdateFlight = () => {
             </div>
           </div>
         </div>
+        <button className="buttonCancel">Cancel</button>
         <button className="button">Update</button>
       </form>
     </div>

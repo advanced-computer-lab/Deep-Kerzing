@@ -6,7 +6,7 @@ const FlightDetails = (props) => {
   const history = useHistory();
 
   const deleteHandler = () => {
-    props.onDelete();
+    props.onDelete(props);
   };
   const updateHandler = () => {
     history.push("/UpdateFlight");
@@ -17,7 +17,7 @@ const FlightDetails = (props) => {
       <div className="flightCard">
         <div className="departureTime">
           {/*1,1*/}
-          <h4>09:00</h4>
+          <h4>{props.departure}</h4>
         </div>
         <div className="arrivalTime">
           {" "}

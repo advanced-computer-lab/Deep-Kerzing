@@ -10,6 +10,7 @@ import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 import Profile from "./Components/Profile/Profile";
 import { useState } from "react";
 import AdminHomePage from "./Pages/AdminHomepage/AdminHomepage";
+import AdminSearchFlight from "./Components/searchFlight/adminSearchFlight";
 const App = () => {
   const [loggedIn, setLoggedIn] = useState("Admin");
   return (
@@ -49,6 +50,9 @@ const App = () => {
         <Route path="/Profile">
           <Profile></Profile>
         </Route>
+        {/* <Route path="/SearchFlight">
+          <AdminSearchFlight></AdminSearchFlight>
+        </Route> */}
       </Switch>
     </Layout>
   );
