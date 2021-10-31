@@ -1,7 +1,7 @@
-import FlightDetails from "../../Components/FlightDetails/FlightDetails";
+import AllFlights from "../../Components/AllFlights/AllFlights";
 const AdminFlights = () =>{
     return (
-        <FlightDetails></FlightDetails>
+        <AllFlights></AllFlights>
     )
 }
 export default AdminFlights;
