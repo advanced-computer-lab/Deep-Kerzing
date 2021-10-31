@@ -10,13 +10,13 @@ const sendEmail = async options => {
     // }
     service: 'gmail',
     auth: {
-        user: 'deepkerzing@gmail.com',
-        pass: 'deep@kerzing11'
+        user:  process.env.SMTP_EMAIL,
+        pass:  process.env.SMTP_PASSWORD
     }
   });
 
   const message = {
-    from: 'deepkerzing@gmail.com',
+    from:  process.env.SMTP_EMAIL,
     to: options.email,
     subject: options.subject,
     text: options.message

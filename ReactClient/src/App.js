@@ -8,11 +8,21 @@ import Login from "./Pages/Login/Login";
 import AdminTrackFlight from "./Components/AdminTrackFlight/adminTrackFlight";
 import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 import Profile from "./Components/Profile/Profile";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import AdminHomePage from "./Pages/AdminHomepage/AdminHomepage";
 import AdminSearchFlight from "./Components/searchFlight/adminSearchFlight";
+import { useDispatch } from 'react-redux';
+// import Front from './components/Posts/Posts';
+import { getFlights } from './Actions/flight';
+
 const App = () => {
   const [loggedIn, setLoggedIn] = useState("Admin");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getFlights());
+  }, [dispatch]);
+
   return (
     <Layout>
       <Switch>
