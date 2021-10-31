@@ -48,15 +48,8 @@ return(
     <div className="containerCard">
        <form onSubmit={createHandler}>
 
-  {/* <h1><div>Icons made by <a href="https://www.flaticon.com/authors/icongeek26" 
-  title="Icongeek26">Icongeek26</a>
-   from <a href="https://www.flaticon.com/"
-   title="Flaticon">www.flaticon.com</a></div></h1> */}
-
-        {/* <div style="position: relative;"> */}
         <h1><IoIosAddCircleOutline/></h1>
         <h1>  Create Flight</h1>
-{/* </div> */}
         <div class="input-group input-group-icon">
           <input
             onChange={(event) => setFlightNumber(event.target.value)}

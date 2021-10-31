@@ -10,6 +10,8 @@ import {
   FaCalendarWeek,
   FaChair,
   FaTicketAlt,
+  FaArrowDown,
+  FaArrowUp,
 } from "react-icons/fa";
 
 const AdminSearchFlight = () => {
@@ -22,9 +24,12 @@ const AdminSearchFlight = () => {
   const [businessSeats, setBusinessSeats] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
+  const [collapsable, setCollapsable] = useState(false);
 
   // const airports =["CA"]
-
+  const collapseHandler = () => {
+    setCollapsable(!collapsable);
+  };
   const searchHandler = (event) => {
     event.preventDefault();
     const inputs = {
@@ -46,59 +51,74 @@ const AdminSearchFlight = () => {
 
   return (
     <div className="containerCard">
-      <form onSubmit={searchHandler}>
-        <h1>
-          <FaSearch />
-        </h1>
+
+      <div className="SearchHeader">
+        {" "}
         <h1>Flight Search</h1>
-        <div className="searchFields">
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setDepartureAirport(event.target.value)}
-              type="text"
-              placeholder="Departure Airport"
-              required
-            />
-            <div class="input-icon">
-              <FaPlaneDeparture></FaPlaneDeparture>
-            </div>
-          </div>
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setArrivalAirport(event.target.value)}
-              type="text"
-              placeholder="Arrival Airport"
-            />
-            <div class="input-icon">
-              <FaPlaneArrival></FaPlaneArrival>
-            </div>
-          </div>
+        <div className="buttonHeader">
+          {collapsable && (
+            <button className="FiltersButton" onClick={collapseHandler}>
+              <FaArrowUp />
+            </button>
+          )}
+          {!collapsable && (
+            <button className="FiltersButton" onClick={collapseHandler}>
+              <FaArrowDown />
+            </button>
+          )}
         </div>
-        <div className="searchFields">
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setDepartureTime(event.target.value)}
-              type="text"
-              placeholder="Departure Time"
-              required
-            />
-            <div class="input-icon">
-              <FaClock></FaClock>
+      </div>
+      {collapsable && (
+        <form onSubmit={searchHandler}>
+          {/* <h1>
+        </h1> */}
+          <div className="searchFields">
+            <div class="input-group input-group-icon">
+              <input
+                onChange={(event) => setDepartureAirport(event.target.value)}
+                type="text"
+                placeholder="Departure Airport"
+                required
+              />
+              <div class="input-icon">
+                <FaPlaneDeparture></FaPlaneDeparture>
+              </div>
+            </div>
+            <div class="input-group input-group-icon">
+              <input
+                onChange={(event) => setArrivalAirport(event.target.value)}
+                type="text"
+                placeholder="Arrival Airport"
+              />
+              <div class="input-icon">
+                <FaPlaneArrival></FaPlaneArrival>
+              </div>
+            </div>
+
+            <div class="input-group input-group-icon">
+              <input
+                onChange={(event) => setDepartureTime(event.target.value)}
+                type="text"
+                placeholder="Departure Time"
+                required
+              />
+              <div class="input-icon">
+                <FaClock></FaClock>
+              </div>
+            </div>
+            <div class="input-group input-group-icon">
+              <input
+                onChange={(event) => setArrivalTime(event.target.value)}
+                type="text"
+                placeholder="Arrival Time"
+              />
+              <div class="input-icon">
+                <FaClock></FaClock>
+              </div>
             </div>
           </div>
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setArrivalTime(event.target.value)}
-              type="text"
-              placeholder="Arrival Time"
-            />
-            <div class="input-icon">
-              <FaClock></FaClock>
-            </div>
-          </div>
-        </div>
-        <div className="searchFields">
-          <label>
+          <div className="searchFields">
+            {/* <label>
             &nbsp;&nbsp;&nbsp;&nbsp;Departure Date
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -109,33 +129,31 @@ const AdminSearchFlight = () => {
           <label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Arrival Date
-          </label>
-        </div>
-        <div className="searchFields">
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setDepartureDate(event.target.value)}
-              type="date"
-              placeholder="Departure Date"
-              required
-            />
-            <div class="input-icon">
-              <FaCalendarDay></FaCalendarDay>
-            </div>
+          </label> */}
           </div>
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setArrivalDate(event.target.value)}
-              type="date"
-              placeholder="Arrival Date"
-            />
-            <div class="input-icon">
-              <FaCalendarWeek></FaCalendarWeek>
+          <div className="searchFields">
+            <div class="input-group input-group-icon">
+              <input
+                onChange={(event) => setDepartureDate(event.target.value)}
+                type="date"
+                placeholder="Departure Date"
+                required
+              />
+              <div class="input-icon">
+                <FaCalendarDay></FaCalendarDay>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="searchFields">
-          <div class="input-group input-group-icon">
+            <div class="input-group input-group-icon">
+              <input
+                onChange={(event) => setArrivalDate(event.target.value)}
+                type="date"
+                placeholder="Arrival Date"
+              />
+              <div class="input-icon">
+                <FaCalendarWeek></FaCalendarWeek>
+              </div>
+            </div>
+            {/* <div class="input-group input-group-icon">
             <input
               onChange={(event) => setEconomySeats(event.target.value)}
               type="text"
@@ -154,22 +172,22 @@ const AdminSearchFlight = () => {
             <div class="input-icon">
               <FaChair></FaChair>
             </div>
+          </div> */}
+            <div class="input-group input-group-icon">
+              <input
+                onChange={(event) => setFlightNumber(event.target.value)}
+                type="text"
+                placeholder="Flight Number"
+              />
+              <div class="input-icon">
+                <FaTicketAlt></FaTicketAlt>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="input-group input-group-icon">
-          <input
-            onChange={(event) => setFlightNumber(event.target.value)}
-            type="text"
-            placeholder="Flight Number"
-          />
-          <div class="input-icon">
-            <FaTicketAlt></FaTicketAlt>
-          </div>
-        </div>
-
-        <button className="button">Search</button>
-      </form>
+          {/* <button className="button">Search</button> */}
+        </form>
+      )}
     </div>
   );
 };

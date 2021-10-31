@@ -3,18 +3,17 @@ import { IoAirplaneOutline } from "react-icons/io5";
 import { useHistory } from "react-router-dom";
 
 const FlightDetails = (props) => {
-
   const history = useHistory();
 
   const deleteHandler = () => {
-    console.log();
+    props.onDelete();
   };
-  const updateHandler =() =>{
+  const updateHandler = () => {
     history.push("/UpdateFlight");
-  }
+  };
 
   return (
-    <div className="containerCard">
+    <div>
       <div className="flightCard">
         <div className="departureTime">
           {/*1,1*/}
@@ -42,8 +41,12 @@ const FlightDetails = (props) => {
         <div className="business">Business: 250</div>
         <h6 className="depDate">Departure: 13/10/2021</h6> {/*6,1*/}
         <div className="arrDate">Arrival: 13/10/2021</div> {/*6,2*/}
-        <button className="Update" onClick={updateHandler}>Update</button>
-        <button className="Delete" onClick={deleteHandler}>Delete</button>
+        <button className="Update" onClick={updateHandler}>
+          Update
+        </button>
+        <button className="Delete" onClick={deleteHandler}>
+          Delete
+        </button>
       </div>
     </div>
   );
