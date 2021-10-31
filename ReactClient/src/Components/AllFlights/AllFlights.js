@@ -1,8 +1,12 @@
 import FlightDetails from "../FlightDetails/FlightDetails";
 import AdminSearchFlight from "../searchFlight/adminSearchFlight";
+import { useSelector } from 'react-redux';
 
 const AllFlights = () => {
-  const allFlights = [{ Departure: "Cairo" }, { Departure: "Cairo" }];
+  //const allFlights = [{ Departure: "Cairo" }, { Departure: "Cairo" }];
+  const Flights = useSelector((state) => state.Flight);
+
+  console.log(Flights)
 
   const onDeleteHandler = (props) => {
     console.log("Called");
@@ -13,10 +17,10 @@ const AllFlights = () => {
       <AdminSearchFlight></AdminSearchFlight>
 
       <div className="containerCard">
-        {allFlights.map((element) => (
+        {Flights.map((element) => (
           <FlightDetails
             onDelete={onDeleteHandler}
-            departure={element.Departure}
+            departure={element.from}
           ></FlightDetails>
         ))}
       </div>
