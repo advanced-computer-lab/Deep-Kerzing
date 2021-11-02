@@ -1,8 +1,12 @@
 import { useHistory } from "react-router-dom";
 import "../../Components/searchFlight/adminSearchFlight.css";
 // import logo1 from "./Flight.jpg";
+import { useSelector } from "react-redux";
+
 
 const AdminHomePage = () => {
+  const username = useSelector((store) => store.User);
+
   const history = useHistory();
   const Update = () => {
     history.push("/UpdateFlight");
@@ -13,7 +17,7 @@ const AdminHomePage = () => {
   return (
     <div>
       <div className="adminHomepage">
-        <h1 className="WelcomeTitle">Welcome Admin</h1>
+        <h1 className="WelcomeTitle">Welcome {username}</h1>
         <div className="QuickAccessContainer">
           <h1 className="QuickAccess">Quick Access</h1>
           <button className="button1" onClick={Update}>
