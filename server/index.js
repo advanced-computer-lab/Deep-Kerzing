@@ -30,8 +30,17 @@ db.once("open", () => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+
 app.use("/api/user", auth);
 app.use("/api/flights", flights);
+
+
+
+
+
+
+
 
 app.listen(8000, () => {
   console.log("Serving on port 8000");

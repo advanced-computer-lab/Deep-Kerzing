@@ -17,7 +17,7 @@ const FlightDetails = (props) => {
       <div className="flightCard">
         <div className="departureTime">
           {/*1,1*/}
-          <h4>{props.departure}</h4>
+          <h4>09:00</h4>
         </div>
         <div className="arrivalTime">
           {" "}
@@ -25,11 +25,11 @@ const FlightDetails = (props) => {
         </div>
         <div className="departure">
           {" "}
-          <h3>CAI</h3>{" "}
+          <h3>{props.departure}</h3>{" "}
         </div>
         {/*1,2*/}
         <div className="arrival">
-          <h3>MUC</h3>
+          <h3>{props.arrival}</h3>
         </div>{" "}
         {/*5,2*/}
         <div className="flightNum">A123</div> {/*1,1*/}
