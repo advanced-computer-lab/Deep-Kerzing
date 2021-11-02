@@ -1,20 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./adminSearchFlight.css";
 import axios from "axios";
 import {
-  FaSearch,
   FaPlaneDeparture,
   FaPlaneArrival,
   FaClock,
   FaCalendarDay,
   FaCalendarWeek,
-  FaChair,
   FaTicketAlt,
   FaArrowDown,
   FaArrowUp,
 } from "react-icons/fa";
+import { PromiseProvider } from "mongoose";
 
-const AdminSearchFlight = () => {
+const AdminSearchFlight = (props) => {
   const [departureAirport, setDepartureAirport] = useState("");
   const [arrivalAirport, setArrivalAirport] = useState("");
   const [flightNumber, setFlightNumber] = useState("");
@@ -30,8 +29,7 @@ const AdminSearchFlight = () => {
   const collapseHandler = () => {
     setCollapsable(!collapsable);
   };
-  const searchHandler = (event) => {
-    event.preventDefault();
+  useEffect(() => {
     const inputs = {
       departureAirport: departureAirport,
       arrivalAirport: arrivalAirport,
@@ -43,15 +41,21 @@ const AdminSearchFlight = () => {
       departureDate: departureDate,
       arrivalDate: arrivalDate,
     };
-    axios.post("", { inputs }).then((res) => {
-      console.log(res);
-      console.log(res.data);
-    });
-  };
+    props.onFilter(inputs);
+  }, [
+    departureAirport,
+    arrivalAirport,
+    flightNumber,
+    departureTime,
+    arrivalTime,
+    economySeats,
+    businessSeats,
+    departureDate,
+    arrivalDate,
+  ]);
 
   return (
     <div className="containerCard">
-
       <div className="SearchHeader">
         {" "}
         <h1>Flight Search</h1>
@@ -69,13 +73,15 @@ const AdminSearchFlight = () => {
         </div>
       </div>
       {collapsable && (
-        <form onSubmit={searchHandler}>
+        <form>
           {/* <h1>
         </h1> */}
           <div className="searchFields">
             <div class="input-group input-group-icon">
               <input
+                options
                 onChange={(event) => setDepartureAirport(event.target.value)}
+                // onInput={searchHandler}
                 type="text"
                 placeholder="Departure Airport"
                 required

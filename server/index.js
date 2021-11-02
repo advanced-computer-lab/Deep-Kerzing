@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', auth);
 app.use('/flights',flights);
-
+app.use('/username',auth)
 
 app.use(cookieParser());
 
