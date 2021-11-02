@@ -1,55 +1,67 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import "../searchFlight/adminSearchFlight.css";
+// import { createFlight } from "../../actions/flights";
 import axios from "axios";
 import {
-    //IoIosCreate,
-    FaSearch,
-    FaPlaneDeparture,
-    FaPlaneArrival,
-    FaClock,
-    FaCalendarDay,
-    FaCalendarWeek,
-    FaChair,
-    FaTicketAlt,
-  } from "react-icons/fa";
+  //IoIosCreate,
+  FaSearch,
+  FaPlaneDeparture,
+  FaPlaneArrival,
+  FaClock,
+  FaCalendarDay,
+  FaCalendarWeek,
+  FaChair,
+  FaTicketAlt,
+} from "react-icons/fa";
 
-  import { IoIosAddCircleOutline } from "react-icons/io";
+import { IoIosAddCircleOutline } from "react-icons/io";
 
+const AdminCreateFlight = () => {
+  const [departureAirport, setDepartureAirport] = useState("");
+  const [arrivalAirport, setArrivalAirport] = useState("");
+  const [flightNumber, setFlightNumber] = useState("");
+  const [departureTime, setDepartureTime] = useState("");
+  const [arrivalTime, setArrivalTime] = useState("");
+  const [economySeats, setEconomySeats] = useState("");
+  const [businessSeats, setBusinessSeats] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [arrivalDate, setArrivalDate] = useState("");
 
-const AdminCreateFlight=()=>{
+  const dispatch = useDispatch();
 
-    const [departureAirport, setDepartureAirport] = useState("");
-    const [arrivalAirport, setArrivalAirport] = useState("");
-    const [flightNumber, setFlightNumber] = useState("");
-    const [departureTime, setDepartureTime] = useState("");
-    const [arrivalTime, setArrivalTime] = useState("");
-    const [economySeats, setEconomySeats] = useState("");
-    const [businessSeats, setBusinessSeats] = useState("");
-    const [departureDate, setDepartureDate] = useState("");
-    const [arrivalDate, setArrivalDate] = useState("");
+  const createHandler = (event) => {
+    event.preventDefault();
+    const inputs = {
+      from: "CAI",
+      to: "JED",
+      flightNumber: 2,
+      // departureTime: departureTime,
+      // arrivalTime: arrivalTime,
+      // economySeats: economySeats,
+      seatsAvailable: 30,
+      flightDate: "30-11-2020",
+      // arrivalDate: arrivalDate,
+      cabin: "Economy",
+    };
+    console.log(inputs);
+    axios
+      .post("http://localhost:8000/api/flights/create", inputs)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("Error from ShowuserList");
+      });
+  };
 
-    const createHandler = (event) => {
-        event.preventDefault();
-        const inputs = {
-          departureAirport: departureAirport,
-          arrivalAirport: arrivalAirport,
-          flightNumber: flightNumber,
-          departureTime: departureTime,
-          arrivalTime: arrivalTime,
-          economySeats: economySeats,
-          businessSeats: businessSeats,
-          departureDate: departureDate,
-          arrivalDate: arrivalDate,
-        };
-       // console.log(inputs);
-    }
-
-return(
+  return (
     <div className="containerCard">
-       <form onSubmit={createHandler}>
-
-        <h1><IoIosAddCircleOutline/></h1>
-        <h1>  Create Flight</h1>
+      <form onSubmit={createHandler}>
+        <h1>
+          <IoIosAddCircleOutline />
+        </h1>
+        <h1> Create Flight</h1>
         <div class="input-group input-group-icon">
           <input
             onChange={(event) => setFlightNumber(event.target.value)}
@@ -60,7 +72,6 @@ return(
             <FaTicketAlt></FaTicketAlt>
           </div>
         </div>
-
 
         <div className="searchFields">
           <div class="input-group input-group-icon">
@@ -86,8 +97,6 @@ return(
           </div>
         </div>
 
-
-
         <div className="searchFields">
           <label>
             &nbsp;&nbsp;&nbsp;&nbsp;Departure Date
@@ -102,8 +111,6 @@ return(
             Arrival Date
           </label>
         </div>
-
-
 
         <div className="searchFields">
           <div class="input-group input-group-icon">
@@ -152,7 +159,6 @@ return(
           </div>
         </div>
 
-
         <div className="searchFields">
           <div class="input-group input-group-icon">
             <input
@@ -177,20 +183,9 @@ return(
           </div>
         </div>
 
-        
-
-       
-
-
-        
-        
-
-      
-
         <button className="button">Create</button>
-      </form> 
+      </form>
     </div>
-)
-
-}
+  );
+};
 export default AdminCreateFlight;
