@@ -6,44 +6,56 @@ const Schema = mongoose.Schema;
 const FlightSchema = new Schema({
     from: {
         type: String,
-        required: true,
-        validate: {
-            validator: function (val) {
-                return val.length === 3
-            },
-            message: val => `${val.value} Invalid Input`
-        }        
+        required: true,        
     },
     to : {
         type: String,
         required: true,
-        validate: {
-            validator: function (val) {
-                return val.length === 3
-            },
-            message: val => `${val.value} Invalid Input`
-        }    
     },
-    flightDate:{
+    departureDate :{
         type:String,
         required: true
     },
-    cabin:{
+    arrivalDate:{
         type:String,
-        required: true,
-        enum: ['Business','Economy','First'],
+        required: true
     },
-    seatsAvailable:{
+    departureTime :{
+        type:String,
+        required: true
+    },
+    arrivalTime :{
+        type:String,
+        required: true
+    },
+    economySeats :{
+        type:String,
+        required: true
+    },
+    economyPrice :{
         type:Number,
-        required: true,        
+        required: true
+    },
+    firstClassSeats:{
+        type:String,
+        required: true
+    },
+    firstClassPrice :{
+        type:Number,
+        required: true
+    },
+    businessSeats:{
+        type:String,
+        required: true
+    },
+    businessPrice :{
+        type:Number,
+        required: true
     }
+
 });
 
-FlightSchema.pre('save', function (next) {
-  this.from=this.from.toUpperCase()
-  this.to=this.to.toUpperCase()
-  next();
-});
+
 
 
 module.exports = mongoose.model('Flight', FlightSchema);
