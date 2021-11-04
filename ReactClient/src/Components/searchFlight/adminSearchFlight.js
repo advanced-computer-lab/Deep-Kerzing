@@ -36,6 +36,7 @@ const AdminSearchFlight = (props) => {
     { id: 6, name: "Munich, Franz Josef Strauss (MUC), Germany" },
     { id: 7, name: "Paris, Charles De Gaulle (CDG), France" },
   ];
+
   // const airports =["CA"]
   const collapseHandler = () => {
     setCollapsable(!collapsable);
