@@ -37,7 +37,8 @@ const seedDB = async () => {
             firstClassSeats:helper[i].firstClassSeats,
             firstClassPrice :helper[i].firstClassPrice,
             businessSeats:helper[i].businessSeats,
-            businessPrice :helper[i].businessPrice
+            businessPrice :helper[i].businessPrice,
+            flightNumber :helper[i].flightNumber
         })
         await flight.save();
     }
