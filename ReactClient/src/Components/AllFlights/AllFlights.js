@@ -3,7 +3,6 @@ import AdminSearchFlight from "../searchFlight/adminSearchFlight";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 const AllFlights = () => {
-  //const allFlights = [{ Departure: "Cairo" }, { Departure: "Cairo" }];
   var Flights = useSelector((store) => store.Flight);
   const [filteredFlights, setFlights] = useState(Flights);
 
@@ -13,18 +12,24 @@ const AllFlights = () => {
 
   const checkFlight = (flight, filteredArray) => {
     return (
-      ((flight.from).toLowerCase().includes(filteredArray.departureAirport.toLowerCase()) || filteredArray.departureAirport.length == 0) &&
-      ((flight.to).toLowerCase().includes(filteredArray.arrivalAirport.toLowerCase()) || filteredArray.arrivalAirport.length == 0)
+      (typeof filteredArray == "undefined" ||
+        filteredArray.departureAirport === null ||
+        typeof filteredArray.departureAirport.name === "undefined" ||
+        filteredArray.departureAirport.name.toLowerCase().includes(flight.from.toLowerCase()) ||
+        filteredArray.departureAirport.name.length == 0) &&
+      (filteredArray.arrivalAirport === null ||
+        typeof filteredArray.arrivalAirport.name === "undefined" ||
+        filteredArray.arrivalAirport.name.toLowerCase().includes(flight.to.toLowerCase()) ||
+        filteredArray.arrivalAirport.name.length == 0)
     );
   };
 
-  const Filter = (filteredArray) => {
+  const Filter = (filteredArray = {}) => {
     var FlightsArray = Object.values(Flights);
-    console.log(FlightsArray);
     FlightsArray = FlightsArray.filter((flight) => {
-      return checkFlight(flight,filteredArray);
-      // flight.from == filteredArray.departureAirport;
+      return checkFlight(flight, filteredArray);
     });
+
     setFlights(FlightsArray);
   };
 
@@ -37,11 +42,23 @@ const AllFlights = () => {
       <AdminSearchFlight onFilter={Filter}></AdminSearchFlight>
 
       <div className="containerCard">
+        {filteredFlights.length == 0 && <h1>No Results Found</h1>}
         {filteredFlights.map((element) => (
           <FlightDetails
             onDelete={onDeleteHandler}
             departure={element.from}
-            arrival ={element.to}
+            arrival={element.to}
+            depDate={element.depDate}
+            arrDate={element.arrDate}
+            depTime={element.depTime}
+            arrTime={element.arrTime}
+            seatsEconomy={element.seatsEconomy}
+            seatsBusiness={element.seatsBusiness}
+            seatsFirst={element.seatsFirst}
+            priceEconomy={element.priceEconomy}
+            priceBusiness={element.priceBusiness}
+            priceFirst={element.priceFirst}
+            flightNumber={element.flightNumber}
           ></FlightDetails>
         ))}
       </div>

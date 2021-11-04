@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import "./adminSearchFlight.css";
-import axios from "axios";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import InputAdornment from "@mui/material/InputAdornment";
+
 import {
   FaPlaneDeparture,
   FaPlaneArrival,
@@ -11,7 +14,6 @@ import {
   FaArrowDown,
   FaArrowUp,
 } from "react-icons/fa";
-import { PromiseProvider } from "mongoose";
 
 const AdminSearchFlight = (props) => {
   const [departureAirport, setDepartureAirport] = useState("");
@@ -25,6 +27,15 @@ const AdminSearchFlight = (props) => {
   const [arrivalDate, setArrivalDate] = useState("");
   const [collapsable, setCollapsable] = useState(false);
 
+  const nbaTeams = [
+    { id: 1, name: "Los Angeles, Los Angeles Intl (LAX), United States" },
+    { id: 2, name: "New York, John F Kennedy Intl (JFK), United States" },
+    { id: 3, name: "London, Heathrow (LHR), United Kingdom" },
+    { id: 4, name: "Dubai, Dubai Intl (DXB), United Arab Emirates" },
+    { id: 5, name: "Cairo, Cairo Intl Apt (CAI), Egypt" },
+    { id: 6, name: "Munich, Franz Josef Strauss (MUC), Germany" },
+    { id: 7, name: "Paris, Charles De Gaulle (CDG), France" },
+  ];
   // const airports =["CA"]
   const collapseHandler = () => {
     setCollapsable(!collapsable);
@@ -72,122 +83,135 @@ const AdminSearchFlight = (props) => {
           )}
         </div>
       </div>
+
       {collapsable && (
         <form>
-          {/* <h1>
-        </h1> */}
           <div className="searchFields">
+            {/* Departure Airport */}
             <div class="input-group input-group-icon">
-              <input
-                options
-                onChange={(event) => setDepartureAirport(event.target.value)}
-                // onInput={searchHandler}
-                type="text"
-                placeholder="Departure Airport"
-                required
+              <Autocomplete
+                getOptionSelected={(option, value) => option.id === value.id}
+                options={nbaTeams}
+                fullWidth="true"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder="Departure Airport"
+                    InputProps={{
+                      ...params.InputProps,
+                      shrink: "true",
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <FaPlaneDeparture />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+                getOptionLabel={(option) => option.name}
+                onChange={(_event, depAirport) => {
+                  setDepartureAirport(depAirport);
+                }}
               />
-              <div class="input-icon">
-                <FaPlaneDeparture></FaPlaneDeparture>
-              </div>
             </div>
+            {/*Arrival Airport*/}
             <div class="input-group input-group-icon">
-              <input
-                onChange={(event) => setArrivalAirport(event.target.value)}
-                type="text"
+              <Autocomplete
+                getOptionSelected={(option, value) => option.id === value.id}
+                options={nbaTeams}
+                fullWidth="true"
                 placeholder="Arrival Airport"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder="Arrival Airport"
+                    InputProps={{
+                      ...params.InputProps,
+                      shrink: "true",
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <FaPlaneArrival />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+                getOptionLabel={(option) => option.name}
+                onChange={(_event, arrAirport) => {
+                  setArrivalAirport(arrAirport);
+                }}
               />
-              <div class="input-icon">
-                <FaPlaneArrival></FaPlaneArrival>
-              </div>
-            </div>
-
-            <div class="input-group input-group-icon">
-              <input
-                onChange={(event) => setDepartureTime(event.target.value)}
-                type="text"
-                placeholder="Departure Time"
-                required
-              />
-              <div class="input-icon">
-                <FaClock></FaClock>
-              </div>
-            </div>
-            <div class="input-group input-group-icon">
-              <input
-                onChange={(event) => setArrivalTime(event.target.value)}
-                type="text"
-                placeholder="Arrival Time"
-              />
-              <div class="input-icon">
-                <FaClock></FaClock>
-              </div>
-            </div>
-          </div>
-          <div className="searchFields">
-            {/* <label>
-            &nbsp;&nbsp;&nbsp;&nbsp;Departure Date
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </label>
-
-          <label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Arrival Date
-          </label> */}
-          </div>
-          <div className="searchFields">
-            <div class="input-group input-group-icon">
-              <input
-                onChange={(event) => setDepartureDate(event.target.value)}
-                type="date"
-                placeholder="Departure Date"
-                required
-              />
-              <div class="input-icon">
-                <FaCalendarDay></FaCalendarDay>
-              </div>
             </div>
             <div class="input-group input-group-icon">
-              <input
-                onChange={(event) => setArrivalDate(event.target.value)}
-                type="date"
-                placeholder="Arrival Date"
-              />
-              <div class="input-icon">
-                <FaCalendarWeek></FaCalendarWeek>
-              </div>
-            </div>
-            {/* <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setEconomySeats(event.target.value)}
-              type="text"
-              placeholder="Economy Seats"
-            />
-            <div class="input-icon">
-              <FaChair></FaChair>
-            </div>
-          </div>
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setBusinessSeats(event.target.value)}
-              type="text"
-              placeholder="Business Seats"
-            />
-            <div class="input-icon">
-              <FaChair></FaChair>
-            </div>
-          </div> */}
-            <div class="input-group input-group-icon">
-              <input
-                onChange={(event) => setFlightNumber(event.target.value)}
-                type="text"
+              <TextField
                 placeholder="Flight Number"
+                variant="outlined"
+                fullWidth="true"
+                onChange={(event) => setFlightNumber(event.target.value)}
+                InputProps={{
+                  shrink: "true",
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaTicketAlt />
+                    </InputAdornment>
+                  ),
+                }}
               />
-              <div class="input-icon">
-                <FaTicketAlt></FaTicketAlt>
-              </div>
+            </div>
+          </div>
+
+          <div className="searchFields">
+            <div class="input-group input-group-icon">
+              <TextField
+                fullWidth="true"
+                label="Departure Time"
+                type="time"
+                defaultValue="00:00"
+                variant="standard"
+                onChange={(event) => setDepartureTime(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </div>
+            <div class="input-group input-group-icon">
+              <TextField
+                fullWidth="true"
+                label="Arrival Time"
+                type="time"
+                defaultValue="00:00"
+                variant="standard"
+                onChange={(event) => setArrivalTime(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </div>
+            <div class="input-group input-group-icon">
+              <TextField
+                fullWidth="true"
+                label="Arrival Date"
+                type="date"
+                variant="standard"
+                onChange={(event) => setDepartureDate(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </div>
+            <div class="input-group input-group-icon">
+              <TextField
+                fullWidth="true"
+                label="Departure Date"
+                type="date"
+                variant="standard"
+                onChange={(event) => setArrivalDate(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
             </div>
           </div>
 
