@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import "../searchFlight/adminSearchFlight.css";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import InputAdornment from "@mui/material/InputAdornment";
+
+
 // import { createFlight } from "../../actions/flights";
 import axios from "axios";
 import {
@@ -25,25 +30,44 @@ const AdminCreateFlight = () => {
   const [arrivalTime, setArrivalTime] = useState("");
   const [economySeats, setEconomySeats] = useState("");
   const [businessSeats, setBusinessSeats] = useState("");
+  const [firstClassSeats, setFirstClassSeats] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
-
+  const [firstPrice, setFirstClassPrice] = useState("");
+  const [businessPrice, setBusinessPrice] = useState("");
+  const [economyPrice, setEconomyPrice] = useState("");
+  
   const dispatch = useDispatch();
 
-  const createHandler = (event) => {
+  const nbaTeams = [
+    { id: 1, name: "Los Angeles, Los Angeles Intl (LAX), United States" },
+    { id: 2, name: "New York, John F Kennedy Intl (JFK), United States" },
+    { id: 3, name: "London, Heathrow (LHR), United Kingdom" },
+    { id: 4, name: "Dubai, Dubai Intl (DXB), United Arab Emirates" },
+    { id: 5, name: "Cairo, Cairo Intl Apt (CAI), Egypt" },
+    { id: 6, name: "Munich, Franz Josef Strauss (MUC), Germany" },
+    { id: 7, name: "Paris, Charles De Gaulle (CDG), France" },
+  ];
+
+
+  const createFlight = (event) => {
     event.preventDefault();
     const inputs = {
-      from: "CAI",
-      to: "JED",
-      flightNumber: 2,
-      // departureTime: departureTime,
-      // arrivalTime: arrivalTime,
-      // economySeats: economySeats,
-      seatsAvailable: 30,
-      flightDate: "30-11-2020",
-      // arrivalDate: arrivalDate,
-      cabin: "Economy",
+     flightNumber:flightNumber,
+     from:departureAirport,
+     to:arrivalAirport,
+     departureTime:departureTime,
+     arrivalTime:arrivalTime,
+     departureDate:departureDate,
+     arrivalDate:arrivalDate,
+     economySeats:economySeats,
+     businessSeats:businessSeats,
+     firstClassSeats:firstClassSeats,
+     economyPrice:economyPrice,
+     businessPrice:businessPrice,
+     firstPrice:firstPrice,
     };
+
     console.log(inputs);
     axios
       .post("http://localhost:8000/api/flights/create", inputs)
@@ -56,135 +80,246 @@ const AdminCreateFlight = () => {
   };
 
   return (
-    <div className="containerCard">
-      <form onSubmit={createHandler}>
-        <h1>
+    <div id ="createFlightCard" className="containerCard">
+      <h1>
           <IoIosAddCircleOutline />
         </h1>
         <h1> Create Flight</h1>
-        <div class="input-group input-group-icon">
-          <input
-            onChange={(event) => setFlightNumber(event.target.value)}
-            type="text"
-            placeholder="Flight Number"
-          />
-          <div class="input-icon">
-            <FaTicketAlt></FaTicketAlt>
+      <form>
+      <div className="searchFields">
+      <div class="input-group input-group-icon">
+              <TextField
+                placeholder="Flight Number"
+                variant="outlined"
+                fullWidth="true"
+                onChange={(event) => setFlightNumber(event.target.value)}
+                InputProps={{
+                  shrink: "true",
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaTicketAlt />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </div>
+      </div>
+          <div className="searchFields">
+            {/* Departure Airport */}
+            <div class="input-group input-group-icon">
+              <Autocomplete
+                getOptionSelected={(option, value) => option.id === value.id}
+                options={nbaTeams}
+                fullWidth="true"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder="Departure Airport"
+                    InputProps={{
+                      ...params.InputProps,
+                      shrink: "true",
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <FaPlaneDeparture />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+                getOptionLabel={(option) => option.name}
+                onChange={(_event, depAirport) => {
+                  setDepartureAirport(depAirport);
+                }}
+              />
+            </div>
+            {/*Arrival Airport*/}
+            <div class="input-group input-group-icon">
+              <Autocomplete
+                getOptionSelected={(option, value) => option.id === value.id}
+                options={nbaTeams}
+                fullWidth="true"
+                placeholder="Arrival Airport"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder="Arrival Airport"
+                    InputProps={{
+                      ...params.InputProps,
+                      shrink: "true",
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <FaPlaneArrival />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+                getOptionLabel={(option) => option.name}
+                onChange={(_event, arrAirport) => {
+                  setArrivalAirport(arrAirport);
+                }}
+              />
+            </div>
+    
           </div>
-        </div>
 
-        <div className="searchFields">
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setDepartureTime(event.target.value)}
-              type="text"
-              placeholder="Departure Time"
-              required
-            />
-            <div class="input-icon">
-              <FaClock></FaClock>
-            </div>
-          </div>
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setArrivalTime(event.target.value)}
-              type="text"
-              placeholder="Arrival Time"
-            />
-            <div class="input-icon">
-              <FaClock></FaClock>
-            </div>
-          </div>
-        </div>
+          <div className="searchFields">
+               <div className="textField">
+              <TextField
+                fullWidth="true"
+                label="Departure Time"
+                type="time"
+                // value="00:00"
+                variant="standard"
+                onChange={(event) => setDepartureTime(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              /></div>
+            
+            <div className="textField">
+              <TextField
+                fullWidth="true"
+                label="Arrival Time"
+                type="time"
+                // defaultValue="00:00"
+                variant="standard"
+                onChange={(event) => setArrivalTime(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              /></div>
+           
+           <div className="textField">
+              <TextField
+                fullWidth="true"
+                label="Departure Date"
+                type="date"
+                variant="standard"
+                onChange={(event) => setDepartureDate(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              /></div>
 
-        <div className="searchFields">
-          <label>
-            &nbsp;&nbsp;&nbsp;&nbsp;Departure Date
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </label>
+            <div className="textField">
+              <TextField
+                fullWidth="true"
+                label="Arrival Date"
+                type="date"
+                variant="standard"
+                onChange={(event) => setArrivalDate(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              /></div>
+           
+           
+            <div>
+              
+            </div>
+          </div>
 
-          <label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Arrival Date
-          </label>
-        </div>
+            <div className="searchFields">
+              <div class="input-group input-group-icon">
+                <TextField
+                fullWidth="true"
+                label="Economy Seats Number"
+                type="number"
+                defaultValue="0"
+                variant="standard"
+                onChange={(event) => setEconomySeats(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                />
+              </div>
+                        
+                        
+              <div class="input-group input-group-icon">
+                  <TextField
+                fullWidth="true"
+                label="Business Class Number"
+                type="number"
+                defaultValue="0"
+                variant="standard"
+                onChange={(event) => setBusinessSeats(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                />
+                
+                </div>
+                <div class="input-group input-group-icon">
+            <TextField
+                fullWidth="true"
+                label="First Class Seats Number"
+                type="number"
+                defaultValue="0"
+                variant="standard"
+                onChange={(event) => setFirstClassSeats(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              </div>
+              </div>
 
-        <div className="searchFields">
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setDepartureDate(event.target.value)}
-              type="date"
-              placeholder="Departure Date"
-              required
-            />
-            <div class="input-icon">
-              <FaCalendarDay></FaCalendarDay>
-            </div>
+          <div className="searchFields">
+         
+                        
+                        
+              <div class="input-group input-group-icon">
+                  <TextField
+                fullWidth="true"
+                label="Economy Class Price"
+                type="number"
+                defaultValue="0"
+                variant="standard"
+                onChange={(event) => setEconomyPrice(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                />
+                
+                </div>
+                <div class="input-group input-group-icon">
+            <TextField
+                fullWidth="true"
+                label="Business Class Seats Price"
+                type="number"
+                defaultValue="0"
+                variant="standard"
+                onChange={(event) => setBusinessPrice(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              </div>
+              <div class="input-group input-group-icon">
+            <TextField
+                fullWidth="true"
+                label="First Class Seats Price"
+                type="number"
+                defaultValue="0"
+                variant="standard"
+                onChange={(event) => setFirstClassPrice(event.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              </div>
+                
           </div>
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setArrivalDate(event.target.value)}
-              type="date"
-              placeholder="Arrival Date"
-            />
-            <div class="input-icon">
-              <FaCalendarWeek></FaCalendarWeek>
-            </div>
-          </div>
-        </div>
+         
 
-        <div className="searchFields">
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setEconomySeats(event.target.value)}
-              type="text"
-              placeholder="Economy Seats"
-            />
-            <div class="input-icon">
-              <FaChair></FaChair>
-            </div>
-          </div>
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setBusinessSeats(event.target.value)}
-              type="text"
-              placeholder="Business Seats"
-            />
-            <div class="input-icon">
-              <FaChair></FaChair>
-            </div>
-          </div>
-        </div>
+          {/* <div className="searchField"> */}
+          <button id ="createFlightButton" className="button " onClick={createFlight}>Create</button> 
+          {/* </div> */}
+        </form>
 
-        <div className="searchFields">
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setDepartureAirport(event.target.value)}
-              type="text"
-              placeholder="Departure Airport"
-              required
-            />
-            <div class="input-icon">
-              <FaPlaneDeparture></FaPlaneDeparture>
-            </div>
-          </div>
-          <div class="input-group input-group-icon">
-            <input
-              onChange={(event) => setArrivalAirport(event.target.value)}
-              type="text"
-              placeholder="Arrival Airport"
-            />
-            <div class="input-icon">
-              <FaPlaneArrival></FaPlaneArrival>
-            </div>
-          </div>
-        </div>
-
-        <button className="button">Create</button>
-      </form>
     </div>
   );
 };
