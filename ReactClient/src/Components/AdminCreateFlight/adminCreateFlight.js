@@ -53,9 +53,13 @@ const AdminCreateFlight = () => {
   const createFlight = (event) => {
     event.preventDefault();
     const inputs = {
+      
+
+
+
      flightNumber:flightNumber,
-     from:departureAirport,
-     to:arrivalAirport,
+     from:departureAirport.name,
+     to:arrivalAirport.name,
      departureTime:departureTime,
      arrivalTime:arrivalTime,
      departureDate:departureDate,
@@ -65,7 +69,7 @@ const AdminCreateFlight = () => {
      firstClassSeats:firstClassSeats,
      economyPrice:economyPrice,
      businessPrice:businessPrice,
-     firstPrice:firstPrice,
+     firstClassPrice:firstPrice,
     };
 
     console.log(inputs);

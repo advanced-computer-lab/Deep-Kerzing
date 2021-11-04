@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 
 const FlightSchema = new Schema({
+    
     from: {
         type: String,
         required: true,        
@@ -51,6 +52,10 @@ const FlightSchema = new Schema({
     businessPrice :{
         type:Number,
         required: true
+    },
+    flightNumber:{
+        type:String,
+        required:true
     }
 
 });
