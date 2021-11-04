@@ -37,7 +37,6 @@ const UpdateFlight = () => {
       departureDate: departureDate,
       arrivalDate: arrivalDate,
     };
-    // console.log(inputs);
   };
   return (
     <div className="containerCard">
@@ -85,18 +84,6 @@ const UpdateFlight = () => {
         </div>
 
         <div className="searchFields">
-          <label>
-            &nbsp;&nbsp;&nbsp;&nbsp;Departure Date
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </label>
-
-          <label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Arrival Date
-          </label>
         </div>
 
         <div className="searchFields">
