@@ -11,6 +11,7 @@ const cors = require("cors");
 
 const auth = require("./routes/auth");
 const flights = require("./routes/flights");
+const airports = require("./routes/airports");
 
 const app = express();
 app.use(cors());
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/user", auth);
 app.use("/api/flights", flights);
+app.use("/api/airport", airports);
 
 
 

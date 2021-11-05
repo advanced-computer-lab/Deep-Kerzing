@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 const mongoose = require('mongoose');
 
 const Flight = require('../models/flight');
+const Airport = require('../models/airport');
 const helper = require("./flights.js");
 
 
@@ -41,6 +42,31 @@ const seedDB = async () => {
             flightNumber :helper[i].flightNumber
         })
         await flight.save();
+    }
+
+    await Airport.deleteMany({})
+    ;
+    for (let i = 0; i < helper.length ; i++) {
+        try{
+            const airport = new Airport({
+                name:helper[i].from,
+            })
+            await airport.save();
+        }
+        catch(e){
+            console.log("Value is Skipped")
+        }
+        try{
+            const airport1 = new Airport({
+                name:helper[i].to,
+            })
+            await airport1.save();
+        }
+        catch(e){
+            console.log("Value is Skipped")
+        }
+
+
     }
 }
 
