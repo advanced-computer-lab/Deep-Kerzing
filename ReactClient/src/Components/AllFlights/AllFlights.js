@@ -48,16 +48,16 @@ const AllFlights = () => {
             onDelete={onDeleteHandler}
             departure={element.from}
             arrival={element.to}
-            depDate={element.depDate}
-            arrDate={element.arrDate}
-            depTime={element.depTime}
-            arrTime={element.arrTime}
-            seatsEconomy={element.seatsEconomy}
-            seatsBusiness={element.seatsBusiness}
-            seatsFirst={element.seatsFirst}
-            priceEconomy={element.priceEconomy}
-            priceBusiness={element.priceBusiness}
-            priceFirst={element.priceFirst}
+            depDate={element.departureDate}
+            arrDate={element.arrivalDate}
+            depTime={element.departureTime}
+            arrTime={element.arrivalTime}
+            seatsEconomy={element.economySeats}
+            seatsBusiness={element.businessSeats}
+            seatsFirst={element.fisrtClassSeats}
+            priceEconomy={element.economyPrice}
+            priceBusiness={element.businessPrice}
+            priceFirst={element.firstClassPrice}
             flightNumber={element.flightNumber}
           ></FlightDetails>
         ))}
