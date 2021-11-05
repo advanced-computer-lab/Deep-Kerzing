@@ -7,5 +7,3 @@ exports.getAllairport = catchAsync(async (req, res, next) => {
   const l = await Airport.find({});
   res.json(l);
 });
-
-

@@ -20,15 +20,15 @@ const ForgetPassword = () => {
 
   return (
     <div>
-      <form class="containerCard" onSubmit={LoginHandler}>
-        <div class="input-group input-group-icon">
+      <form className="containerCard" onSubmit={LoginHandler}>
+        <div className="input-group input-group-icon">
           <input
             onChange={(event) => setUsername(event.target.value)}
             type="text"
             placeholder="Email"
             required
           />
-          <div class="input-icon">
+          <div className="input-icon">
             <FaUser></FaUser>
           </div>
         </div>

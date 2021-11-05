@@ -8,21 +8,21 @@ import Login from "./Pages/Login/Login";
 import AdminTrackFlight from "./Components/AdminTrackFlight/adminTrackFlight";
 import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 import Profile from "./Components/Profile/Profile";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import AdminHomePage from "./Pages/AdminHomepage/AdminHomepage";
 import AdminSearchFlight from "./Components/searchFlight/adminSearchFlight";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 // import Front from './components/Posts/Posts';
-import { getFlights } from './Actions/flight';
+import { getFlights } from "./Actions/flight";
 
 const App = () => {
+  const [currentId, setCurrentId] = useState(null);
   const [loggedIn, setLoggedIn] = useState("Admin");
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getFlights());
-  }, [dispatch]);
-
+  }, [currentId, dispatch]);
   return (
     <Layout>
       <Switch>
@@ -40,13 +40,13 @@ const App = () => {
           <AddAdmin></AddAdmin>
         </Route>
         <Route exact path="/ViewFlights">
-          <AdminFlights></AdminFlights>
+          <AdminFlights setCurrentId={setCurrentId}></AdminFlights>
         </Route>
         <Route exact path="/AddFlight">
           <AdminCreateFlight></AdminCreateFlight>
         </Route>
         <Route path="/UpdateFlight" exact>
-          <UpdateFlight />
+          <UpdateFlight currentId={currentId} setCurrentId={setCurrentId} />
         </Route>
         <Route path="/login">
           <Login />
