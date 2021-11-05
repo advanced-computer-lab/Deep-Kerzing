@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
 import Navbar from '../GuestNavbar/Navbar';
-import Autocomplete from '../Autocomplete/Autocomplete';
+
 
 const Layout = (props) => {
   return (

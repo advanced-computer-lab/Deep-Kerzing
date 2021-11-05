@@ -1,0 +1,9 @@
+DB_URL=mongodb+srv://test:123@cluster0.hfsoh.mongodb.net/Cluster0?retryWrites=true&w=majority
+
+JWT_SECRET=hhj4h5ehur3uhr3ur383hur
+
+JWT_EXPIRE=30d
+JWT_COOKIE_EXPIRE=30
+
+SMTP_EMAIL=deepkerzing@gmail.com
+SMTP_PASSWORD=deep@kerzing11
