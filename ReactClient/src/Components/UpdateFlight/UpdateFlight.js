@@ -53,14 +53,15 @@ const UpdateFlight = () => {
     };
   };
   const nbaTeams = [
-    { id: 1, name: "Los Angeles, Los Angeles Intl (LAX), United States" },
-    { id: 2, name: "New York, John F Kennedy Intl (JFK), United States" },
-    { id: 3, name: "London, Heathrow (LHR), United Kingdom" },
-    { id: 4, name: "Dubai, Dubai Intl (DXB), United Arab Emirates" },
-    { id: 5, name: "Cairo, Cairo Intl Apt (CAI), Egypt" },
-    { id: 6, name: "Munich, Franz Josef Strauss (MUC), Germany" },
-    { id: 7, name: "Paris, Charles De Gaulle (CDG), France" },
+    "Los Angeles, Los Angeles Intl (LAX), United States",
+    "New York, John F Kennedy Intl (JFK), United States",
+    "London, Heathrow (LHR), United Kingdom" ,
+    "Dubai, Dubai Intl (DXB), United Arab Emirates" ,
+    "Cairo, Cairo Intl Apt (CAI), Egypt" ,
+    "Munich, Franz Josef Strauss (MUC), Germany" ,
+    "Paris, Charles De Gaulle (CDG), France"
   ];
+  ///update/:id
   
   return (
     <div className="containerCard">
@@ -69,7 +70,6 @@ const UpdateFlight = () => {
       <div className="searchFields">
       <div class="input-group input-group-icon">
               <TextField
-                //placeholder={flightNumber}
                 value={flightNumber}
                 variant="outlined"
                 fullWidth="true"
@@ -89,17 +89,13 @@ const UpdateFlight = () => {
             {/* Departure Airport */}
             <div class="input-group input-group-icon">
               <Autocomplete
-                getOptionSelected={(option, value) => option.id === value.id}
                 options={nbaTeams}
                 fullWidth="true"
-                inputValue={departureAirport}
+                value={nbaTeams[nbaTeams.indexOf(departureAirport)]}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    defaultValue= {nbaTeams.find(o => o.name === departureAirport).name}
-                    //placeholder={nbaTeams.find(o => o.name === departureAirport).name}
                     variant="outlined"
-                   // placeholder="Departure Airport"
                     InputProps={{
                       ...params.InputProps,
                       shrink: "true",
@@ -111,7 +107,6 @@ const UpdateFlight = () => {
                     }}
                   />
                 )}
-                getOptionLabel={(option) => option.name}
                 onChange={(_event, depAirport) => {
                   setDepartureAirport(depAirport);
                 }}
@@ -120,20 +115,14 @@ const UpdateFlight = () => {
             {/*Arrival Airport*/}
             <div class="input-group input-group-icon">
               <Autocomplete
-               // getOptionSelected={(option, value) => option.id === value.id}
                 options={nbaTeams}
                 fullWidth="true"
-                //placeholder="Arrival Airport"
-                value={nbaTeams[0].name}
+                value={nbaTeams[nbaTeams.indexOf(arrivalAirport)]}
                 renderInput={(params) => (
                   <TextField
           
                     {...params}
-                    //defaultValue= {nbaTeams.find(o => o.name === arrivalAirport).name}
-                    //placeholder={nbaTeams.find(o => o.name === arrivalAirport).name}
-                   
                     variant="outlined"
-                   // placeholder="Arrival Airport"
                     InputProps={{
                       ...params.InputProps,
                       shrink: "true",
@@ -145,7 +134,6 @@ const UpdateFlight = () => {
                     }}
                   />
                 )}
-                getOptionLabel={(option) => option.name}
                 onChange={(_event, arrAirport) => {
                   setArrivalAirport(arrAirport);
                 }}
