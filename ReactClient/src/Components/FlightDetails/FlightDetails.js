@@ -2,6 +2,7 @@ import "../searchFlight/adminSearchFlight.css";
 import { IoAirplaneOutline } from "react-icons/io5";
 import { useHistory } from "react-router-dom";
 import Popup from "reactjs-popup";
+import { useState } from "react";
 import "reactjs-popup/dist/index.css";
 
 const FlightDetails = (props) => {
@@ -10,6 +11,7 @@ const FlightDetails = (props) => {
     props.onDelete(props);
   };
   const updateHandler = () => {
+    // setCurrentId(id);
     history.push("/UpdateFlight");
   };
 
@@ -52,7 +54,13 @@ const FlightDetails = (props) => {
         <div className="business">Business: {props.seatsBusiness}</div>
         <h6 className="depDate">Departure: {props.depDate}</h6> {/*6,1*/}
         <div className="arrDate">Arrival: {props.arrDate}</div> {/*6,2*/}
-        <button className="Update" onClick={updateHandler}>
+        <button
+          className="Update"
+          onClick={() => {
+            props.setCurrentId(props._id);
+            history.push("/UpdateFlight");
+          }}
+        >
           Update
         </button>
         <Popup

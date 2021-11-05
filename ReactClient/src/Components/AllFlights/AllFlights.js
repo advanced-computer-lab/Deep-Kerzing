@@ -2,7 +2,7 @@ import FlightDetails from "../FlightDetails/FlightDetails";
 import AdminSearchFlight from "../searchFlight/adminSearchFlight";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-const AllFlights = () => {
+const AllFlights = (props) => {
   var Flights = useSelector((store) => store.Flight);
   const [filteredFlights, setFlights] = useState(Flights);
 
@@ -15,11 +15,15 @@ const AllFlights = () => {
       (typeof filteredArray == "undefined" ||
         filteredArray.departureAirport === null ||
         typeof filteredArray.departureAirport.name === "undefined" ||
-        filteredArray.departureAirport.name.toLowerCase().includes(flight.from.toLowerCase()) ||
+        filteredArray.departureAirport.name
+          .toLowerCase()
+          .includes(flight.from.toLowerCase()) ||
         filteredArray.departureAirport.name.length == 0) &&
       (filteredArray.arrivalAirport === null ||
         typeof filteredArray.arrivalAirport.name === "undefined" ||
-        filteredArray.arrivalAirport.name.toLowerCase().includes(flight.to.toLowerCase()) ||
+        filteredArray.arrivalAirport.name
+          .toLowerCase()
+          .includes(flight.to.toLowerCase()) ||
         filteredArray.arrivalAirport.name.length == 0)
     );
   };
@@ -59,6 +63,9 @@ const AllFlights = () => {
             priceBusiness={element.businessPrice}
             priceFirst={element.firstClassPrice}
             flightNumber={element.flightNumber}
+            setCurrentId={props.setCurrentId}
+            _id={element._id}
+            key={element._id}
           ></FlightDetails>
         ))}
       </div>

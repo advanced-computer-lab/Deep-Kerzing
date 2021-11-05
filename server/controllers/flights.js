@@ -10,35 +10,35 @@ exports.getAllflights = catchAsync(async (req, res, next) => {
 
 exports.createflight = catchAsync(async (req, res, next) => {
   console.log(req.body);
-  const { 
-    from, 
-    to, 
-    departureDate ,
+  const {
+    from,
+    to,
+    departureDate,
     arrivalDate,
-    departureTime ,
-    arrivalTime ,
-    economySeats ,
-    economyPrice ,
+    departureTime,
+    arrivalTime,
+    economySeats,
+    economyPrice,
     firstClassSeats,
-    firstClassPrice ,
+    firstClassPrice,
     businessSeats,
     businessPrice,
-  flightNumber } = req.body;
+    flightNumber,
+  } = req.body;
   const flight = await Flight.create({
-
-    from, 
-    to, 
-    departureDate ,
+    from,
+    to,
+    departureDate,
     arrivalDate,
-    departureTime ,
-    arrivalTime ,
-    economySeats ,
-    economyPrice ,
+    departureTime,
+    arrivalTime,
+    economySeats,
+    economyPrice,
     firstClassSeats,
-    firstClassPrice ,
+    firstClassPrice,
     businessSeats,
     businessPrice,
-    flightNumber
+    flightNumber,
   });
   res.status(200).json({
     success: true,
@@ -50,6 +50,7 @@ exports.updateflight = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   await Flight.findByIdAndUpdate(id, { ...req.body });
   const flight = await Flight.findById(id);
+  console.log(flight);
   res.status(200).json({
     success: true,
     data: flight,

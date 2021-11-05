@@ -7,7 +7,7 @@ import { FaUser } from "react-icons/fa";
 
 const AdminNavbar = () => {
   const [navbar, setNavbar] = useState(false);
-  const [homePage, setHomePage] = useState(true)
+  const [homePage, setHomePage] = useState(true);
   const logoutHandler = () => {
     console.log("Logout");
   };
@@ -36,22 +36,22 @@ const AdminNavbar = () => {
             {navbar && <button className="buttonIN2">Add Admin</button>}
           </NavLink>
           {!navbar && (
-            <div class="dropdown">
-              <button class="buttonUP">
+            <div className="dropdown">
+              <button className="buttonUP">
                 <FaUser></FaUser>
               </button>
-              <div class="dropdown-content">
+              <div className="dropdown-content">
                 <NavLink to="/MyProfile">My Profile</NavLink>
                 <NavLink to="/">Logout</NavLink>
               </div>
             </div>
           )}
           {navbar && (
-            <div class="dropdown">
-              <button class="buttonUP2">
+            <div className="dropdown">
+              <button className="buttonUP2">
                 <FaUser></FaUser>
               </button>
-              <div class="dropdown-content2">
+              <div className="dropdown-content2">
                 <NavLink to="/MyProfile">My Profile</NavLink>
                 <NavLink to="/">Logout</NavLink>
               </div>

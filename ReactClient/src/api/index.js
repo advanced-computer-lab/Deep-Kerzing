@@ -1,9 +1,8 @@
 import axios from "axios";
 
-
 const url = "http://localhost:8000/api/flights";
-// const urlCreate = 'http://localhost:8000/api/flights/create';
+const urlUpdate = "http://localhost:8000/api/flights/update";
 
 export const fetchFlight = () => axios.get(url);
-// export const createFlight = (newFlight) => axios.post(urlCreate, newFlight);
-
+export const updateFlight = (id, updatedFlight) =>
+  axios.put(`${urlUpdate}/${id}`, updatedFlight);
