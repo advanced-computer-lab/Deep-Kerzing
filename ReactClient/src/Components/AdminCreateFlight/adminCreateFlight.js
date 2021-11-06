@@ -4,7 +4,7 @@ import "../searchFlight/adminSearchFlight.css";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import InputAdornment from "@mui/material/InputAdornment";
-
+import PopUp from "../PopUp/popUp";
 // import { createFlight } from "../../actions/flights";
 import axios from "axios";
 import {
@@ -37,6 +37,7 @@ const AdminCreateFlight = () => {
   const [economyPrice, setEconomyPrice] = useState("");
 
   const dispatch = useDispatch();
+  const [open,setOpen]= useState(false);
 
   const [Airport, setAirport] = useState([]);
 
@@ -78,6 +79,7 @@ const AdminCreateFlight = () => {
       .catch((err) => {
         console.log("Error from ShowuserList");
       });
+      setOpen(true);
   };
 
   return (
@@ -90,6 +92,7 @@ const AdminCreateFlight = () => {
         <div className="searchFields">
           <div className="input-group input-group-icon">
             <TextField
+             
               placeholder="Flight Number"
               variant="outlined"
               fullWidth={true}
@@ -256,7 +259,7 @@ const AdminCreateFlight = () => {
               fullWidth={true}
               label="First Class Seats Number"
               type="number"
-              defaultValue="0"
+              defaultValue={"0"}
               variant="standard"
               onChange={(event) => setFirstClassSeats(event.target.value)}
               InputLabelProps={{
@@ -269,10 +272,11 @@ const AdminCreateFlight = () => {
         <div className="searchFields">
           <div className="input-group input-group-icon">
             <TextField
+              required ={true}
               fullWidth={true}
               label="Economy Class Price"
               type="number"
-              defaultValue="0"
+              defaultValue= "0"
               variant="standard"
               onChange={(event) => setEconomyPrice(event.target.value)}
               InputLabelProps={{
@@ -318,6 +322,11 @@ const AdminCreateFlight = () => {
         </button>
         {/* </div> */}
       </form>
+      {open && <PopUp message= "Success!!!!!!!!!"  path="/ViewFlights">
+         
+
+         </PopUp> }
+      
     </div>
   );
 };

@@ -19,6 +19,8 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from "axios";
+import PopUp from "../PopUp/popUp";
+import { useHistory } from "react-router-dom";
 
 const UpdateFlight = ({ currentId, setCurrentId }) => {
   const [departureAirport, setDepartureAirport] = useState("");
@@ -37,6 +39,8 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
 
   const [Airport, setAirport] = useState([]);
 
+  const history = useHistory();
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/airport")
@@ -48,6 +52,8 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
         console.log("Error from Airport Api");
       });
   }, []);
+
+  const [open,setOpen]= useState(false);
 
   const inputs = {
     departureAirport: departureAirport,
@@ -113,7 +119,9 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
     if (currentId) {
       dispatch(updateFlight(currentId, inputs));
     }
+    setOpen(true);
     clear();
+    
   };
 
   return (
@@ -342,9 +350,18 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
           </div>
         </div>
 
-        <button className="buttonCancel">Cancel</button>
+        <button className="buttonCancel" onClick={()=>{
+           history.push("/ViewFlights")
+        }}
+        >
+          Cancel</button>
         <button className="button">Update</button>
       </form>
+      {open && <PopUp message= "bravo 3alek"  path="/ViewFlights">
+         
+
+         </PopUp> }
+      
     </div>
   );
 };
