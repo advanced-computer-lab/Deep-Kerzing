@@ -4,15 +4,40 @@ import { useHistory } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { useState } from "react";
 import "reactjs-popup/dist/index.css";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import axios from "axios"
 
 const FlightDetails = (props) => {
   const history = useHistory();
+ 
+ 
+  const [open, setOpen] = React.useState(false);
+
   const deleteHandler = () => {
-    props.onDelete(props);
+    axios
+   .delete("http://localhost:8000/api/flights/delete/" + props._id)
+   .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log("Error in delete");
+  });
+    setOpen(false);
+    window.location.reload(false);
   };
-  const updateHandler = () => {
-    // setCurrentId(id);
-    history.push("/UpdateFlight");
+
+  const handleClickOpen = () => {
+    setOpen(true);   
+  };
+
+  const handleClose = () => {         
+    setOpen(false);
   };
 
   return (
@@ -63,24 +88,28 @@ const FlightDetails = (props) => {
         >
           Update
         </button>
-        <Popup
-          trigger={
-            <button className="Delete" onClick={deleteHandler}>
+
+        <button className="Delete" onClick={handleClickOpen}>
               Delete
             </button>
-          }
-          position="top center"
-        >
-          {(close) => (
-            <div>
-              Content here
-              <a className="close" onClick={close}>
-                &times;
-              </a>
-            </div>
-          )}
-        </Popup>
+
       </div>
+      <Dialog 
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are You Sure,You Want To Delete ?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button  onClick={handleClose}>Cancel</Button>
+          <Button  onClick={deleteHandler} >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

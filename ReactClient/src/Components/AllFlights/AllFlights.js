@@ -8,7 +8,7 @@ const AllFlights = (props) => {
 
   useEffect(() => {
     setFlights(Flights);
-  }, []);
+  }, [Flights, filteredFlights]);
 
   const checkFlight = (flight, filteredArray) => {
     return (
@@ -54,7 +54,7 @@ const AllFlights = (props) => {
       <AdminSearchFlight onFilter={Filter}></AdminSearchFlight>
 
       <div className="containerCard">
-        {filteredFlights.length == 0 && <h1>No Results Found</h1>}
+        
         {filteredFlights.map((element) => (
           <FlightDetails
             onDelete={onDeleteHandler}
@@ -76,6 +76,7 @@ const AllFlights = (props) => {
             key={element._id}
           ></FlightDetails>
         ))}
+        {filteredFlights.length == 0 && <h1>No Results Found</h1>}
       </div>
     </div>
   );
