@@ -3,13 +3,10 @@ import "./adminSearchFlight.css";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import InputAdornment from "@mui/material/InputAdornment";
-
+import axios from "axios";
 import {
   FaPlaneDeparture,
   FaPlaneArrival,
-  FaClock,
-  FaCalendarDay,
-  FaCalendarWeek,
   FaTicketAlt,
   FaArrowDown,
   FaArrowUp,
@@ -21,23 +18,42 @@ const AdminSearchFlight = (props) => {
   const [flightNumber, setFlightNumber] = useState("");
   const [departureTime, setDepartureTime] = useState("");
   const [arrivalTime, setArrivalTime] = useState("");
-  const [economySeats, setEconomySeats] = useState("");
-  const [businessSeats, setBusinessSeats] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
   const [collapsable, setCollapsable] = useState(false);
 
-  const nbaTeams = [
-    { id: 1, name: "Los Angeles, Los Angeles Intl (LAX), United States" },
-    { id: 2, name: "New York, John F Kennedy Intl (JFK), United States" },
-    { id: 3, name: "London, Heathrow (LHR), United Kingdom" },
-    { id: 4, name: "Dubai, Dubai Intl (DXB), United Arab Emirates" },
-    { id: 5, name: "Cairo, Cairo Intl Apt (CAI), Egypt" },
-    { id: 6, name: "Munich, Franz Josef Strauss (MUC), Germany" },
-    { id: 7, name: "Paris, Charles De Gaulle (CDG), France" },
-  ];
+  const [Airport, setAirport] = useState([]);
 
-  // const airports =["CA"]
+  useEffect(
+    () => {
+      axios
+        .get("http://localhost:8000/api/airport")
+        .then((res) => {
+          setAirport(res.data);
+        })
+        .catch((err) => {
+          console.log("Error from Airport Api");
+        });
+    },
+    [departureAirport, 
+    flightNumber,
+    departureTime,
+    arrivalTime,
+    arrivalAirport,
+    departureDate,
+    arrivalDate
+    ]
+  );
+
+  const clearFilters = () => {
+    setDepartureAirport("");
+    setArrivalAirport("");
+    setArrivalDate("");
+    setDepartureDate("");
+    setFlightNumber("");
+    setDepartureTime("");
+    setArrivalTime("");
+  };
   const collapseHandler = () => {
     setCollapsable(!collapsable);
   };
@@ -48,8 +64,6 @@ const AdminSearchFlight = (props) => {
       flightNumber: flightNumber,
       departureTime: departureTime,
       arrivalTime: arrivalTime,
-      economySeats: economySeats,
-      businessSeats: businessSeats,
       departureDate: departureDate,
       arrivalDate: arrivalDate,
     };
@@ -60,8 +74,6 @@ const AdminSearchFlight = (props) => {
     flightNumber,
     departureTime,
     arrivalTime,
-    economySeats,
-    businessSeats,
     departureDate,
     arrivalDate,
   ]);
@@ -69,18 +81,30 @@ const AdminSearchFlight = (props) => {
   return (
     <div className="containerCard">
       <div className="SearchHeader">
-        {" "}
         <h1>Flight Search</h1>
+
         <div className="buttonHeader">
           {collapsable && (
-            <button className="FiltersButton" onClick={collapseHandler}>
-              <FaArrowUp />
-            </button>
+            <div className="FilterButtons">
+              <button className="FiltersButton" onClick={collapseHandler}>
+                <FaArrowUp />
+              </button>
+              &nbsp;
+              <button className="FiltersButton" onClick={clearFilters}>
+                Clear Filters
+              </button>
+            </div>
           )}
           {!collapsable && (
-            <button className="FiltersButton" onClick={collapseHandler}>
-              <FaArrowDown />
-            </button>
+            <div className="FilterButtons">
+              <button className="FiltersButton" onClick={collapseHandler}>
+                <FaArrowDown />
+              </button>
+              &nbsp;
+              <button className="FiltersButton" onClick={clearFilters}>
+                Clear Filters
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -91,8 +115,10 @@ const AdminSearchFlight = (props) => {
             {/* Departure Airport */}
             <div class="input-group input-group-icon">
               <Autocomplete
-                getOptionSelected={(option, value) => option.id === value.id}
-                options={nbaTeams}
+                options={Airport}
+                getOptionLabel={(option) => option.name || departureAirport}
+                getOptionSelected={(option) => option.name === departureAirport}
+                value={departureAirport}
                 fullWidth="true"
                 renderInput={(params) => (
                   <TextField
@@ -119,8 +145,10 @@ const AdminSearchFlight = (props) => {
             {/*Arrival Airport*/}
             <div class="input-group input-group-icon">
               <Autocomplete
-                getOptionSelected={(option, value) => option.id === value.id}
-                options={nbaTeams}
+                options={Airport}
+                getOptionLabel={(option) => option.name || arrivalAirport}
+                getOptionSelected={(option) => option.name == arrivalAirport}
+                value={arrivalAirport}
                 fullWidth="true"
                 placeholder="Arrival Airport"
                 renderInput={(params) => (
@@ -150,6 +178,7 @@ const AdminSearchFlight = (props) => {
                 placeholder="Flight Number"
                 variant="outlined"
                 fullWidth="true"
+                value={flightNumber}
                 onChange={(event) => setFlightNumber(event.target.value)}
                 InputProps={{
                   shrink: "true",
@@ -166,10 +195,10 @@ const AdminSearchFlight = (props) => {
           <div className="searchFields">
             <div class="input-group input-group-icon">
               <TextField
+                value={departureTime}
                 fullWidth="true"
                 label="Departure Time"
                 type="time"
-                defaultValue="00:00"
                 variant="standard"
                 onChange={(event) => setDepartureTime(event.target.value)}
                 InputLabelProps={{
@@ -181,8 +210,8 @@ const AdminSearchFlight = (props) => {
               <TextField
                 fullWidth="true"
                 label="Arrival Time"
+                value={arrivalTime}
                 type="time"
-                defaultValue="00:00"
                 variant="standard"
                 onChange={(event) => setArrivalTime(event.target.value)}
                 InputLabelProps={{
@@ -193,7 +222,8 @@ const AdminSearchFlight = (props) => {
             <div class="input-group input-group-icon">
               <TextField
                 fullWidth="true"
-                label="Arrival Date"
+                label="Departure Date"
+                value={departureDate}
                 type="date"
                 variant="standard"
                 onChange={(event) => setDepartureDate(event.target.value)}
@@ -205,7 +235,8 @@ const AdminSearchFlight = (props) => {
             <div class="input-group input-group-icon">
               <TextField
                 fullWidth="true"
-                label="Departure Date"
+                label="Arrival Date"
+                value={arrivalDate}
                 type="date"
                 variant="standard"
                 onChange={(event) => setArrivalDate(event.target.value)}
@@ -215,8 +246,6 @@ const AdminSearchFlight = (props) => {
               />
             </div>
           </div>
-
-          {/* <button className="button">Search</button> */}
         </form>
       )}
     </div>

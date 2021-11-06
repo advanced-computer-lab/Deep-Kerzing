@@ -10,14 +10,14 @@ import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 import Profile from "./Components/Profile/Profile";
 import { useState, useEffect } from "react";
 import AdminHomePage from "./Pages/AdminHomepage/AdminHomepage";
-import AdminSearchFlight from "./Components/searchFlight/adminSearchFlight";
 import { useDispatch } from "react-redux";
 // import Front from './components/Posts/Posts';
 import { getFlights } from "./Actions/flight";
+import axios from "axios";
 
 const App = () => {
   const [currentId, setCurrentId] = useState(null);
-  const [loggedIn, setLoggedIn] = useState("Admin");
+  const [TypeOfUser, setTypeOfUser] = useState("Admin");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,12 +26,13 @@ const App = () => {
   return (
     <Layout>
       <Switch>
-        {loggedIn == "Guest" && (
+        {TypeOfUser === "Guest" && (
           <Route path="/" exact>
             <h1>Hello</h1>
+            <h1>Hello</h1> <h1>Hello</h1> <h1>Hello</h1> <h1>Hello</h1>
           </Route>
         )}
-        {loggedIn == "Admin" && (
+        {TypeOfUser === "Admin" && (
           <Route path="/" exact>
             <AdminHomePage></AdminHomePage>{" "}
           </Route>
