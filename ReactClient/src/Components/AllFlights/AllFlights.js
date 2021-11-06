@@ -12,7 +12,7 @@ const AllFlights = (props) => {
 
   const checkFlight = (flight, filteredArray) => {
     return (
-      (typeof filteredArray == "undefined" ||
+      (typeof filteredArray === "undefined" ||
         filteredArray.departureAirport === null ||
         typeof filteredArray.departureAirport.name === "undefined" ||
         filteredArray.departureAirport.name
@@ -24,7 +24,15 @@ const AllFlights = (props) => {
         filteredArray.arrivalAirport.name
           .toLowerCase()
           .includes(flight.to.toLowerCase()) ||
-        filteredArray.arrivalAirport.name.length == 0)
+        filteredArray.arrivalAirport.name.length == 0) &&
+      (filteredArray.flightNumber === "" ||
+        flight.flightNumber
+          .toLowerCase()
+          .includes(filteredArray.flightNumber.toLowerCase())) &&
+      (filteredArray.departureTime === "" || flight.departureTime === filteredArray.departureTime) &&
+      (filteredArray.arrivalTime === "" || flight.arrivalTime === filteredArray.arrivalTime) &&
+      (filteredArray.arrivalDate === "" || flight.arrivalDate === filteredArray.arrivalDate) &&
+      (filteredArray.departureDate === "" || flight.departureDate === filteredArray.departureDate)
     );
   };
 
