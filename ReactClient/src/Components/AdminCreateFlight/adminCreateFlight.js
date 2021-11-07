@@ -6,11 +6,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import InputAdornment from "@mui/material/InputAdornment";
 import PopUp from "../PopUp/popUp";
 import axios from "axios";
-import {
-  FaPlaneDeparture,
-  FaPlaneArrival,
-  FaTicketAlt,
-} from "react-icons/fa";
+import { FaPlaneDeparture, FaPlaneArrival, FaTicketAlt } from "react-icons/fa";
 
 import { IoIosAddCircleOutline } from "react-icons/io";
 
@@ -28,11 +24,9 @@ const AdminCreateFlight = () => {
   const [firstPrice, setFirstClassPrice] = useState("");
   const [businessPrice, setBusinessPrice] = useState("");
   const [economyPrice, setEconomyPrice] = useState("");
-  
+
   const [open, setOpen] = useState(false);
-  const checkValidity = () => {
-    return;
-  };
+
   const [Airport, setAirport] = useState([]);
 
   useEffect(() => {
@@ -69,11 +63,11 @@ const AdminCreateFlight = () => {
       .post("http://localhost:8000/api/flights/create", inputs)
       .then((res) => {
         console.log(res);
+        setOpen(true);
       })
       .catch((err) => {
         console.log("Error from ShowuserList");
       });
-    setOpen(true);
   };
 
   return (
@@ -312,16 +306,20 @@ const AdminCreateFlight = () => {
 
         {/* <div className="searchField"> */}
         <button
-          disabled={checkValidity}
           id="createFlightButton"
-          className="button "
+          className="button"
           onClick={createFlight}
         >
           Create
         </button>
-        {/* </div> */}
       </form>
-      {open && <PopUp message="Flight Added" content="Your flight is now added successfully to the database. You can now see it in View Flights" path="/ViewFlights"></PopUp>}
+      {open && (
+        <PopUp
+          message="Flight Added"
+          content="Your flight is now added successfully to the database. You can now see it in View Flights"
+          path="/ViewFlights"
+        ></PopUp>
+      )}
     </div>
   );
 };
