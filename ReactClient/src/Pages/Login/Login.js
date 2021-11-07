@@ -1,27 +1,36 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import "../../Components/searchFlight/adminSearchFlight.css";
-import axios from "axios";
 import { FaUser, FaAt } from "react-icons/fa";
 import { useHistory } from "react-router";
 
-const Login = () => {
+
+async function loginUser(credentials) {
+  return fetch('http://localhost:8000/api/user/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json())
+ }
+
+const Login = ({ setToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
   const forgetPasswordHandler =()=>{
     history.push("/forgetpassword")
   }
-  const LoginHandler = (event) => {
+
+  const LoginHandler = async event => {
     event.preventDefault();
-    const input = {
-      username: username,
-      password: password,
-    };
-    axios("", { input }).then((res) => {
-      console.log(res);
-      console.log(res.data);
+    const token = await loginUser({
+      email:username,
+      password:password
     });
+    setToken(token);
   };
 
   return (
