@@ -13,16 +13,30 @@ import AdminHomePage from "./Pages/AdminHomepage/AdminHomepage";
 import { useDispatch } from "react-redux";
 // import Front from './components/Posts/Posts';
 import { getFlights } from "./Actions/flight";
+import useToken from './useToken';
+
 import axios from "axios";
 
 const App = () => {
   const [currentId, setCurrentId] = useState(null);
   const [TypeOfUser, setTypeOfUser] = useState("Admin");
+  const { token, setToken } = useToken();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getFlights());
   }, [currentId, dispatch]);
+
+  if(!token) {
+    
+    return <Login setToken={setToken} />
+  }
+
+
+
+  
+
   return (
     <Layout>
       <Switch>
@@ -33,7 +47,7 @@ const App = () => {
           </Route>
         )}
         {TypeOfUser === "Admin" && (
-          <Route path="/" exact>
+          <Route path="/" exact>           
             <AdminHomePage></AdminHomePage>{" "}
           </Route>
         )}
