@@ -18,13 +18,13 @@ const AllFlights = (props) => {
         filteredArray.departureAirport.name
           .toLowerCase()
           .includes(flight.from.toLowerCase()) ||
-        filteredArray.departureAirport.name.length == 0) &&
+        filteredArray.departureAirport.name.length === 0) &&
       (filteredArray.arrivalAirport === null ||
         typeof filteredArray.arrivalAirport.name === "undefined" ||
         filteredArray.arrivalAirport.name
           .toLowerCase()
           .includes(flight.to.toLowerCase()) ||
-        filteredArray.arrivalAirport.name.length == 0) &&
+        filteredArray.arrivalAirport.name.length === 0) &&
       (filteredArray.flightNumber === "" ||
         flight.flightNumber
           .toLowerCase()
@@ -76,7 +76,7 @@ const AllFlights = (props) => {
             key={element._id}
           ></FlightDetails>
         ))}
-        {filteredFlights.length == 0 && <h1>No Results Found</h1>}
+        {filteredFlights.length === 0 && <h1>No Results Found</h1>}
       </div>
     </div>
   );

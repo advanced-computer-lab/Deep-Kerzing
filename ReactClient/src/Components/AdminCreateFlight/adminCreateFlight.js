@@ -5,10 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import InputAdornment from "@mui/material/InputAdornment";
 import PopUp from "../PopUp/popUp";
-// import { createFlight } from "../../actions/flights";
 import axios from "axios";
 import {
-  //IoIosCreate,
   FaPlaneDeparture,
   FaPlaneArrival,
   FaTicketAlt,
@@ -30,10 +28,11 @@ const AdminCreateFlight = () => {
   const [firstPrice, setFirstClassPrice] = useState("");
   const [businessPrice, setBusinessPrice] = useState("");
   const [economyPrice, setEconomyPrice] = useState("");
-
-  const dispatch = useDispatch();
-  const [open,setOpen]= useState(false);
-
+  
+  const [open, setOpen] = useState(false);
+  const checkValidity = () => {
+    return;
+  };
   const [Airport, setAirport] = useState([]);
 
   useEffect(() => {
@@ -74,7 +73,7 @@ const AdminCreateFlight = () => {
       .catch((err) => {
         console.log("Error from ShowuserList");
       });
-      setOpen(true);
+    setOpen(true);
   };
 
   return (
@@ -87,7 +86,8 @@ const AdminCreateFlight = () => {
         <div className="searchFields">
           <div className="input-group input-group-icon">
             <TextField
-             
+              required={true}
+              errorText={"Please Enter Flight Number"}
               placeholder="Flight Number"
               variant="outlined"
               fullWidth={true}
@@ -112,6 +112,7 @@ const AdminCreateFlight = () => {
               fullWidth={true}
               renderInput={(params) => (
                 <TextField
+                  required={true}
                   {...params}
                   variant="outlined"
                   placeholder="Departure Airport"
@@ -141,6 +142,7 @@ const AdminCreateFlight = () => {
               placeholder="Arrival Airport"
               renderInput={(params) => (
                 <TextField
+                  required={true}
                   {...params}
                   variant="outlined"
                   placeholder="Arrival Airport"
@@ -167,9 +169,9 @@ const AdminCreateFlight = () => {
           <div className="textField">
             <TextField
               fullWidth={true}
+              required={true}
               label="Departure Time"
               type="time"
-              // value="00:00"
               variant="standard"
               onChange={(event) => setDepartureTime(event.target.value)}
               InputLabelProps={{
@@ -181,9 +183,9 @@ const AdminCreateFlight = () => {
           <div className="textField">
             <TextField
               fullWidth={true}
+              required={true}
               label="Arrival Time"
               type="time"
-              // defaultValue="00:00"
               variant="standard"
               onChange={(event) => setArrivalTime(event.target.value)}
               InputLabelProps={{
@@ -195,6 +197,7 @@ const AdminCreateFlight = () => {
           <div className="textField">
             <TextField
               fullWidth={true}
+              required={true}
               label="Departure Date"
               type="date"
               variant="standard"
@@ -208,6 +211,7 @@ const AdminCreateFlight = () => {
           <div className="textField">
             <TextField
               fullWidth={true}
+              required={true}
               label="Arrival Date"
               type="date"
               variant="standard"
@@ -225,9 +229,9 @@ const AdminCreateFlight = () => {
           <div className="input-group input-group-icon">
             <TextField
               fullWidth={true}
+              required={true}
               label="Economy Seats Number"
               type="number"
-              defaultValue="0"
               variant="standard"
               onChange={(event) => setEconomySeats(event.target.value)}
               InputLabelProps={{
@@ -239,9 +243,9 @@ const AdminCreateFlight = () => {
           <div className="input-group input-group-icon">
             <TextField
               fullWidth={true}
+              required={true}
               label="Business Class Number"
               type="number"
-              defaultValue="0"
               variant="standard"
               onChange={(event) => setBusinessSeats(event.target.value)}
               InputLabelProps={{
@@ -252,9 +256,9 @@ const AdminCreateFlight = () => {
           <div className="input-group input-group-icon">
             <TextField
               fullWidth={true}
+              required={true}
               label="First Class Seats Number"
               type="number"
-              defaultValue={"0"}
               variant="standard"
               onChange={(event) => setFirstClassSeats(event.target.value)}
               InputLabelProps={{
@@ -267,11 +271,10 @@ const AdminCreateFlight = () => {
         <div className="searchFields">
           <div className="input-group input-group-icon">
             <TextField
-              required ={true}
+              required={true}
               fullWidth={true}
               label="Economy Class Price"
               type="number"
-              defaultValue= "0"
               variant="standard"
               onChange={(event) => setEconomyPrice(event.target.value)}
               InputLabelProps={{
@@ -284,7 +287,7 @@ const AdminCreateFlight = () => {
               fullWidth={true}
               label="Business Class Seats Price"
               type="number"
-              defaultValue="0"
+              required={true}
               variant="standard"
               onChange={(event) => setBusinessPrice(event.target.value)}
               InputLabelProps={{
@@ -297,7 +300,7 @@ const AdminCreateFlight = () => {
               fullWidth={true}
               label="First Class Seats Price"
               type="number"
-              defaultValue="0"
+              required={true}
               variant="standard"
               onChange={(event) => setFirstClassPrice(event.target.value)}
               InputLabelProps={{
@@ -309,6 +312,7 @@ const AdminCreateFlight = () => {
 
         {/* <div className="searchField"> */}
         <button
+          disabled={checkValidity}
           id="createFlightButton"
           className="button "
           onClick={createFlight}
@@ -317,11 +321,7 @@ const AdminCreateFlight = () => {
         </button>
         {/* </div> */}
       </form>
-      {open && <PopUp message= "Success!!!!!!!!!"  path="/ViewFlights">
-         
-
-         </PopUp> }
-      
+      {open && <PopUp message="Flight Added" content="Your flight is now added successfully to the database. You can now see it in View Flights" path="/ViewFlights"></PopUp>}
     </div>
   );
 };

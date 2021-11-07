@@ -1,6 +1,5 @@
 import { useHistory } from "react-router-dom";
 import "../../Components/searchFlight/adminSearchFlight.css";
-// import logo1 from "./Flight.jpg";
 import { useSelector } from "react-redux";
 
 
@@ -18,7 +17,7 @@ const AdminHomePage = () => {
     <div>
       <div className="adminHomepage">
         <h1 className="WelcomeTitle">Welcome {username}</h1>
-        <div className="QuickAccessContainer">
+        {/* <div className="QuickAccessContainer">
           <h1 className="QuickAccess">Quick Access</h1>
           <button className="button1" onClick={Update}>
             Update Flight
@@ -29,7 +28,7 @@ const AdminHomePage = () => {
           <button className="button3" onClick={Search}>
             Search Flight
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

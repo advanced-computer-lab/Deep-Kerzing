@@ -1,19 +1,12 @@
 // import { FaUserPlus, FaUser, FaAt, FaLock, FaUnlock } from "react-icons/fa";
 import "../searchFlight/adminSearchFlight.css";
 import { updateFlight } from "../../Actions/flight";
-import { IoIosAddCircleOutline } from "react-icons/io";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  //IoIosCreate,
-  FaSearch,
   FaPlaneDeparture,
   FaPlaneArrival,
-  FaClock,
-  FaCalendarDay,
-  FaCalendarWeek,
-  FaChair,
-  FaTicketAlt,
+  FaTicketAlt
 } from "react-icons/fa";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -71,7 +64,6 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
     economyPrice: economyPrice,
   };
 
-  ///update/:id
   const flight = useSelector((state) =>
     currentId ? state.Flight.find((message) => message._id === currentId) : null
   );
@@ -113,6 +105,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
     setBusinessPrice(0);
     setEconomyPrice(0);
   };
+  const checkValidity = () => {return};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -125,12 +118,17 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
   };
 
   return (
-    <div className="containerCard">
+    <div id="createFlightCard" className="containerCard">
+      <h1>
+        <FaPlaneDeparture></FaPlaneDeparture>
+      </h1>
+      <h1> Create Flight</h1>
       <form onSubmit={handleSubmit}>
         <div className="searchFields">
           <div className="input-group input-group-icon">
             <TextField
               value={flightNumber}
+              required={true}
               variant="outlined"
               fullWidth={true}
               onChange={(event) => setFlightNumber(event.target.value)}
@@ -157,6 +155,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  required={true}
                   variant="outlined"
                   InputProps={{
                     ...params.InputProps,
@@ -185,6 +184,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  required={true}
                   variant="outlined"
                   InputProps={{
                     ...params.InputProps,
@@ -209,6 +209,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <TextField
               placeholder={departureTime}
               fullWidth={true}
+              required={true}
               label="Departure Time"
               type="time"
               value={departureTime}
@@ -223,6 +224,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
           <div className="textField">
             <TextField
               fullWidth={true}
+              required={true}
               label="Arrival Time"
               type="time"
               value={arrivalTime}
@@ -238,6 +240,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <TextField
               value={departureDate}
               fullWidth={true}
+              required={true}
               label="Departure Date"
               type="date"
               variant="standard"
@@ -252,6 +255,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <TextField
               value={arrivalDate}
               fullWidth={true}
+              required={true}
               label="Arrival Date"
               type="date"
               variant="standard"
@@ -270,6 +274,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <TextField
               value={economySeats}
               fullWidth={true}
+              required={true}
               label="Economy Seats Number"
               type="number"
               variant="standard"
@@ -284,6 +289,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <TextField
               value={businessSeats}
               fullWidth={true}
+              required={true}
               label="Business Class Number"
               type="number"
               variant="standard"
@@ -297,6 +303,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <TextField
               value={firstClassSeats}
               fullWidth={true}
+              required={true}
               label="First Class Seats Number"
               type="number"
               variant="standard"
@@ -313,6 +320,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <TextField
               value={economyPrice}
               fullWidth={true}
+              required={true}
               label="Economy Class Price"
               type="number"
               variant="standard"
@@ -326,6 +334,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <TextField
               value={businessPrice}
               fullWidth={true}
+              required={true}
               label="Business Class Seats Price"
               type="number"
               variant="standard"
@@ -339,6 +348,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <TextField
               value={firstPrice}
               fullWidth={true}
+              required={true}
               label="First Class Seats Price"
               type="number"
               variant="standard"
@@ -350,18 +360,25 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
           </div>
         </div>
 
-        <button className="buttonCancel" onClick={()=>{
-           history.push("/ViewFlights")
-        }}
+        <button
+          className="buttonCancel"
+          onClick={() => {
+            history.push("/ViewFlights");
+          }}
         >
-          Cancel</button>
-        <button className="button">Update</button>
+          Cancel
+        </button>
+        <button className="button" disabled={checkValidity}>
+          Update
+        </button>
       </form>
-      {open && <PopUp message= "bravo 3alek"  path="/ViewFlights">
-         
-
-         </PopUp> }
-      
+      {open && (
+        <PopUp
+          message="Flight Updated"
+          content="Your Flight details are now updated. Check it from View Flights"
+          path="/ViewFlights"
+        ></PopUp>
+      )}
     </div>
   );
 };
