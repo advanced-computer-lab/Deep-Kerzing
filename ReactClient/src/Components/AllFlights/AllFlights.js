@@ -8,7 +8,7 @@ const AllFlights = (props) => {
 
   useEffect(() => {
     setFlights(Flights);
-  }, [Flights, filteredFlights]);
+  }, [Flights]);
 
   const checkFlight = (flight, filteredArray) => {
     return (

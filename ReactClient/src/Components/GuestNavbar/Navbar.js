@@ -29,9 +29,9 @@ const Navbar = () => {
         <div>
           <NavLink to="/">
             {!navbar && (
-              <img src={logo2} className="image" alt="Deep Kerzing" />
+              <img src={logo1} className="image" alt="Deep Kerzing" />
             )}
-            {navbar && <img src={logo1} className="image" alt="Deep Kerzing" />}
+            {navbar && <img src={logo2} className="image" alt="Deep Kerzing" />}
           </NavLink>
           <NavLink to="/login">
             {!navbar && <button className="buttonIN">Login</button>}

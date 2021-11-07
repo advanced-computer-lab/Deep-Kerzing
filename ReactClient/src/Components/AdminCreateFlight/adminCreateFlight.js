@@ -9,13 +9,8 @@ import PopUp from "../PopUp/popUp";
 import axios from "axios";
 import {
   //IoIosCreate,
-  FaSearch,
   FaPlaneDeparture,
   FaPlaneArrival,
-  FaClock,
-  FaCalendarDay,
-  FaCalendarWeek,
-  FaChair,
   FaTicketAlt,
 } from "react-icons/fa";
 

@@ -6,7 +6,7 @@ import Navbar from '../GuestNavbar/Navbar';
 const Layout = (props) => {
   return (
     <Fragment>
-      {true ? <AdminNavbar /> : <Navbar />}
+      {props.user === "Admin" ? <AdminNavbar /> : <Navbar />}
       <main>{props.children}</main>
       {/* <Autocomplete></Autocomplete> */}
     </Fragment>
