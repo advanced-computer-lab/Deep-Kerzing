@@ -4,12 +4,23 @@ import "../GuestNavbar/Navbar.css";
 import logo1 from "../GuestNavbar/logo.png";
 import logo2 from "../GuestNavbar/logo2.png";
 import { FaUser } from "react-icons/fa";
+import axios from "axios";
 
 const AdminNavbar = () => {
   const [navbar, setNavbar] = useState(false);
   const [homePage, setHomePage] = useState(true);
+  
   const logoutHandler = () => {
-    console.log("Logout");
+    localStorage.clear();
+    window.location.href = '/';
+    axios
+    .get("http://localhost:8000/api/user/logout")
+    .then((res) => {
+        console.log(res)
+    })
+    .catch((err) => {
+      console.log("Error from Logout");
+    });
   };
 
   const changeBackground = () => {
@@ -20,6 +31,7 @@ const AdminNavbar = () => {
       setNavbar(false);
     }
   };
+
   window.addEventListener("scroll", changeBackground);
   return (
     <div>
@@ -42,7 +54,7 @@ const AdminNavbar = () => {
               </button>
               <div className="dropdown-content">
                 <NavLink to="/MyProfile">My Profile</NavLink>
-                <NavLink to="/">Logout</NavLink>
+                <NavLink to="/" onClick={logoutHandler}>Logout</NavLink>
               </div>
             </div>
           )}
