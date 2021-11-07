@@ -27,11 +27,11 @@ const PopUp = (props)=>{
         <DialogTitle id="alert-dialog-title">
           {props.message}
         </DialogTitle>
-        {/* <DialogContent>
+        <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            
+            {props.content}
           </DialogContentText>
-        </DialogContent> */}
+        </DialogContent>
         <DialogActions>
           <Button  onClick={handleClose}>Confirm</Button>
         </DialogActions>

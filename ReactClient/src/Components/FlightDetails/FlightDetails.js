@@ -1,15 +1,12 @@
 import "../searchFlight/adminSearchFlight.css";
 import { IoAirplaneOutline } from "react-icons/io5";
 import { useHistory } from "react-router-dom";
-import Popup from "reactjs-popup";
-import { useState } from "react";
 import "reactjs-popup/dist/index.css";
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from "axios"
 

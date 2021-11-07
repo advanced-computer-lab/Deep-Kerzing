@@ -5,12 +5,11 @@ import { FaUserPlus, FaUser, FaAt } from "react-icons/fa";
 const AddAdmin = () => {
   const [Name, setName] = useState("");
   const [Email, setEmail] = useState("");
-  //   const [Name, setName] = useState("");
-  //   const [Name, setName] = useState("");
+
 
   const addAdminHandler = (event) => {
     event.preventDefault();
-    const admin = { name: Name, email: Email };
+    // const admin = { name: Name, email: Email };
   };
 
   return (
