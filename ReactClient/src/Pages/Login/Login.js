@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import "../../Components/searchFlight/adminSearchFlight.css";
 import axios from "axios";
-import { FaUser, FaAt } from "react-icons/fa";
+import { FaUser, FaAt, FaLock} from "react-icons/fa";
 import { useHistory } from "react-router";
 
 const Login = () => {
@@ -25,38 +25,42 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <form class="containerCard" onSubmit={LoginHandler}>
-        <div class="input-group input-group-icon">
-          <input
-            onChange={(event) => setUsername(event.target.value)}
-            type="text"
-            placeholder="Email"
-            required
-          />
-          <div class="input-icon">
-            <FaUser></FaUser>
+    <div className="LoginPage">
+      <div className="LoginImage"></div>
+      <div className="LoginForm">
+        <form class="containerCard" onSubmit={LoginHandler}>
+          <h1>Login</h1>
+          <div class="input-group input-group-icon">
+            <input
+              onChange={(event) => setUsername(event.target.value)}
+              type="text"
+              placeholder="Email"
+              required
+            />
+            <div class="input-icon">
+              <FaUser></FaUser>
+            </div>
           </div>
-        </div>
 
-        <div class="input-group input-group-icon">
-          <input
-            onChange={(event) => setPassword(event.target.value)}
-            type="password"
-            placeholder=" Password"
-            required
-          />
-          <div class="input-icon">
-            <FaAt></FaAt>
+          <div class="input-group input-group-icon">
+            <input
+              onChange={(event) => setPassword(event.target.value)}
+              type="password"
+              placeholder=" Password"
+              required
+            />
+            <div class="input-icon">
+              <FaLock></FaLock>
+            </div>
           </div>
-        </div>
-        <div>
+          {/* <div>
           <button className="button" onClick={forgetPasswordHandler}>ForgetPassword!</button>
-        </div>
-        <br/>
+        </div> */}
+          <br />
 
-        <button className="button">Submit</button>
-      </form>
+          <button className="buttonLogin">Login</button>
+        </form>
+      </div>
     </div>
   );
 };

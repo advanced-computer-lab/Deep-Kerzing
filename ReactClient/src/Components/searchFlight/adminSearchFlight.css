@@ -430,10 +430,9 @@ select:active {
   width: 100%;
   justify-content: space-between;
 }
-.FilterButtons{
+.FilterButtons {
   display: inline-block;
   width: 100%;
-  
 }
 .FiltersButton {
   min-width: 2.5rem;
@@ -468,4 +467,46 @@ select:active {
 .textField {
   margin: 2%;
   width: 100%;
+}
+
+.LoginPage {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  top: 4rem;
+  vertical-align: middle;
+}
+.LoginImage {
+  grid-column: 1;
+  background: url("Login.jpg");
+  height: 100vh;
+}
+.LoginForm {
+  vertical-align: auto;
+  height: 100vh;
+  vertical-align: middle;
+  grid-column-start: 2;
+  width: 100%;
+}
+
+.buttonLogin {
+  width: 100%;
+  margin: auto;
+  height: 2.5rem;
+  border: solid #e81932;
+  border-width: 0.1rem;
+  background-color: transparent;
+  color: #232b38;
+  border-radius: 100px;
+  transition: all 0.4s ease-in-out;
+}
+.buttonLogin:hover {
+  width: 100%;
+  margin: auto;
+  height: 2.5rem;
+  transition-duration: 0.4s;
+  background-color: #b11426;
+  color: #f5f5f5;
+  border-radius: 100px;
+  border: solid #b11426;
+  border-width: 0.1rem;
 }

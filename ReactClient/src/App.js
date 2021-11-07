@@ -17,19 +17,18 @@ import axios from "axios";
 
 const App = () => {
   const [currentId, setCurrentId] = useState(null);
-  const [TypeOfUser, setTypeOfUser] = useState("Admin");
+  const [TypeOfUser, setTypeOfUser] = useState("Guest");
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getFlights());
   }, [currentId, dispatch]);
   return (
-    <Layout>
+    <Layout user={TypeOfUser}>
       <Switch>
         {TypeOfUser === "Guest" && (
           <Route path="/" exact>
-            <h1>Hello</h1>
-            <h1>Hello</h1> <h1>Hello</h1> <h1>Hello</h1> <h1>Hello</h1>
+  
           </Route>
         )}
         {TypeOfUser === "Admin" && (
