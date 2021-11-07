@@ -17,7 +17,7 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-const Login = ({ setToken }) => {
+const Login = ({ setToken,setTypeOfUser}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -36,6 +36,17 @@ const Login = ({ setToken }) => {
         password: password,
       });
       setToken(token);
+      axios
+      .get("http://localhost:8000/api/user/me"
+      , { headers: {
+          'Authorization': `Bearer ${token.token}`       
+      }})
+      .then((res) => {
+        setTypeOfUser(res.data.data.role)
+      })
+      .catch((err) => {
+        console.log("Error Can not Get the profile");
+      });
     } catch (e) {
       setError(true);
     }

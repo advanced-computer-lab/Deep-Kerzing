@@ -22,7 +22,6 @@ const App = () => {
 
   const [TypeOfUser, setTypeOfUser] = useState("Admin");
 
-
   const { token, setToken } = useToken();
 
 
@@ -30,16 +29,14 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getFlights());
+    console.log(token);
+
   }, [currentId, dispatch]);
 
-  if(!token) {
-    
-    return <Login setToken={setToken} />
-  }
-
-
-
   
+  if(!token) {
+      return <Login setToken={setToken} setTypeOfUser={setTypeOfUser} />
+  }
 
   return (
     <Layout user={TypeOfUser}>
@@ -49,11 +46,19 @@ const App = () => {
   
           </Route>
         )}
-        {TypeOfUser === "Admin" && (
+
+        {token==="undefined" &&(
+          <Route path="/" exact>           
+            <Login setToken={setToken} setTypeOfUser={setTypeOfUser} />
+          </Route>
+        )}
+
+        {TypeOfUser === "Admin" && token !== "undefined" &&(
           <Route path="/" exact>           
             <AdminHomePage></AdminHomePage>{" "}
           </Route>
         )}
+
         <Route exact path="/AddAdmin">
           <AddAdmin></AddAdmin>
         </Route>
