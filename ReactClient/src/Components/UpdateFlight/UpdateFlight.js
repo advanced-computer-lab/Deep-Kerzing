@@ -105,7 +105,6 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
     setBusinessPrice(0);
     setEconomyPrice(0);
   };
-  const checkValidity = () => {return};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -368,7 +367,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
         >
           Cancel
         </button>
-        <button className="button" disabled={checkValidity}>
+        <button className="button" >
           Update
         </button>
       </form>
