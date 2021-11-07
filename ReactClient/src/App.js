@@ -19,7 +19,9 @@ import axios from "axios";
 
 const App = () => {
   const [currentId, setCurrentId] = useState(null);
+
   const [TypeOfUser, setTypeOfUser] = useState("Admin");
+
   const { token, setToken } = useToken();
 
 

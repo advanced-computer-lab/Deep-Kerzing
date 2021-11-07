@@ -3,38 +3,40 @@ import { useState } from "react";
 import "../../Components/searchFlight/adminSearchFlight.css";
 
 import axios from "axios";
-import { FaUser, FaAt, FaLock} from "react-icons/fa";
+import { FaUser, FaLock } from "react-icons/fa";
 
 import { useHistory } from "react-router";
 
-
 async function loginUser(credentials) {
-  return fetch('http://localhost:8000/api/user/login', {
-    method: 'POST',
+  return fetch("http://localhost:8000/api/user/login", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
- }
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
 
 const Login = ({ setToken,setTypeOfUser}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const history = useHistory();
-  const forgetPasswordHandler =()=>{
-    history.push("/forgetpassword")
-  }
 
-  const LoginHandler = async event => {
+  const forgetPasswordHandler = () => {
+    history.push("/forgetpassword");
+  };
+
+  const LoginHandler = async (event) => {
     event.preventDefault();
-    const token = await loginUser({
-      email:username,
-      password:password
-    });
-    setToken(token);
-    axios
+    try {
+      setError(false);
+      const token = await loginUser({
+        email: username,
+        password: password,
+      });
+      setToken(token);
+      axios
       .get("http://localhost:8000/api/user/me"
       , { headers: {
           'Authorization': `Bearer ${token.token}`       
@@ -45,6 +47,9 @@ const Login = ({ setToken,setTypeOfUser}) => {
       .catch((err) => {
         console.log("Error Can not Get the profile");
       });
+    } catch (e) {
+      setError(true);
+    }
   };
 
   return (
@@ -56,7 +61,7 @@ const Login = ({ setToken,setTypeOfUser}) => {
           <div class="input-group input-group-icon">
             <input
               onChange={(event) => setUsername(event.target.value)}
-              type="text"
+              type="email"
               placeholder="Email"
               required
             />
@@ -80,8 +85,10 @@ const Login = ({ setToken,setTypeOfUser}) => {
           <button className="button" onClick={forgetPasswordHandler}>ForgetPassword!</button>
         </div> */}
           <br />
-
           <button className="buttonLogin">Login</button>
+          <div className="Incorrect">
+            {error && <h6>Incorrect Username/Password</h6>}
+          </div>
         </form>
       </div>
     </div>

@@ -43,17 +43,17 @@ const AdminNavbar = () => {
             )}
             {navbar && <img src={logo2} className="image" alt="Deep Kerzing" />}
           </NavLink>
-          <NavLink to="/AddAdmin">
+          {/* <NavLink to="/AddAdmin">
             {!navbar && <button className="buttonIN">Add Admin</button>}
             {navbar && <button className="buttonIN2">Add Admin</button>}
-          </NavLink>
+          </NavLink> */}
           {!navbar && (
             <div className="dropdown">
               <button className="buttonUP">
                 <FaUser></FaUser>
               </button>
               <div className="dropdown-content">
-                <NavLink to="/MyProfile">My Profile</NavLink>
+                {/* <NavLink to="/MyProfile">My Profile</NavLink> */}
                 <NavLink to="/" onClick={logoutHandler}>Logout</NavLink>
               </div>
             </div>
@@ -64,7 +64,7 @@ const AdminNavbar = () => {
                 <FaUser></FaUser>
               </button>
               <div className="dropdown-content2">
-                <NavLink to="/MyProfile">My Profile</NavLink>
+                {/* <NavLink to="/MyProfile">My Profile</NavLink> */}
                 <NavLink to="/">Logout</NavLink>
               </div>
             </div>
