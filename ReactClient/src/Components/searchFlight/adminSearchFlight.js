@@ -24,26 +24,24 @@ const AdminSearchFlight = (props) => {
 
   const [Airport, setAirport] = useState([]);
 
-  useEffect(
-    () => {
-      axios
-        .get("http://localhost:8000/api/airport")
-        .then((res) => {
-          setAirport(res.data);
-        })
-        .catch((err) => {
-          console.log("Error from Airport Api");
-        });
-    },
-    [departureAirport, 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/airport")
+      .then((res) => {
+        setAirport(res.data);
+      })
+      .catch((err) => {
+        console.log("Error from Airport Api");
+      });
+  }, [
+    departureAirport,
     flightNumber,
     departureTime,
     arrivalTime,
     arrivalAirport,
     departureDate,
-    arrivalDate
-    ]
-  );
+    arrivalDate,
+  ]);
 
   const clearFilters = () => {
     setDepartureAirport("");
@@ -136,7 +134,7 @@ const AdminSearchFlight = (props) => {
                     }}
                   />
                 )}
-                getOptionLabel={(option) => option.name}
+                getOptionLabel={(option) => option.name || ""}
                 onChange={(_event, depAirport) => {
                   setDepartureAirport(depAirport);
                 }}
@@ -167,7 +165,7 @@ const AdminSearchFlight = (props) => {
                     }}
                   />
                 )}
-                getOptionLabel={(option) => option.name}
+                getOptionLabel={(option) => option.name || ""}
                 onChange={(_event, arrAirport) => {
                   setArrivalAirport(arrAirport);
                 }}

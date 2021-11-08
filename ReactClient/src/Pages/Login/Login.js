@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import "../../Components/searchFlight/adminSearchFlight.css";
 
-// import axios from "axios";
+import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
 
 // import { useHistory } from "react-router";
@@ -17,7 +17,7 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-const Login = ({ setToken,setTypeOfUser}) => {
+const Login = ({ setToken, setTypeOfUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -36,16 +36,17 @@ const Login = ({ setToken,setTypeOfUser}) => {
       });
       setToken(token);
       axios
-      .get("http://localhost:8000/api/user/me"
-      , { headers: {
-          'Authorization': `Bearer ${token.token}`       
-      }})
-      .then((res) => {
-        setTypeOfUser(res.data.data.role)
-      })
-      .catch((err) => {
-        console.log("Error Can not Get the profile");
-      });
+        .get("http://localhost:8000/api/user/me", {
+          headers: {
+            Authorization: `Bearer ${token.token}`,
+          },
+        })
+        .then((res) => {
+          setTypeOfUser(res.data.data.role);
+        })
+        .catch((err) => {
+          console.log("Error Can not Get the profile");
+        });
     } catch (e) {
       setError(true);
     }

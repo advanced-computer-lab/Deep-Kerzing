@@ -3,11 +3,7 @@ import "../searchFlight/adminSearchFlight.css";
 import { updateFlight } from "../../Actions/flight";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  FaPlaneDeparture,
-  FaPlaneArrival,
-  FaTicketAlt
-} from "react-icons/fa";
+import { FaPlaneDeparture, FaPlaneArrival, FaTicketAlt } from "react-icons/fa";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -46,7 +42,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
       });
   }, []);
 
-  const [open,setOpen]= useState(false);
+  const [open, setOpen] = useState(false);
 
   const inputs = {
     from: departureAirport,
@@ -85,7 +81,6 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
       setFirstClassPrice(flight.firstClassPrice);
       setBusinessPrice(flight.businessPrice);
       setEconomyPrice(flight.economyPrice);
-      console.log(flight);
     }
     console.log(departureAirport);
   }, [flight]);
@@ -114,7 +109,6 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
     }
     setOpen(true);
     clear();
-    
   };
 
   return (
@@ -169,6 +163,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
                 />
               )}
               onChange={(_event, depAirport) => {
+                console.log(depAirport);
                 setDepartureAirport(depAirport.name);
               }}
             />
@@ -178,7 +173,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <Autocomplete
               options={Airport}
               getOptionLabel={(option) => option.name || arrivalAirport}
-              getOptionSelected={(option) => option.name===arrivalAirport}
+              getOptionSelected={(option) => option.name === arrivalAirport}
               value={arrivalAirport}
               fullWidth={true}
               renderInput={(params) => (
