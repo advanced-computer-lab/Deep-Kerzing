@@ -15,8 +15,6 @@ import { useDispatch } from "react-redux";
 import { getFlights } from "./Actions/flight";
 import useToken from './useToken';
 
-import axios from "axios";
-
 const App = () => {
   const [currentId, setCurrentId] = useState(null);
 

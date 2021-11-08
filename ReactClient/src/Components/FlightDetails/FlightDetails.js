@@ -2,38 +2,38 @@ import "../searchFlight/adminSearchFlight.css";
 import { IoAirplaneOutline } from "react-icons/io5";
 import { useHistory } from "react-router-dom";
 import "reactjs-popup/dist/index.css";
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
 
-import DialogTitle from '@mui/material/DialogTitle';
-import axios from "axios"
+import DialogTitle from "@mui/material/DialogTitle";
+import axios from "axios";
 
 const FlightDetails = (props) => {
   const history = useHistory();
- 
- 
+
   const [open, setOpen] = React.useState(false);
 
   const deleteHandler = () => {
     axios
-   .delete("http://localhost:8000/api/flights/delete/" + props._id)
-   .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log("Error in delete");
-  });
+      .delete("http://localhost:8000/api/flights/delete/" + props._id)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("Error in delete");
+      });
     setOpen(false);
     window.location.reload(false);
+    history.push("/ViewFlights");
   };
 
   const handleClickOpen = () => {
-    setOpen(true);   
+    setOpen(true);
   };
 
-  const handleClose = () => {         
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -85,13 +85,11 @@ const FlightDetails = (props) => {
         >
           Update
         </button>
-
         <button className="Delete" onClick={handleClickOpen}>
-              Delete
-            </button>
-
+          Delete
+        </button>
       </div>
-      <Dialog 
+      <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
@@ -101,10 +99,8 @@ const FlightDetails = (props) => {
           {"Are You Sure,You Want To Delete ?"}
         </DialogTitle>
         <DialogActions>
-          <Button  onClick={handleClose}>Cancel</Button>
-          <Button  onClick={deleteHandler} >
-            Delete
-          </Button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={deleteHandler}>Delete</Button>
         </DialogActions>
       </Dialog>
     </div>
