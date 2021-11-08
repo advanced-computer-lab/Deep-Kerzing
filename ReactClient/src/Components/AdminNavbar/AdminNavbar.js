@@ -8,7 +8,7 @@ import axios from "axios";
 
 const AdminNavbar = () => {
   const [navbar, setNavbar] = useState(false);
-  const [homePage, setHomePage] = useState(true);
+  // const [homePage, setHomePage] = useState(true);
   
   const logoutHandler = () => {
     localStorage.clear();

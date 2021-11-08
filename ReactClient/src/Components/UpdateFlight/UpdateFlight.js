@@ -49,7 +49,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
   const [open,setOpen]= useState(false);
 
   const inputs = {
-    departureAirport: departureAirport,
+    from: departureAirport,
     to: arrivalAirport,
     flightNumber: flightNumber,
     departureTime: departureTime,
@@ -71,6 +71,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
 
   useEffect(() => {
     if (flight) {
+      console.log(flight);
       setDepartureAirport(flight.from);
       setArrivalAirport(flight.to);
       setFlightNumber(flight.flightNumber);
@@ -122,7 +123,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
         <FaPlaneDeparture></FaPlaneDeparture>
       </h1>
       <h1> Create Flight</h1>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="searchFields">
           <div className="input-group input-group-icon">
             <TextField
@@ -168,7 +169,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
                 />
               )}
               onChange={(_event, depAirport) => {
-                setDepartureAirport(depAirport);
+                setDepartureAirport(depAirport.name);
               }}
             />
           </div>
@@ -177,7 +178,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
             <Autocomplete
               options={Airport}
               getOptionLabel={(option) => option.name || arrivalAirport}
-              getOptionSelected={(option) => option.name == arrivalAirport}
+              getOptionSelected={(option) => option.name===arrivalAirport}
               value={arrivalAirport}
               fullWidth={true}
               renderInput={(params) => (
@@ -197,7 +198,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
                 />
               )}
               onChange={(_event, arrAirport) => {
-                setArrivalAirport(arrAirport);
+                setArrivalAirport(arrAirport.name);
               }}
             />
           </div>
@@ -367,7 +368,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
         >
           Cancel
         </button>
-        <button className="button" >
+        <button className="button" onClick={handleSubmit}>
           Update
         </button>
       </form>

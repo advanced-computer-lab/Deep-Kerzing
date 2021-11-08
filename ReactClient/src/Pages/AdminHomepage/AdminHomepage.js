@@ -1,22 +1,22 @@
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import "../../Components/searchFlight/adminSearchFlight.css";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 
 const AdminHomePage = () => {
-  const username = useSelector((store) => store.User);
+  // const username = useSelector((store) => store.User);
 
-  const history = useHistory();
-  const Update = () => {
-    history.push("/UpdateFlight");
-  };
-  const Search = () => {
-    history.push("/SearchFlight");
-  };
+  // const history = useHistory();
+  // const Update = () => {
+  //   history.push("/UpdateFlight");
+  // };
+  // const Search = () => {
+  //   history.push("/SearchFlight");
+  // };
   return (
     <div>
       <div className="adminHomepage">
-        <h1 className="WelcomeTitle">Welcome {username}</h1>
+        <h1 className="WelcomeTitle">Welcome </h1>
         {/* <div className="QuickAccessContainer">
           <h1 className="QuickAccess">Quick Access</h1>
           <button className="button1" onClick={Update}>

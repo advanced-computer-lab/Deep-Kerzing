@@ -113,13 +113,13 @@ const AdminSearchFlight = (props) => {
         <form>
           <div className="searchFields">
             {/* Departure Airport */}
-            <div class="input-group input-group-icon">
+            <div className="input-group input-group-icon">
               <Autocomplete
                 options={Airport}
                 getOptionLabel={(option) => option.name || departureAirport}
                 getOptionSelected={(option) => option.name === departureAirport}
                 value={departureAirport}
-                fullWidth="true"
+                fullWidth={true}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -143,13 +143,13 @@ const AdminSearchFlight = (props) => {
               />
             </div>
             {/*Arrival Airport*/}
-            <div class="input-group input-group-icon">
+            <div className="input-group input-group-icon">
               <Autocomplete
                 options={Airport}
                 getOptionLabel={(option) => option.name || arrivalAirport}
-                getOptionSelected={(option) => option.name == arrivalAirport}
+                getOptionSelected={(option) => option.name === arrivalAirport}
                 value={arrivalAirport}
-                fullWidth="true"
+                fullWidth={true}
                 placeholder="Arrival Airport"
                 renderInput={(params) => (
                   <TextField
@@ -173,11 +173,11 @@ const AdminSearchFlight = (props) => {
                 }}
               />
             </div>
-            <div class="input-group input-group-icon">
+            <div className="input-group input-group-icon">
               <TextField
                 placeholder="Flight Number"
                 variant="outlined"
-                fullWidth="true"
+                fullWidth={true}
                 value={flightNumber}
                 onChange={(event) => setFlightNumber(event.target.value)}
                 InputProps={{
@@ -193,10 +193,10 @@ const AdminSearchFlight = (props) => {
           </div>
 
           <div className="searchFields">
-            <div class="input-group input-group-icon">
+            <div className="input-group input-group-icon">
               <TextField
                 value={departureTime}
-                fullWidth="true"
+                fullWidth={true}
                 label="Departure Time"
                 type="time"
                 variant="standard"
@@ -206,9 +206,9 @@ const AdminSearchFlight = (props) => {
                 }}
               />
             </div>
-            <div class="input-group input-group-icon">
+            <div className="input-group input-group-icon">
               <TextField
-                fullWidth="true"
+                fullWidth={true}
                 label="Arrival Time"
                 value={arrivalTime}
                 type="time"
@@ -219,9 +219,9 @@ const AdminSearchFlight = (props) => {
                 }}
               />
             </div>
-            <div class="input-group input-group-icon">
+            <div className="input-group input-group-icon">
               <TextField
-                fullWidth="true"
+                fullWidth={true}
                 label="Departure Date"
                 value={departureDate}
                 type="date"
@@ -232,9 +232,9 @@ const AdminSearchFlight = (props) => {
                 }}
               />
             </div>
-            <div class="input-group input-group-icon">
+            <div className="input-group input-group-icon">
               <TextField
-                fullWidth="true"
+                fullWidth={true}
                 label="Arrival Date"
                 value={arrivalDate}
                 type="date"
