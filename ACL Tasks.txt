@@ -1,0 +1,7 @@
+Deep Kerzing
+
+Mark Wafik ---> Backend + delete
+Amira Salah ---> Backend + update
+Kirollos Samir ---> Create Flight + Popups
+Fady Sami ---> List all available flights + Homepage
+George Sherif ---> Search Flights + Navbar
