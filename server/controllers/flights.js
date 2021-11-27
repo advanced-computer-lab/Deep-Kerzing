@@ -4,8 +4,7 @@ const User = require("../models/User");
 const Flight = require("../models/flight");
 
 exports.getAllflights = catchAsync(async (req, res, next) => {
-  const l = await Flight.find({});
-  res.json(l);
+  res.json(res.advancedResults.data);
 });
 
 exports.createflight = catchAsync(async (req, res, next) => {

@@ -8,58 +8,50 @@ import Login from "./Pages/Login/Login";
 import AdminTrackFlight from "./Components/AdminTrackFlight/adminTrackFlight";
 import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 import Profile from "./Components/Profile/Profile";
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useContext} from "react";
 import AdminHomePage from "./Pages/AdminHomepage/AdminHomepage";
 import { useDispatch } from "react-redux";
-// import Front from './components/Posts/Posts';
 import { getFlights } from "./Actions/flight";
-import useToken from './useToken';
+import AuthContext from './Store/auth-context';
 
 const App = () => {
   const [currentId, setCurrentId] = useState(null);
-
-  const [TypeOfUser, setTypeOfUser] = useState("Admin");
-
-  const { token, setToken } = useToken();
-
-
+  const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     dispatch(getFlights());
-    console.log(token);
-
   }, [currentId, dispatch]);
 
   
-  if(!token) {
-      return <Login setToken={setToken} setTypeOfUser={setTypeOfUser} />
+  if(!authCtx.isLoggedIn ) {
+      return <Layout user={authCtx.role}> <Login/> </Layout>
   }
 
   return (
-    <Layout user={TypeOfUser}>
+    <Layout user={authCtx.role}>
       <Switch>
-        {TypeOfUser === "Guest" && (
-          <Route path="/" exact>
-  
+        {authCtx.role === "Guest" && (
+          <Route path="/" exact> 
           </Route>
         )}
 
-        {token==="undefined" &&(
+        {!authCtx.isLoggedIn&&(
           <Route path="/" exact>           
-            <Login setToken={setToken} setTypeOfUser={setTypeOfUser} />
+            <Login />
           </Route>
         )}
 
-        {TypeOfUser === "Admin" && token !== "undefined" &&(
+        {authCtx.role=== "Admin" && authCtx.isLoggedIn &&(
           <Route path="/" exact>           
             <AdminHomePage></AdminHomePage>{" "}
           </Route>
         )}
 
-        <Route exact path="/AddAdmin">
+        {/* <Route exact path="/AddAdmin">
           <AddAdmin></AddAdmin>
-        </Route>
+        </Route> */}
         <Route exact path="/ViewFlights">
           <AdminFlights setCurrentId={setCurrentId}></AdminFlights>
         </Route>
@@ -72,15 +64,15 @@ const App = () => {
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/TrackFlight">
+        {/* <Route path="/TrackFlight">
           <AdminTrackFlight></AdminTrackFlight>
-        </Route>
+        </Route> */}
         <Route path="/forgetpassword">
           <ForgetPassword />
         </Route>
-        <Route path="/Profile">
+        {/* <Route path="/Profile">
           <Profile></Profile>
-        </Route>
+        </Route> */}
         {/* <Route path="/SearchFlight">
           <AdminSearchFlight></AdminSearchFlight>
         </Route> */}
