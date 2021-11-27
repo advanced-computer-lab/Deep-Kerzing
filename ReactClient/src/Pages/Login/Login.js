@@ -1,9 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import { useState ,useContext } from "react";
 import "../../Components/searchFlight/adminSearchFlight.css";
 
 import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
+import useToken from '../../useToken';
+import AuthContext from '../../Store/auth-context';
 
 // import { useHistory } from "react-router";
 
@@ -17,10 +19,11 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-const Login = ({ setToken, setTypeOfUser }) => {
+const Login = ({ setTypeOfUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const authCtx = useContext(AuthContext);
   // const history = useHistory();
   // const forgetPasswordHandler = () => {
   //   history.push("/forgetpassword");
@@ -34,19 +37,9 @@ const Login = ({ setToken, setTypeOfUser }) => {
         email: username,
         password: password,
       });
-      setToken(token);
-      axios
-        .get("http://localhost:8000/api/user/me", {
-          headers: {
-            Authorization: `Bearer ${token.token}`,
-          },
-        })
-        .then((res) => {
-          setTypeOfUser(res.data.data.role);
-        })
-        .catch((err) => {
-          console.log("Error Can not Get the profile");
-        });
+      const expirationTime = new Date(new Date().getTime() + +3600*10000000);
+      authCtx.login(token,expirationTime.toISOString());
+
     } catch (e) {
       setError(true);
     }
@@ -56,28 +49,28 @@ const Login = ({ setToken, setTypeOfUser }) => {
     <div className="LoginPage">
       <div className="LoginImage"></div>
       <div className="LoginForm">
-        <form class="containerCard" onSubmit={LoginHandler}>
+        <form className="containerCard" onSubmit={LoginHandler}>
           <h1>Login</h1>
-          <div class="input-group input-group-icon">
+          <div className="input-group input-group-icon">
             <input
               onChange={(event) => setUsername(event.target.value)}
               type="email"
               placeholder="Email"
               required
             />
-            <div class="input-icon">
+            <div className="input-icon">
               <FaUser></FaUser>
             </div>
           </div>
 
-          <div class="input-group input-group-icon">
+          <div className="input-group input-group-icon">
             <input
               onChange={(event) => setPassword(event.target.value)}
               type="password"
               placeholder=" Password"
               required
             />
-            <div class="input-icon">
+            <div className="input-icon">
               <FaLock></FaLock>
             </div>
           </div>
