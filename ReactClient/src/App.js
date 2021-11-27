@@ -13,27 +13,26 @@ import AdminHomePage from "./Pages/AdminHomepage/AdminHomepage";
 import { useDispatch } from "react-redux";
 // import Front from './components/Posts/Posts';
 import { getFlights } from "./Actions/flight";
-import useToken from './useToken';
-
+import useToken from "./useToken";
+import GuestHomepage from "./Pages/GuestHomePage/Homepage";
+import GUAllFlights from "./Components/GUViewFlights/GUAllFlights";
+import GUFlightDetails from "./Components/GUViewFlights/GUFlightDetails";
 const App = () => {
   const [currentId, setCurrentId] = useState(null);
 
-  const [TypeOfUser, setTypeOfUser] = useState("Admin");
+  const [TypeOfUser, setTypeOfUser] = useState("Guest");
 
   const { token, setToken } = useToken();
-
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getFlights());
     console.log(token);
-
   }, [currentId, dispatch]);
 
-  
-  if(!token) {
-      return <Login setToken={setToken} setTypeOfUser={setTypeOfUser} />
+  if (!token) {
+    return <Login setToken={setToken} setTypeOfUser={setTypeOfUser} />;
   }
 
   return (
@@ -41,22 +40,30 @@ const App = () => {
       <Switch>
         {TypeOfUser === "Guest" && (
           <Route path="/" exact>
-  
+            <GuestHomepage></GuestHomepage>
           </Route>
         )}
 
-        {token==="undefined" &&(
-          <Route path="/" exact>           
+        {token === "undefined" && (
+          <Route path="/" exact>
             <Login setToken={setToken} setTypeOfUser={setTypeOfUser} />
           </Route>
         )}
 
-        {TypeOfUser === "Admin" && token !== "undefined" &&(
-          <Route path="/" exact>           
+        {TypeOfUser === "Admin" && token !== "undefined" && (
+          <Route path="/" exact>
             <AdminHomePage></AdminHomePage>{" "}
           </Route>
         )}
-
+        <Route exact path="/GUFlightDetails">
+          <GUFlightDetails
+            currentId={currentId}
+            setCurrentId={setCurrentId}
+          ></GUFlightDetails>
+        </Route>
+        <Route exact path="/GUAllFlights">
+          <GUAllFlights></GUAllFlights>
+        </Route>
         <Route exact path="/AddAdmin">
           <AddAdmin></AddAdmin>
         </Route>
