@@ -358,7 +358,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
         <button
           className="buttonCancel"
           onClick={() => {
-            history.push("/ViewFlights");
+            history.push("/admin/ViewFlights");
           }}
         >
           Cancel
@@ -371,7 +371,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
         <PopUp
           message="Flight Updated"
           content="Your Flight details are now updated. Check it from View Flights"
-          path="/ViewFlights"
+          path="/admin/ViewFlights"
         ></PopUp>
       )}
     </div>

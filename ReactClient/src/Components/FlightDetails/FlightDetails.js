@@ -26,7 +26,7 @@ const FlightDetails = (props) => {
       });
     setOpen(false);
     window.location.reload(false);
-    history.push("/ViewFlights");
+    history.push("/admin/ViewFlights");
   };
 
   const handleClickOpen = () => {
@@ -80,7 +80,7 @@ const FlightDetails = (props) => {
           className="Update"
           onClick={() => {
             props.setCurrentId(props._id);
-            history.push("/UpdateFlight");
+            history.push("/admin/UpdateFlight");
           }}
         >
           Update

@@ -9,18 +9,18 @@ import axios from "axios";
 const AdminNavbar = () => {
   const [navbar, setNavbar] = useState(false);
   // const [homePage, setHomePage] = useState(true);
-  
+
   const logoutHandler = () => {
     localStorage.clear();
-    window.location.href = '/';
+    window.location.href = "/";
     axios
-    .get("http://localhost:8000/api/user/logout")
-    .then((res) => {
-        console.log(res)
-    })
-    .catch((err) => {
-      console.log("Error from Logout");
-    });
+      .get("http://localhost:8000/api/user/logout")
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("Error from Logout");
+      });
   };
 
   const changeBackground = () => {
@@ -54,7 +54,9 @@ const AdminNavbar = () => {
               </button>
               <div className="dropdown-content">
                 {/* <NavLink to="/MyProfile">My Profile</NavLink> */}
-                <NavLink to="/" onClick={logoutHandler}>Logout</NavLink>
+                <NavLink to="/" onClick={logoutHandler}>
+                  Logout
+                </NavLink>
               </div>
             </div>
           )}
@@ -69,7 +71,7 @@ const AdminNavbar = () => {
               </div>
             </div>
           )}
-          <NavLink to="/ViewFlights">
+          <NavLink to="/admin/ViewFlights">
             {!navbar && (
               <button className="NavbarOptions"> View Flights</button>
             )}
@@ -77,7 +79,7 @@ const AdminNavbar = () => {
               <button className="NavbarOptions2"> View Flights </button>
             )}
           </NavLink>
-          <NavLink to="/AddFlight">
+          <NavLink to="/admin/AddFlight">
             {!navbar && <button className="NavbarOptions"> New Flight</button>}
             {navbar && <button className="NavbarOptions2"> New Flight </button>}
           </NavLink>
