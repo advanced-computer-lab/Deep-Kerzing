@@ -1,8 +1,7 @@
 import { useState } from "react";
-import {  NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo1 from "./logo.png";
 import logo2 from "./logo2.png";
-
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
@@ -33,7 +32,7 @@ const Navbar = () => {
             )}
             {navbar && <img src={logo2} className="image" alt="Deep Kerzing" />}
           </NavLink>
-          <NavLink to="/login">
+          <NavLink to="/">
             {!navbar && <button className="buttonIN">Login</button>}
             {navbar && <button className="buttonIN2">Login</button>}
           </NavLink>
@@ -47,8 +46,12 @@ const Navbar = () => {
             {navbar && <button className="NavbarOptions2"> Contact Us </button>}
           </NavLink>
           <NavLink to="/TrackFlight">
-            {!navbar && (<button className="NavbarOptions"> Track Flight </button>)}
-            {navbar && (<button className="NavbarOptions2"> Track Flight </button>)}
+            {!navbar && (
+              <button className="NavbarOptions"> Track Flight </button>
+            )}
+            {navbar && (
+              <button className="NavbarOptions2"> Track Flight </button>
+            )}
           </NavLink>
         </div>
       </nav>

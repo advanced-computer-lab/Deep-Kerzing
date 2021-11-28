@@ -1,11 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState ,useContext } from "react";
+import { useState, useContext } from "react";
 import "../../Components/searchFlight/adminSearchFlight.css";
 
 import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
-import useToken from '../../useToken';
-import AuthContext from '../../Store/auth-context';
+import useToken from "../../useToken";
+import AuthContext from "../../Store/auth-context";
 
 // import { useHistory } from "react-router";
 
@@ -37,9 +37,8 @@ const Login = ({ setTypeOfUser }) => {
         email: username,
         password: password,
       });
-      const expirationTime = new Date(new Date().getTime() + +3600*10000000);
-      authCtx.login(token,expirationTime.toISOString());
-
+      const expirationTime = new Date(new Date().getTime() + +3600 * 10000000);
+      authCtx.login(token, expirationTime.toISOString());
     } catch (e) {
       setError(true);
     }

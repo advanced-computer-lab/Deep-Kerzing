@@ -80,7 +80,7 @@ const AdminCreateFlight = () => {
           <div className="input-group input-group-icon">
             <TextField
               required={true}
-              errorText={"Please Enter Flight Number"}
+              errortext={"Please Enter Flight Number"}
               placeholder="Flight Number"
               variant="outlined"
               fullWidth={true}
@@ -316,7 +316,7 @@ const AdminCreateFlight = () => {
         <PopUp
           message="Flight Added"
           content="Your flight is now added successfully to the database. You can now see it in View Flights"
-          path="/ViewFlights"
+          path="/admin/ViewFlights"
         ></PopUp>
       )}
     </div>
