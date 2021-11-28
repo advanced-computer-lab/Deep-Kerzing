@@ -10,6 +10,7 @@ const AuthContext = React.createContext({
   login: (token) => {},
   logout: () => {},
 });
+
 const calculateRemainingTime = (expirationTime) => {
     const currentTime = new Date().getTime();
     const adjExpirationTime = new Date(expirationTime).getTime();
@@ -42,17 +43,27 @@ const retrieveStoredToken = () => {
     const tokenData = retrieveStoredToken();
     let initialToken;
     let initialRole;
-    if (tokenData) {  
-        console.log(tokenData)   
-        initialToken = JSON.parse(tokenData.token).token;
-        initialRole=JSON.parse(tokenData.token).role;
-        console.log(initialToken);
-        console.log(initialRole);
-    }
-
-    const [token, setToken] = useState(initialToken); 
     const [role, setRole] = useState(initialRole);
+
+    if (tokenData) {  
+        initialToken = JSON.parse(tokenData.token).token;
+        axios
+        .get("http://localhost:8000/api/user/me", {
+          headers: {
+            Authorization: `Bearer ${initialToken}`,
+          },
+        })
+        .then((res) => {
+          setRole(res.data.data.role);  
+          console.log('AAAAA')         
+        })
+        .catch((err) => {
+          console.log("Error Can not Get the profile");
+        });
+    }
+    const [token, setToken] = useState(initialToken); 
     
+  
     const userIsLoggedIn = !!token;
 
     const logoutHandler = useCallback(() => {
@@ -68,9 +79,22 @@ const retrieveStoredToken = () => {
 
     const loginHandler = (token, expirationTime) => {
         setToken(token);
-        setRole(token.role);
         localStorage.setItem('token', JSON.stringify(token));      
         localStorage.setItem('expirationTime', expirationTime);
+        axios
+        .get("http://localhost:8000/api/user/me", {
+          headers: {
+            Authorization: `Bearer ${token.token}`,
+          },
+        })
+        .then((res) => {
+            console.log(res.data.data.role)
+          setRole(res.data.data.role);
+          console.log('MMMMMMMM')  
+        })
+        .catch((err) => {
+          console.log("Error Can not Get the profile");
+        });
 
 
         const remainingTime = calculateRemainingTime(expirationTime);
