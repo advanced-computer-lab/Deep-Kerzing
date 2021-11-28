@@ -12,16 +12,25 @@ import { useState, useEffect ,useContext} from "react";
 import AdminHomePage from "./Pages/AdminHomepage/AdminHomepage";
 import { useDispatch } from "react-redux";
 import { getFlights } from "./Actions/flight";
+import GuestHomepage from "./Pages/GuestHomePage/Homepage";
+import GUAllFlights from "./Components/GUViewFlights/GUAllFlights";
+import GUFlightDetails from "./Components/GUViewFlights/GUFlightDetails";
+
+
+
 import AuthContext from './Store/auth-context';
 
 const App = () => {
   const [currentId, setCurrentId] = useState(null);
+  const [TypeOfUser, setTypeOfUser] = useState("Guest");
   const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
 
 
   useEffect(() => {
     dispatch(getFlights());
+
+    console.log(token);
   }, [currentId, dispatch]);
 
   
@@ -31,7 +40,17 @@ const App = () => {
 
   return (
     <Layout user={authCtx.role}>
-      <Switch>
+      <Switch>       
+        <Route exact path="/GUFlightDetails">
+          <GUFlightDetails
+            currentId={currentId}
+            setCurrentId={setCurrentId}
+          ></GUFlightDetails>
+        </Route>
+        <Route exact path="/GUAllFlights">
+          <GUAllFlights></GUAllFlights>
+        </Route>
+        <Route exact path="/AddAdmin">
         {authCtx.role === "Guest" && (
           <Route path="/" exact> 
           </Route>
