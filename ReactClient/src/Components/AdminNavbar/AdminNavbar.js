@@ -37,7 +37,7 @@ const AdminNavbar = () => {
     <div>
       <nav className={navbar ? "headerScrolled" : "header"}>
         <div>
-          <NavLink to="/">
+          <NavLink to="/admin">
             {!navbar && (
               <img src={logo1} className="image" alt="Deep Kerzing" />
             )}
