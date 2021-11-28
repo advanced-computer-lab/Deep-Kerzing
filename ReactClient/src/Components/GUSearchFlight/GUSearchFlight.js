@@ -49,8 +49,8 @@ const GUSearchFlight = () => {
   var history = useHistory();
   const getDates = (event, picker) => {
     setSelected(true);
-    setDepartureDate((picker.startDate._d + "").substring(4, 15));
-    setArrivalDate((picker.endDate._d + "").substring(4, 15));
+    setDepartureDate(picker.startDate._d.toLocaleString("fr-CA").substring(0,10));
+    setArrivalDate(picker.endDate._d.toLocaleString("fr-CA").substring(0,10));
   };
   const datesHandler = (event) => {
     event.preventDefault();
