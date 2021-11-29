@@ -1,22 +1,10 @@
 import GUViewFlights from "./GUViewFlights";
-import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
 const GUAllFlights = (props) => {
-  var Flights = useSelector((store) => store.Flight);
-  const [filteredFlights, setFlights] = useState(Flights);
-
-  useEffect(() => {
-    setFlights(Flights);
-    console.log(filteredFlights)
-  }, [Flights]);
-
-  const setid = (input) => {
-    props.setCurrentId(input);
-  };
+  const departure = props.departure;
   return (
     <div>
-      <div className="containerCard">
-        {filteredFlights.map((element) => (
+      <div className="containerCardChooseFlight">
+        {props.Flights.map((element) => (
           <GUViewFlights
             departure={element.from}
             arrival={element.to}
@@ -31,12 +19,12 @@ const GUAllFlights = (props) => {
             priceBusiness={element.businessPrice}
             priceFirst={element.firstClassPrice}
             flightNumber={element.flightNumber}
-            setCurrentId={setid}
             _id={element._id}
             key={element._id}
+            departureCheck={departure}
           ></GUViewFlights>
         ))}
-        {filteredFlights.length === 0 && <h1>No Results Found</h1>}
+        {props.Flights.length === 0 && <h1>No Results Found</h1>}
       </div>
     </div>
   );

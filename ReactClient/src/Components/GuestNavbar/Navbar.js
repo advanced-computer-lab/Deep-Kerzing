@@ -32,7 +32,7 @@ const Navbar = () => {
             )}
             {navbar && <img src={logo2} className="image" alt="Deep Kerzing" />}
           </NavLink>
-          <NavLink to="/">
+          <NavLink to="/login">
             {!navbar && <button className="buttonIN">Login</button>}
             {navbar && <button className="buttonIN2">Login</button>}
           </NavLink>

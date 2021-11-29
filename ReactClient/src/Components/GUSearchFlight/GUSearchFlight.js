@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext} from "react";
+import UserContext from "../UserContext/UserContext";
 import "../searchFlight/adminSearchFlight.css";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -13,12 +14,15 @@ import { useHistory } from "react-router-dom";
 const GUSearchFlight = () => {
   const [departureAirport, setDepartureAirport] = useState("");
   const [arrivalAirport, setArrivalAirport] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [arrivalDate, setArrivalDate] = useState("");
+  const [departureDate, setDepartureDate] = useState();
+  const [arrivalDate, setArrivalDate] = useState();
   const [Airport, setAirport] = useState([]);
   const [selected, setSelected] = useState(false);
   const [cabin, setCabin] = useState("Economy");
   const [numberOfseats, setNumberofSeats] = useState(0);
+  const history = useHistory();
+
+  const {setDepartureFlights,setReturnFlights,setCabinChosen,setNumSeats} = useContext(UserContext)
   const cabins = [
     {
       value: "Economy",
@@ -35,22 +39,42 @@ const GUSearchFlight = () => {
   ];
   const submitSearch = (event) => {
     event.preventDefault();
-    const inputs = {
-      departureAirport: departureAirport.name,
-      arrivalAirport: arrivalAirport.name,
-      departureDate: departureDate,
-      arrivalDate: arrivalDate,
-      cabin: cabin,
-      numberOfseats: numberOfseats,
-    };
+    const cabinName = cabin.toLowerCase() + "Seats" + "[gte]";
+    const base = "http://localhost:8000/api/flights/?";
+    const urlDeparture =
+      base +
+      `from=${departureAirport.name}&to=${arrivalAirport.name}&departureDate=${departureDate}&${cabinName}=${numberOfseats}`;
+    const urlArrival =
+      base +
+      `from=${arrivalAirport.name}&to=${departureAirport.name}&arrivalDate=${arrivalDate}&${cabinName}=${numberOfseats}`;
+    setCabinChosen(cabin);
+    setNumSeats(numberOfseats);
+    console.log(urlDeparture);
+    axios
+      .get(urlDeparture)
+      .then((res) => {
+        console.log("data",res.data)
+        setDepartureFlights(res.data);
+      })
+      .catch((err) => {
+        console.log("Error from Airport Api");
+      });
+    axios
+      .get(urlArrival)
+      .then((res) => {
+        setReturnFlights(res.data);
+      })
+      .catch((err) => {
+        console.log("Error from Airport Api");
+      });
     history.push("/GUAllFlights");
-    console.log(inputs)
   };
-  var history = useHistory();
   const getDates = (event, picker) => {
     setSelected(true);
-    setDepartureDate(picker.startDate._d.toLocaleString("fr-CA").substring(0,10));
-    setArrivalDate(picker.endDate._d.toLocaleString("fr-CA").substring(0,10));
+    setDepartureDate(
+      picker.startDate._d.toLocaleString("fr-CA").substring(0, 10)
+    );
+    setArrivalDate(picker.endDate._d.toLocaleString("fr-CA").substring(0, 10));
   };
   const datesHandler = (event) => {
     event.preventDefault();
