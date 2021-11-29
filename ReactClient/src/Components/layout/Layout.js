@@ -6,9 +6,9 @@ import  ViewReservedFlights from '../GuestViewReservedFlights/ViewReservedFlight
 const Layout = (props) => {
   return (
     <Fragment>
-      {props.user === "Admin" ? <AdminNavbar /> : <Navbar />}
+      {props.user === "Admin" ||props.user === "user" ? <AdminNavbar /> : <Navbar />}
       <main>{props.children}</main>
-      {/* <ViewReservedFlights></ViewReservedFlights> */}
+ 
     </Fragment>
   );
 };

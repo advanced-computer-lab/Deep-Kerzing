@@ -72,16 +72,10 @@ export const AuthContextProvider = (props) => {
     localStorage.setItem("expirationTime", expirationTime);
     const remainingTime = calculateRemainingTime(expirationTime);
     logoutTimer = setTimeout(logoutHandler, remainingTime);
-    if ( token.role === "Admin") {
-      console.log("admin if");
-      window.location.pathname = "/admin";
-      
-    } 
-    else if ( token.role === "user") {
-      console.log("user if");
-      window.location.pathname = "/user/Reservations";
-      
-    }
+
+      window.location.pathname = "/";
+
+
   };
 
   useEffect(() => {

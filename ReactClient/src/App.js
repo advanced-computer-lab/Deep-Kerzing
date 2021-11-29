@@ -20,7 +20,7 @@ import ViewReservedFlights from "./Components/GuestViewReservedFlights/ViewReser
 const App = () => {
   const authCtx = useContext(AuthContext);
   const role = authCtx.role;
-
+  console.log("this is"+role)
   const [currentId, setCurrentId] = useState(null);
   const dispatch = useDispatch();
 
@@ -29,51 +29,42 @@ const App = () => {
   }, [currentId, dispatch]);
 
   return (
-    <Switch>
-      <Route exact path="/">
-        <Layout user={""}>
-          <Login />
-        </Layout>
-      </Route>
-
-      
-      
-        <ProtectedRoutesAdmin path="/admin" exact>
-        <Layout user={role}><AdminHomePage></AdminHomePage></Layout>
+    <Switch>  
+      <Layout user={role}>
+        {!role&&
+        <div>
+        <Route exact path="/">
+            <Login />
+        </Route>
+        </div>
+        }
+        {role==='Admin'&&
+        <div>
+        <ProtectedRoutesAdmin  path="/" exact >
+        <AdminHomePage></AdminHomePage>
         </ProtectedRoutesAdmin>
-        <ProtectedRoutesAdmin exact path="/admin/ViewFlights">
+        <ProtectedRoutesAdmin  path="/admin/ViewFlights" exact>
           <AdminFlights setCurrentId={setCurrentId}></AdminFlights>
         </ProtectedRoutesAdmin>
-        <ProtectedRoutesAdmin exact path="/admin/AddFlight">
+        <ProtectedRoutesAdmin path="/admin/AddFlight" exact >
           <AdminCreateFlight></AdminCreateFlight>
         </ProtectedRoutesAdmin>
         <ProtectedRoutesAdmin path="/admin/UpdateFlight" exact>
           <UpdateFlight currentId={currentId} setCurrentId={setCurrentId} />
         </ProtectedRoutesAdmin>
-        <ProtectedRoutesAdmin path="/admin/forgetpassword">
+        <ProtectedRoutesAdmin path="/admin/forgetpassword" exact>
           <ForgetPassword />
-        </ProtectedRoutesAdmin>
-      
-      
-
-      
-      
-        <ProtectedRoutesUser path ="/user/Reservations" exact>
+        </ProtectedRoutesAdmin>   
+        </div> 
+        }
+        {role==='user'&&
+        <div>
+        <ProtectedRoutesUser path ="/" exact>
         <ViewReservedFlights></ViewReservedFlights>
-        </ProtectedRoutesUser>
-      
-
-
-      {/* <Route path="/TrackFlight">
-          <AdminTrackFlight></AdminTrackFlight>
-        </Route> */}
-
-      {/* <Route path="/Profile">
-          <Profile></Profile>
-        </Route> */}
-      {/* <Route path="/SearchFlight">
-          <AdminSearchFlight></AdminSearchFlight>
-        </Route> */}
+        </ProtectedRoutesUser>     
+        </div>
+        }
+      </Layout>
     </Switch>
   );
 };
