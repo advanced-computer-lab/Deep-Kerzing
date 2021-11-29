@@ -4,6 +4,7 @@ const User = require("../models/User");
 const Flight = require("../models/flight");
 
 exports.getAllflights = catchAsync(async (req, res, next) => {
+  console.log(req.params)
   res.json(res.advancedResults.data);
 });
 

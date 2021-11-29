@@ -3,18 +3,39 @@ import { IoAirplaneOutline } from "react-icons/io5";
 import { useHistory } from "react-router-dom";
 import "reactjs-popup/dist/index.css";
 import * as React from "react";
-
+import { useState, useContext } from "react";
+import UserContext from "../UserContext/UserContext";
 const GUViewFlights = (props) => {
   const history = useHistory();
-  const handleClickOpen = () => {
-    history.push("/UpdateFlight");
+  const {
+    setChosenDepartureFlight,
+    setChosenReturnFlight,
+    chosenReturnFlight,
+    chosenDepartureFlight,
+  } = useContext(UserContext);
+
+  const [clicked, setClicked] = useState(true);
+  const handleClickOpen = (value) => {
+    setClicked(!clicked);
+    if (props.departureCheck && clicked) {
+      setChosenDepartureFlight(value);
+      console.log(chosenDepartureFlight);
+    } else if (props.departureCheck) {
+      setChosenDepartureFlight([]);
+      console.log(chosenDepartureFlight);
+    } else if (!props.departureCheck && clicked) {
+      setChosenReturnFlight(value);
+      console.log(chosenReturnFlight);
+    } else {
+      setChosenReturnFlight([]);
+      console.log(chosenReturnFlight);
+    }
   };
 
   return (
-    <div onClick={handleClickOpen} style={{ cursor: "pointer" }}>
-      <div className="flightCard">
+    <div onClick={(event) => handleClickOpen(props)}>
+      <div className={clicked ? "flightCardChoose" : "flightCardChooseClicked"}>
         <div className="departureTime">
-         
           <h4>{props.depTime}</h4>
         </div>
         <div className="arrivalTime">
@@ -28,7 +49,7 @@ const GUViewFlights = (props) => {
             )}
           </h3>
         </div>
-     
+
         <div className="arrival">
           <h3>
             {props.arrival.substring(
@@ -41,10 +62,10 @@ const GUViewFlights = (props) => {
         <h2 className="Icon">
           <IoAirplaneOutline></IoAirplaneOutline>
         </h2>
-        <h6 className="economy">Economy: {props.seatsEconomy}</h6> 
+        <h6 className="economy">Economy: {props.seatsEconomy}</h6>
         <div className="business">Business: {props.seatsBusiness}</div>
-        <h6 className="depDate">Departure: {props.depDate}</h6> 
-        <div className="arrDate">Arrival: {props.arrDate}</div> 
+        <h6 className="depDate">Departure: {props.depDate}</h6>
+        <div className="arrDate">Arrival: {props.arrDate}</div>
         <div className="TripDuration"> Trip Duration: </div>
         <div className="price"> Price: </div>
       </div>

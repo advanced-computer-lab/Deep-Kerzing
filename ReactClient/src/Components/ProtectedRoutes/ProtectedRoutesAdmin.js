@@ -10,6 +10,7 @@ const ProtectedRoutesAdmin = (props) => {
   console.log("this", role);
 
   if (isAuthenticated && role === "Admin") {
+    console.log("I am Here",...props)
     return <Route {...props} />;
   } else {
     return (

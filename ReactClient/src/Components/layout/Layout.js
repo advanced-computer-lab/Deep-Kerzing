@@ -3,9 +3,10 @@ import AdminNavbar from '../AdminNavbar/AdminNavbar';
 import Navbar from '../GuestNavbar/Navbar';
 import GUSearchFlight from '../GUSearchFlight/GUSearchFlight';
 const Layout = (props) => {
+  console.log(props)
   return (
     <Fragment>
-      {props.user === "Admin" ? <AdminNavbar /> : <Navbar />}
+      {props.user === "Admin" ? <AdminNavbar/> : <Navbar />}
       <main>{props.children}</main>
     </Fragment>
   );
