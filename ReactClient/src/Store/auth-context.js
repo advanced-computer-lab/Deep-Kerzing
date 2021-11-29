@@ -70,11 +70,12 @@ export const AuthContextProvider = (props) => {
     setRole(token.role);
     localStorage.setItem("token", JSON.stringify(token));
     localStorage.setItem("expirationTime", expirationTime);
-
     const remainingTime = calculateRemainingTime(expirationTime);
-
     logoutTimer = setTimeout(logoutHandler, remainingTime);
-    window.location.pathname = "/admin";
+
+      window.location.pathname = "/";
+
+
   };
 
   useEffect(() => {

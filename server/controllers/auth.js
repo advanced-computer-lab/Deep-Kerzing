@@ -5,7 +5,7 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 
 exports.register = catchAsync(async (req, res, next) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role, passport } = req.body;
   console.log(name);
   // Create user
   const user = await User.create({
@@ -13,6 +13,7 @@ exports.register = catchAsync(async (req, res, next) => {
     email,
     password,
     role,
+    passport,
   });
 
   sendTokenResponse(user, 200, res);
@@ -134,6 +135,28 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   sendTokenResponse(user, 200, res);
+});
+
+exports.getAllReservations = catchAsync(async (req, res, next) => {
+  const { userId } = req.params;
+  const reservations = await User.findById(userId)
+    .populate({
+      path: "reservations",
+      populate: {
+        path: "departureFlight_id",
+      },
+    })
+    .populate({
+      path: "reservations",
+      populate: {
+        path: "returnFlight_id",
+      },
+    });
+
+  res.status(200).json({
+    success: true,
+    data: { reservations },
+  });
 });
 
 exports.logout = catchAsync(async (req, res, next) => {

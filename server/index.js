@@ -12,6 +12,7 @@ const cors = require("cors");
 const auth = require("./routes/auth");
 const flights = require("./routes/flights");
 const airports = require("./routes/airports");
+const reserve = require("./routes/reservation");
 
 const app = express();
 app.use(cors());
@@ -31,18 +32,10 @@ db.once("open", () => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 app.use("/api/user", auth);
 app.use("/api/flights", flights);
 app.use("/api/airport", airports);
-
-
-
-
-
-
-
+app.use("/api/reservation", reserve);
 
 app.listen(8000, () => {
   console.log("Serving on port 8000");
