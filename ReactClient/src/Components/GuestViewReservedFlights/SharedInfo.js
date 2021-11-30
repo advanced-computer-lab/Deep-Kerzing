@@ -1,46 +1,63 @@
 import "../searchFlight/adminSearchFlight.css";
-import { IoAirplane } from "react-icons/io5";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../GuestNavbar/Navbar";
-import {  MdOutlineAirplaneTicket} from "react-icons/md";
-
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-
 import DialogTitle from "@mui/material/DialogTitle";
 import "reactjs-popup/dist/index.css";
 import * as React from "react";
 
+const SharedInfo = (props) => {
+  const current = new Date();
+  const date = `${current.getFullYear()}-${
+    current.getMonth() + 1
+  }-${current.getDate()}`;
+  const history = useHistory();
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-const SharedInfo = () => {
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-      };
+  const deleteHandler = () => {
+    axios
+      .delete(
+        "http://localhost:8000/api/reservation/cancel/" + props.reservationId
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("Error in delete");
+      });
+    setOpen(false);
+    // window.location.reload(false);
+    history.push("/" + props.userId);
+  };
 
-    
-    const handleClose = () => {
-         setOpen(false);
-               };
+  return (
+    <div>
+      <div className="sharedInfo">
+        <div>
+          <h3>Price:{props.price}</h3>
+        </div>
+        <div>
+          <h3>Class:{props.cabin}</h3>
+        </div>
+        <div>
+          {date < props.depDateDep && (
+            <button className="reserveDelete" onClick={handleClickOpen}>
+              Delete Reservation
+            </button>
+          )}
+        </div>
+      </div>
 
-
-
-
-    return(
-
-
-        <div >
-
-            <div className="sharedInfo">
-                <div><h3>Price:$400</h3></div>
-                <div><h3>Class:economy</h3></div>
-                <div><button className="reserveDelete"  onClick={handleClickOpen} >Delete Reservation</button></div>
-            </div>
-
-            <Dialog
+      <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
@@ -50,13 +67,11 @@ const SharedInfo = () => {
           {"Are You Sure,You Want To Cancel Your Reservation ?"}
         </DialogTitle>
         <DialogActions>
-          <Button onClick={handleClose}>Yes</Button>
+          <Button onClick={deleteHandler}>Yes</Button>
           <Button onClick={handleClose}>NO</Button>
-          
         </DialogActions>
       </Dialog>
-        </div>    
-        )
-
-}
+    </div>
+  );
+};
 export default SharedInfo;
