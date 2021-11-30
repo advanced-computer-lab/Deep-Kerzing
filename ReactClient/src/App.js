@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router";
+import { Switch, Route, Redirect } from "react-router";
 import UpdateFlight from "./Components/UpdateFlight/UpdateFlight";
 import Layout from "./Components/layout/Layout";
 import AddAdmin from "./Components/AddAdmin/AddAdmin";
@@ -22,11 +22,13 @@ import HomePage from "./Pages/GuestHomePage/Homepage";
 import UserContext from "./Components/UserContext/UserContext";
 import GuestHomepage from "./Pages/GuestHomePage/Homepage";
 import ViewReservedFlights from "./Components/GuestViewReservedFlights/ViewReservedFlights";
+import UserHomePage from "./Pages/UserHomepage/UserHomepage";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
+  const isAuthenticated = authCtx.isLoggedIn;
   const role = authCtx.role;
-  console.log("this is"+role)
+  console.log("this is" + role);
   const [currentId, setCurrentId] = useState(null);
   const dispatch = useDispatch();
 
@@ -43,8 +45,8 @@ const App = () => {
   }, [currentId, dispatch]);
 
   return (
-    <Switch>  
-       <UserContext.Provider
+    <Layout user={role}>
+      <UserContext.Provider
         value={{
           departureFlights,
           returnFlights,
@@ -62,62 +64,80 @@ const App = () => {
           totalPrice,
         }}
       >
-      <Layout user={role}>
-        {!role&&
-        <div>
-        <Route exact path="/">
-            <GuestHomepage></GuestHomepage>
-        </Route>
-         <Route exact path="/login">
-            <Login></Login>
-          </Route>
-          <Route exact path="/GUFlightDetails">
-            <GUFlightDetails></GUFlightDetails>
-          </Route>
-          <Route exact path="/GUAllFlights">
-            <GUChooseFlights></GUChooseFlights>
-          </Route>
-        </div>
-        }
-        {role==='Admin'&&
-        <div>
-        <ProtectedRoutesAdmin  path="/" exact >
-        <AdminHomePage></AdminHomePage>
+        <Switch>
+          {!isAuthenticated && (
+            <Route exact path="/">
+              <GuestHomepage></GuestHomepage>
+            </Route>
+          )}
+          {!isAuthenticated && (
+            <Route exact path="/login">
+              <Login></Login>
+            </Route>
+          )}
+          {!isAuthenticated && (
+            <Route exact path="/GUFlightDetails">
+              <GUFlightDetails></GUFlightDetails>
+            </Route>
+          )}
+          {!isAuthenticated && (
+            <Route exact path="/GUAllFlights">
+              <GUChooseFlights></GUChooseFlights>
+            </Route>
+          )}
+          {isAuthenticated && role === "Admin" && (
+            <Route path="/" exact>
+              <AdminHomePage></AdminHomePage>
+            </Route>
+          )}
+          {isAuthenticated && role === "Admin" && (
+            <Route path="/admin/ViewFlights" exact>
+              <AdminFlights setCurrentId={setCurrentId}></AdminFlights>
+            </Route>
+          )}
+          {isAuthenticated && role === "Admin" && (
+            <Route path="/admin/AddFlight" exact>
+              <AdminCreateFlight></AdminCreateFlight>
+            </Route>
+          )}
+          {isAuthenticated && role === "Admin" && (
+            <Route path="/admin/UpdateFlight" exact>
+              <UpdateFlight currentId={currentId} setCurrentId={setCurrentId} />
+            </Route>
+          )}
+          {isAuthenticated && role === "Admin" && (
+            <Route path="/admin/forgetpassword" exact>
+              <ForgetPassword />
+            </Route>
+          )}
 
-        </ProtectedRoutesAdmin>
-        <ProtectedRoutesAdmin  path="/admin/ViewFlights" exact>
-          <AdminFlights setCurrentId={setCurrentId}></AdminFlights>
-        </ProtectedRoutesAdmin>
-        <ProtectedRoutesAdmin path="/admin/AddFlight" exact >
-          <AdminCreateFlight></AdminCreateFlight>
-        </ProtectedRoutesAdmin>
-        <ProtectedRoutesAdmin path="/admin/UpdateFlight" exact>
-          <UpdateFlight currentId={currentId} setCurrentId={setCurrentId} />
-        </ProtectedRoutesAdmin>
-        <ProtectedRoutesAdmin path="/admin/forgetpassword" exact>
-          <ForgetPassword />
-        </ProtectedRoutesAdmin>   
-        </div> 
-        }
-        {role==='user'&&
-        <div>
-        <ProtectedRoutesUser path ="/" exact>
-        <ViewReservedFlights></ViewReservedFlights>
-        </ProtectedRoutesUser>   
-          <Route exact path="/GUFlightDetails">
-            <GUFlightDetails></GUFlightDetails>
+          {isAuthenticated && role === "user" && (
+            <Route path="/" exact>
+              <ViewReservedFlights></ViewReservedFlights>
+            </Route>
+          )}
+          {/* {isAuthenticated && role === "user" && (
+            <Route path="/user" exact>
+              <UserHomePage></UserHomePage>
+            </Route>
+          )} */}
+          {isAuthenticated && role === "user" && (
+            <Route exact path="/GUFlightDetails">
+              <GUFlightDetails></GUFlightDetails>
+            </Route>
+          )}
+          {isAuthenticated && role === "user" && (
+            <Route exact path="/GUAllFlights">
+              <GUChooseFlights></GUChooseFlights>
+            </Route>
+          )}
+          <Route path="*">
+            <Redirect to="/" />
           </Route>
-          <Route exact path="/GUAllFlights">
-            <GUChooseFlights></GUChooseFlights>
-          </Route>
-        </div>
-        }
-      </Layout>
+        </Switch>
       </UserContext.Provider>
-
-    </Switch>
+    </Layout>
   );
 };
 
 export default App;
-
