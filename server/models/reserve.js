@@ -16,11 +16,28 @@ const ReserveSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  cabin: {
+  departureCabin: {
     type: String,
     required: true,
   },
-  seats: {
+  returnCabin: {
+    type: String,
+    required: true,
+  },
+
+  departureSeats: [{
+    type: String,
+    required: true,
+  }],
+  departureSeatsCount: {
+    type: Number,
+    required: true,
+  },
+  returnSeats: [{
+    type: String,
+    required: true,
+  }],
+  returnSeatsCount: {
     type: Number,
     required: true,
   },
@@ -28,6 +45,19 @@ const ReserveSchema = new Schema({
     type: Number,
     required: true,
   },
+  departurePassengers: [
+    {
+      type:String ,
+      required: true,
+    },
+  ],
+  returnPassengers: [
+    {
+      type:String ,
+      required: true,
+    },
+  
+  ],
 });
 
 module.exports = mongoose.model("Reserve", ReserveSchema);

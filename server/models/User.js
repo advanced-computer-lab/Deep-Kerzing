@@ -18,10 +18,7 @@ const UserSchema = new Schema({
       "Please add a valid email",
     ],
   },
-  passport: {
-    type: String,
-    required: [true, "Please Add Passport Number"],
-  },
+ 
   reservations: [
     {
       type: Schema.Types.ObjectId,

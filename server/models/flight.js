@@ -30,7 +30,7 @@ const FlightSchema = new Schema({
         required: true
     },
     economySeats :{
-        type:String,
+        type:Number,
         required: true
     },
     economyPrice :{
@@ -38,7 +38,7 @@ const FlightSchema = new Schema({
         required: true
     },
     firstClassSeats:{
-        type:String,
+        type:Number,
         required: true
     },
     firstClassPrice :{
@@ -46,7 +46,7 @@ const FlightSchema = new Schema({
         required: true
     },
     businessSeats:{
-        type:String,
+        type:Number,
         required: true
     },
     businessPrice :{
@@ -56,7 +56,11 @@ const FlightSchema = new Schema({
     flightNumber:{
         type:String,
         required:true
-    }
+    },
+    reservedSeats: [{
+        type: String,
+        required: true,
+      }],
 
 });
 
