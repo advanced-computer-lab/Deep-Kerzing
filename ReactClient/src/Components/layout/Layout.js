@@ -7,7 +7,6 @@ import InfoCard from '../InfoCard/InfoCard';
 
 import ReservationInfo from '../ReservationInfo/ReservationInfo';
 const Layout = (props) => {
-  console.log(props)
   return (
     <Fragment>
 
