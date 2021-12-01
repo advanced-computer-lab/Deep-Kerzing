@@ -222,11 +222,12 @@ const GUSearchFlight = () => {
             <TextField
               required={true}
               errorText={""}
+              defaultValue={1}
               placeholder="Departure Number of Seats"
               type="number"
               variant="outlined"
               fullWidth={true}
-              onInput={(event) => {
+              onChange={(event) => {
                 setDepartureSeats(event.target.value);
               }}
               InputLabelProps={{
@@ -259,11 +260,12 @@ const GUSearchFlight = () => {
             <TextField
               required={true}
               errorText={""}
+              defaultValue={1}
               placeholder="Return Number of Seats"
               type="number"
               variant="outlined"
               fullWidth={true}
-              onInput={(event) => {
+              onChange={(event) => {
                 setReturnSeats(event.target.value);
               }}
               InputLabelProps={{
