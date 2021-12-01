@@ -18,7 +18,6 @@ import GUChooseFlights from "./Pages/GUChooseFlights/GUChooseFlights";
 import AuthContext from "./Store/auth-context";
 import ProtectedRoutesAdmin from "./Components/ProtectedRoutes/ProtectedRoutesAdmin";
 import ProtectedRoutesUser from "./Components/ProtectedRoutes/ProtectedRoutesUser";
-import HomePage from "./Pages/GuestHomePage/Homepage";
 import UserContext from "./Components/UserContext/UserContext";
 import GuestHomepage from "./Pages/GuestHomePage/Homepage";
 import ViewReservedFlights from "./Components/GuestViewReservedFlights/ViewReservedFlights";
@@ -34,11 +33,27 @@ const App = () => {
 
   const [chosenDepartureFlight, setChosenDepartureFlight] = useState([]);
   const [chosenReturnFlight, setChosenReturnFlight] = useState([]);
-  const [cabinChosen, setCabinChosen] = useState("Economy");
-  const [numberofseats, setNumSeats] = useState(1);
+  const [departureCabin, setDepartureCabin] = useState("Economy");
+  const [returnCabin, setReturnCabin] = useState("Economy");
+  const [departureSeats, setDepartureSeats] = useState(1);
+  const [returnSeats, setReturnSeats] = useState(1);
+  const [departurePassengers, setDeparturePassengers] = useState([]);
+  const [returnPassengers, setReturnPassengers] = useState([]);
   const [departureFlights, setDepartureFlights] = useState([]);
   const [returnFlights, setReturnFlights] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [departureFlight_id, setDepartureFlight_id] = useState();
+  const [returnFlight_id, setReturnFlight_id] = useState();
+  const [departureAirport, setDepartureAirport] = useState("");
+  const [arrivalAirport, setArrivalAirport] = useState("");
+  const [departureDate, setDepartureDate] = useState();
+  const [returnDate, setReturnDate] = useState();
+  const [departureChosenSeats, setdepartureChosenSeats] = useState([]);
+  const [returnChosenSeats, setReturnChosenSeats] = useState([]);
+  const [DepSeatsValid, setDepSeatsValid] = useState(false);
+  const [RetSeatsValid, setRetSeatsValid] = useState(false);
+  const [DepartureForm, setDepartureForm] = useState(false);
+  const [ReturnForm, setReturnForm] = useState(false);
 
   useEffect(() => {
     dispatch(getFlights());
@@ -52,16 +67,49 @@ const App = () => {
           returnFlights,
           setDepartureFlights,
           setReturnFlights,
-          setNumSeats,
-          setCabinChosen,
-          cabinChosen,
-          numberofseats,
+          departureCabin,
+          setDepartureCabin,
+          returnCabin,
+          setReturnCabin,
+          departureSeats,
+          setDepartureSeats,
+          returnSeats,
+          setReturnSeats,
           chosenDepartureFlight,
           setChosenDepartureFlight,
           setChosenReturnFlight,
           chosenReturnFlight,
           setTotalPrice,
+          departurePassengers,
+          setDeparturePassengers,
+          returnPassengers,
+          setReturnPassengers,
+          departureChosenSeats,
+          setdepartureChosenSeats,
           totalPrice,
+          departureFlight_id,
+          setDepartureFlight_id,
+          returnFlight_id,
+          setReturnFlight_id,
+          departureAirport,
+          setDepartureAirport,
+          arrivalAirport,
+          setArrivalAirport,
+          departureDate,
+          setDepartureDate,
+          returnDate,
+          setReturnDate,
+          returnChosenSeats,
+          RetSeatsValid,
+          setDepSeatsValid,
+          setRetSeatsValid,
+          setReturnChosenSeats,
+          DepSeatsValid,
+          DepartureForm,
+          setDepartureForm,
+          ReturnForm,
+          setReturnForm,
+          role,
         }}
       >
         <Switch>

@@ -4,7 +4,6 @@ import Navbar from '../GuestNavbar/Navbar';
 import GUSearchFlight from '../GUSearchFlight/GUSearchFlight';
 import  ViewReservedFlights from '../GuestViewReservedFlights/ViewReservedFlights';
 const Layout = (props) => {
-  console.log(props)
   return (
     <Fragment>
 

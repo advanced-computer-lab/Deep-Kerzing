@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import UserContext from "../UserContext/UserContext";
 import "../searchFlight/adminSearchFlight.css";
 import TextField from "@material-ui/core/TextField";
@@ -11,18 +11,37 @@ import "bootstrap-daterangepicker/daterangepicker.css";
 import MenuItem from "@mui/material/MenuItem";
 import { FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
+import { red } from "@material-ui/core/colors";
 const GUSearchFlight = () => {
-  const [departureAirport, setDepartureAirport] = useState("");
-  const [arrivalAirport, setArrivalAirport] = useState("");
-  const [departureDate, setDepartureDate] = useState();
-  const [arrivalDate, setArrivalDate] = useState();
   const [Airport, setAirport] = useState([]);
   const [selected, setSelected] = useState(false);
-  const [cabin, setCabin] = useState("Economy");
-  const [numberOfseats, setNumberofSeats] = useState(0);
+  //Errors States
+  const [FlightsError, setFlightsError] = useState(false);
+  const [FlightsNull, setFlightsNull] = useState(false);
+  const [DatesError, setDatesError] = useState(false);
+
   const history = useHistory();
 
-  const {setDepartureFlights,setReturnFlights,setCabinChosen,setNumSeats} = useContext(UserContext)
+  const {
+    setDepartureFlights,
+    setReturnFlights,
+    setDepartureSeats,
+    setReturnSeats,
+    departureSeats,
+    returnSeats,
+    departureCabin,
+    setDepartureCabin,
+    returnCabin,
+    setReturnCabin,
+    departureAirport,
+    setDepartureAirport,
+    arrivalAirport,
+    setArrivalAirport,
+    departureDate,
+    setDepartureDate,
+    returnDate,
+    setReturnDate,
+  } = useContext(UserContext);
   const cabins = [
     {
       value: "Economy",
@@ -39,42 +58,60 @@ const GUSearchFlight = () => {
   ];
   const submitSearch = (event) => {
     event.preventDefault();
-    const cabinName = cabin.toLowerCase() + "Seats" + "[gte]";
-    const base = "http://localhost:8000/api/flights/?";
-    const urlDeparture =
-      base +
-      `from=${departureAirport.name}&to=${arrivalAirport.name}&departureDate=${departureDate}&${cabinName}=${numberOfseats}`;
-    const urlArrival =
-      base +
-      `from=${arrivalAirport.name}&to=${departureAirport.name}&arrivalDate=${arrivalDate}&${cabinName}=${numberOfseats}`;
-    setCabinChosen(cabin);
-    setNumSeats(numberOfseats);
-    console.log(urlDeparture);
-    axios
-      .get(urlDeparture)
-      .then((res) => {
-        console.log("data",res.data)
-        setDepartureFlights(res.data);
-      })
-      .catch((err) => {
-        console.log("Error from Airport Api");
-      });
-    axios
-      .get(urlArrival)
-      .then((res) => {
-        setReturnFlights(res.data);
-      })
-      .catch((err) => {
-        console.log("Error from Airport Api");
-      });
-    history.push("/GUAllFlights");
+    setFlightsError(false);
+    setFlightsNull(false);
+    setDatesError(false);
+
+    if (!departureAirport || !arrivalAirport) {
+      setFlightsNull(true);
+    } else if (departureAirport.name === arrivalAirport.name) {
+      setFlightsError(true);
+    } else if (!departureDate || !returnDate) {
+      setDatesError(true);
+    } else {
+      const cabinNameDeparture =
+        departureCabin.toLowerCase() + "Seats" + "[gte]";
+      const cabinNameReturn = returnCabin.toLowerCase() + "Seats" + "[gte]";
+
+      const base = "http://localhost:8000/api/flights/?";
+      const urlDeparture =
+        base +
+        `from=${departureAirport.name}&to=${arrivalAirport.name}&departureDate=${departureDate}&${cabinNameDeparture}=${departureSeats}`;
+      const urlArrival =
+        base +
+        `from=${arrivalAirport.name}&to=${departureAirport.name}&departureDate=${returnDate}&${cabinNameReturn}=${returnSeats}`;
+      console.log(urlDeparture);
+      console.log(urlArrival);
+
+      // setCabinChosen(cabin);
+      // setNumSeats(numberOfseats);
+      axios
+        .get(urlDeparture)
+        .then((res) => {
+          console.log("data", res.data);
+          setDepartureFlights(res.data);
+        })
+        .catch((err) => {
+          console.log("Error from Airport Api");
+        });
+      axios
+        .get(urlArrival)
+        .then((res) => {
+          console.log("Return", res.data);
+          setReturnFlights(res.data);
+        })
+        .catch((err) => {
+          console.log("Error from Airport Api");
+        });
+      history.push("/GUAllFlights");
+    }
   };
   const getDates = (event, picker) => {
     setSelected(true);
     setDepartureDate(
       picker.startDate._d.toLocaleString("fr-CA").substring(0, 10)
     );
-    setArrivalDate(picker.endDate._d.toLocaleString("fr-CA").substring(0, 10));
+    setReturnDate(picker.endDate._d.toLocaleString("fr-CA").substring(0, 10));
   };
   const datesHandler = (event) => {
     event.preventDefault();
@@ -89,7 +126,7 @@ const GUSearchFlight = () => {
       .catch((err) => {
         console.log("Error from Airport Api");
       });
-  }, [departureAirport, arrivalAirport, departureDate, arrivalDate]);
+  }, [departureAirport, arrivalAirport, departureDate, returnDate]);
 
   return (
     <div className="containerCardGuest">
@@ -160,40 +197,18 @@ const GUSearchFlight = () => {
               }}
             />
           </div>
-          <div className="GU5">
-            <DateRangePicker onEvent={getDates}>
-              <button className="selectDates" onClick={datesHandler}>
-                {!selected
-                  ? "Select Dates"
-                  : departureDate + " > " + arrivalDate}
-              </button>
-            </DateRangePicker>
+          <div className="GU3">
+            <h6>Departure Flight</h6>
           </div>
           <div className="GU4">
-            <TextField
-              required={true}
-              errorText={""}
-              placeholder="Number of Seats"
-              type="number"
-              variant="outlined"
-              fullWidth={true}
-              onInput={(event) => {
-                setNumberofSeats(event.target.value);
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </div>
-          <div className="GU3">
             <TextField
               select
               required={true}
               variant="outlined"
               fullWidth={true}
-              value={cabin}
+              value={departureCabin}
               onChange={(event) => {
-                setCabin(event.target.value);
+                setDepartureCabin(event.target.value);
               }}
             >
               {cabins.map((option) => (
@@ -203,12 +218,82 @@ const GUSearchFlight = () => {
               ))}
             </TextField>
           </div>
+          <div className="GU5">
+            <TextField
+              required={true}
+              errorText={""}
+              placeholder="Departure Number of Seats"
+              type="number"
+              variant="outlined"
+              fullWidth={true}
+              onInput={(event) => {
+                setDepartureSeats(event.target.value);
+              }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </div>
+          <div className="GU6">
+            <h6>Return Flight</h6>
+          </div>
+          <div className="GU7">
+            <TextField
+              select
+              required={true}
+              variant="outlined"
+              fullWidth={true}
+              value={returnCabin}
+              onChange={(event) => {
+                setReturnCabin(event.target.value);
+              }}
+            >
+              {cabins.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+          <div className="GU8">
+            <TextField
+              required={true}
+              errorText={""}
+              placeholder="Return Number of Seats"
+              type="number"
+              variant="outlined"
+              fullWidth={true}
+              onInput={(event) => {
+                setReturnSeats(event.target.value);
+              }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </div>
+          <div className="GU9">
+            <DateRangePicker onEvent={getDates}>
+              <button className="selectDates" onClick={datesHandler}>
+                {!selected
+                  ? "Select Dates"
+                  : departureDate + " > " + returnDate}
+              </button>
+            </DateRangePicker>
+          </div>
         </div>
         <br></br>
         <button className="buttonLogin" onClick={submitSearch}>
           Search
         </button>
       </form>
+      <br></br>
+      {FlightsError && (
+        <h6> Departure and return flights cannot be the same</h6>
+      )}
+      {FlightsNull && (
+        <h6> Departure and return flights cannot be the nulls</h6>
+      )}
+      {DatesError && <h6> Choose departure and arrival dates of your trip</h6>}
     </div>
   );
 };

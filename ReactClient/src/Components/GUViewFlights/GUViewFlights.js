@@ -12,29 +12,31 @@ const GUViewFlights = (props) => {
     setChosenReturnFlight,
     chosenReturnFlight,
     chosenDepartureFlight,
+    selected,
+    setSelected,
   } = useContext(UserContext);
 
-  const [clicked, setClicked] = useState(true);
   const handleClickOpen = (value) => {
-    setClicked(!clicked);
-    if (props.departureCheck && clicked) {
+    setSelected(props._id);
+    if (props.departureCheck) {
       setChosenDepartureFlight(value);
-      console.log(chosenDepartureFlight);
-    } else if (props.departureCheck) {
-      setChosenDepartureFlight([]);
-      console.log(chosenDepartureFlight);
-    } else if (!props.departureCheck && clicked) {
-      setChosenReturnFlight(value);
-      console.log(chosenReturnFlight);
     } else {
-      setChosenReturnFlight([]);
-      console.log(chosenReturnFlight);
+      setChosenReturnFlight(value);
     }
   };
+  console.log(chosenReturnFlight);
 
   return (
-    <div onClick={(event) => handleClickOpen(props)}>
-      <div className={clicked ? "flightCardChoose" : "flightCardChooseClicked"}>
+    <div onClick={() => handleClickOpen(props)}>
+      <div
+        className={
+          props._id === selected ||
+          props._id === chosenDepartureFlight._id ||
+          props._id === chosenReturnFlight._id
+            ? "flightCardChooseClicked"
+            : "flightCardChoose"
+        }
+      >
         <div className="departureTime">
           <h4>{props.depTime}</h4>
         </div>
@@ -62,12 +64,11 @@ const GUViewFlights = (props) => {
         <h2 className="Icon">
           <IoAirplaneOutline></IoAirplaneOutline>
         </h2>
-        <h6 className="economy">Economy: {props.seatsEconomy}</h6>
-        <div className="business">Business: {props.seatsBusiness}</div>
+        <h6 className="economy">Economy: ${props.priceEconomy}</h6>
+        <div className="business">Business: ${props.priceBusiness}</div>
         <h6 className="depDate">Departure: {props.depDate}</h6>
         <div className="arrDate">Arrival: {props.arrDate}</div>
-        <div className="TripDuration"> Trip Duration: </div>
-        <div className="price"> Price: </div>
+        <div className="TripDuration"> First: ${props.priceFirst} </div>
       </div>
     </div>
   );
