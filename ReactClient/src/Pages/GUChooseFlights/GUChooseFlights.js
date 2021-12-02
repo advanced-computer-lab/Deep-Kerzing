@@ -17,10 +17,8 @@ const GUChooseFlights = () => {
     returnSeats,
     chosenDepartureFlight,
     chosenReturnFlight,
-    setTotalPrice,
     departurePassengers,
     returnPassengers,
-    totalPrice,
     DepSeatsValid,
     RetSeatsValid,
     ReturnForm,
@@ -297,7 +295,6 @@ const GUChooseFlights = () => {
           <button
             disabled
             className="disabledButton"
-            onClick={ContinueReservation}
           >
             Next
           </button>
@@ -306,8 +303,8 @@ const GUChooseFlights = () => {
         <br></br>
         {back && (
           <button className="buttonNext" onClick={onBack}>
-            {" "}
-            Back{" "}
+            
+            Back
           </button>
         )}
       </div>
