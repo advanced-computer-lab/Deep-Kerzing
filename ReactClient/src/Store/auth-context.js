@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
-
 let logoutTimer;
 
 const AuthContext = React.createContext({
   token: "",
   role: "",
   isLoggedIn: false,
-  login: (token) => {},
+  login: (token, checker) => {},
   logout: () => {},
 });
 const calculateRemainingTime = (expirationTime) => {
@@ -65,17 +63,18 @@ export const AuthContextProvider = (props) => {
     }
   }, []);
 
-  const loginHandler = (token, expirationTime) => {
+  const loginHandler = (token, expirationTime, checker) => {
     setToken(token);
     setRole(token.role);
     localStorage.setItem("token", JSON.stringify(token));
     localStorage.setItem("expirationTime", expirationTime);
     const remainingTime = calculateRemainingTime(expirationTime);
     logoutTimer = setTimeout(logoutHandler, remainingTime);
-
+    console.log("I am the checker", checker);
+    if (!checker) {
+      console.log("I am the checker", checker);
       window.location.pathname = "/";
-
-
+    }
   };
 
   useEffect(() => {
