@@ -1,32 +1,18 @@
-import { useState } from "react";
-import InfoCard from "../InfoCard/InfoCard"
-import UserContext from "../UserContext/UserContext";
+import InfoCard from "../InfoCard/InfoCard";
+
 const ReservationInfo = (props) => {
-    const count = 3;
-    const [passengers,setPassengers] = useState({})
-    var id =1
+  const count = props.count;
 
-    var rows =[]
-    for (var i =0 ; i<count ; i++)
-    {
-        rows.push(
-            <InfoCard id = {id} setPassengers= {setPassengers} passengers ={passengers} > </InfoCard>
-        )
-       id++;
-    }
-    return(
-        <div>
-            <UserContext.Provider
-        value={{ passengers
-        
-        }}
-      >
-          {rows}
-            
-             </UserContext.Provider>
-             
-
-        </div>
-    )
-}
+  var rows = [];
+  for (var i = 0; i < count; i++) {
+    rows.push(
+      <div>
+        <h4>Passenger {i + 1}</h4>
+        <InfoCard id={i+1} departure={props.departure}></InfoCard>
+        <hr></hr>
+      </div>
+    );
+  }
+  return <div>{rows}</div>;
+};
 export default ReservationInfo;

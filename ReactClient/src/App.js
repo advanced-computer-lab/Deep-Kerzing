@@ -37,8 +37,10 @@ const App = () => {
   const [returnCabin, setReturnCabin] = useState("Economy");
   const [departureSeats, setDepartureSeats] = useState(1);
   const [returnSeats, setReturnSeats] = useState(1);
-  const [departurePassengers, setDeparturePassengers] = useState([]);
-  const [returnPassengers, setReturnPassengers] = useState([]);
+
+  const [departurePassengers, setDeparturePassengers] = useState({});
+  const [returnPassengers, setReturnPassengers] = useState({});
+
   const [departureFlights, setDepartureFlights] = useState([]);
   const [returnFlights, setReturnFlights] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -54,7 +56,8 @@ const App = () => {
   const [RetSeatsValid, setRetSeatsValid] = useState(false);
   const [DepartureForm, setDepartureForm] = useState(false);
   const [ReturnForm, setReturnForm] = useState(false);
-
+  const [departurePassengersValid, setdeparturePassengersValid] = useState(true);
+  const [returnPassengersValid, setreturnPassengersValid] = useState(false);
   useEffect(() => {
     dispatch(getFlights());
   }, [currentId, dispatch]);
@@ -109,6 +112,10 @@ const App = () => {
           setDepartureForm,
           ReturnForm,
           setReturnForm,
+          setdeparturePassengersValid,
+          setreturnPassengersValid,
+          departurePassengersValid,
+          returnPassengersValid,
           role,
         }}
       >

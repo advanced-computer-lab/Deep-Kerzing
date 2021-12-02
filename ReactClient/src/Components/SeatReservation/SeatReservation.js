@@ -5,16 +5,13 @@ const SeatReservation = (props) => {
   const {
     departureSeats,
     departureChosenSeats,
-    setdepartureChosenSeats,
     returnSeats,
     returnChosenSeats,
-    setReturnSeats,
     DepSeatsValid,
     RetSeatsValid,
     setDepSeatsValid,
     setRetSeatsValid,
   } = useContext(UserContext);
-
   const [numberChosen, setnumberChosen] = useState(0);
   const [numberChosenReturn, setnumberChosenReturn] = useState(0);
 
@@ -26,45 +23,40 @@ const SeatReservation = (props) => {
   const seatChoice = (event) => {
     setDepSeatsValid(false);
     setRetSeatsValid(false);
-     
+
     if (props.departure) {
       if (departureChosenSeats.includes(event)) {
         var index = departureChosenSeats.indexOf(event);
         departureChosenSeats.splice(index, 1);
         setnumberChosen(numberChosen - 1);
-        if (numberChosen - 1 === departureSeats) {
+        if (numberChosen - 1 + "" === departureSeats + "") {
           setDepSeatsValid(true);
         }
       } else {
         departureChosenSeats.push(event);
         setnumberChosen(numberChosen + 1);
-        if (numberChosen + 1 === departureSeats) {
+        if (numberChosen + 1 + "" === departureSeats + "") {
           setDepSeatsValid(true);
         }
       }
-     
-    } else {
+    } else if(!props.departure) {
       if (returnChosenSeats.includes(event)) {
-        index = returnChosenSeats.indexOf(event);
-        returnChosenSeats.splice(index, 1);
+        var index1 = returnChosenSeats.indexOf(event);
+        returnChosenSeats.splice(index1, 1);
         setnumberChosenReturn(numberChosenReturn - 1);
-         if (numberChosenReturn - 1 === returnSeats) {
-           setRetSeatsValid(true);
-         }
+        if ((numberChosenReturn - 1 + "" === returnSeats +"")) {
+          setRetSeatsValid(true);
+        }
       } else {
         returnChosenSeats.push(event);
         setnumberChosenReturn(numberChosenReturn + 1);
-         if (numberChosenReturn + 1 === returnSeats) {
-           setRetSeatsValid(true);
-         }
+        if ((numberChosenReturn + 1 + "" === returnSeats +"")) {
+          setRetSeatsValid(true);
+        }
       }
-      if (numberChosenReturn != returnSeats) {
-        setRetSeatsValid(false);
-      } else {
-        setRetSeatsValid(true);
-      }
+      console.log(returnSeats, numberChosenReturn);
+
     }
-    
   };
 
   //Drawing the cabins
@@ -302,11 +294,12 @@ const SeatReservation = (props) => {
       <div className="exit exit--back fuselage"></div>
       <br></br>
       <div>
-        { ((!DepSeatsValid && props.departure) || (!props.departure && !RetSeatsValid)) && (
-            <h5>
-              Number of seats does not match the number you specified earlier
-            </h5>
-          )}
+        {((!DepSeatsValid && props.departure) ||
+          (!props.departure && !RetSeatsValid)) && (
+          <h5>
+            Number of seats does not match the number you specified earlier
+          </h5>
+        )}
       </div>
     </div>
   );

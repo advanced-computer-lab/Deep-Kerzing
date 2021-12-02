@@ -6,58 +6,33 @@ import Stepper from "./Stepper";
 import SeatReservation from "../../Components/SeatReservation/SeatReservation";
 import Login from "../Login/Login";
 import axios from "axios";
+import ReservationInfo from "../../Components/ReservationInfo/ReservationInfo";
 const GUChooseFlights = () => {
   const {
     departureFlights,
     returnFlights,
-    setDepartureFlights,
-    setReturnFlights,
     departureCabin,
-    setDepartureCabin,
     returnCabin,
-    setReturnCabin,
     departureSeats,
-    setDepartureSeats,
     returnSeats,
-    setReturnSeats,
     chosenDepartureFlight,
-    setChosenDepartureFlight,
-    setChosenReturnFlight,
     chosenReturnFlight,
-    setTotalPrice,
     departurePassengers,
-    setDeparturePassengers,
     returnPassengers,
-    setReturnPassengers,
-    totalPrice,
-    departureFlight_id,
-    setDepartureFlight_id,
-    returnFlight_id,
-    setReturnFlight_id,
-    departureAirport,
-    setDepartureAirport,
-    arrivalAirport,
-    setArrivalAirport,
-    departureDate,
-    setDepartureDate,
-    arrivalDate,
     DepSeatsValid,
     RetSeatsValid,
-    DepartureForm,
-    setDepartureForm,
     ReturnForm,
-    setReturnForm,
-    setArrivalDate,
+    departurePassengersValid,
+    returnPassengersValid,
     role,
   } = useContext(UserContext);
 
   const [BookedDepSeats, setBookedDepSeats] = useState([]);
   const [BookedRetSeats, setBookedRetSeats] = useState([]);
   const [DepSeats, setDepSeats] = useState();
-  const [EmptyRetSeats, setEmptyRetSeats] = useState();
+  const [RetSeats, setRetSeats] = useState();
 
   const [step, setStep] = useState(2);
-  const [tempPrice, setTempPrice] = useState(totalPrice);
   const [button, setButton] = useState(false);
   const [back, setBack] = useState(false);
 
@@ -71,6 +46,10 @@ const GUChooseFlights = () => {
     step,
     back,
     DepSeatsValid,
+    departurePassengersValid,
+    returnPassengersValid,
+    departurePassengers,
+    returnPassengers,
   ]);
 
   const checkPrice = () => {
@@ -111,7 +90,6 @@ const GUChooseFlights = () => {
   const [step7, setStep7] = useState(false);
 
   const ButtonChecker = () => {
-    console.log(DepSeatsValid, "Valid");
     if (step === 2 && chosenDepartureFlight.length !== 0) {
       setButton(true);
     }
@@ -120,20 +98,27 @@ const GUChooseFlights = () => {
     } else if (step === 3 && !DepSeatsValid) {
       setButton(false);
     }
-    if (step === 4 && DepartureForm) {
-      setButton(true);
-    } else if (step === 4 && !DepartureForm) {
-      setButton(false);
+    console.log(step);
+    if (step === 4) {
+      if (
+        Object.keys(departurePassengers).length + "" === departureSeats + "" &&
+        departurePassengersValid
+      ) {
+        setButton(true);
+      } else {
+        setButton(false);
+      }
     }
     if (step === 5 && chosenReturnFlight.length !== 0) {
       setButton(true);
     }
+    console.log("Ret" , RetSeatsValid)
     if (step === 6 && RetSeatsValid) {
       setButton(true);
     } else if (step === 6 && !RetSeatsValid) {
       setButton(false);
     }
-    if (step === 7 && ReturnForm) {
+    if (step === 7) {
       setButton(true);
     } else if (step === 7 && !ReturnForm) {
       setButton(false);
@@ -156,8 +141,13 @@ const GUChooseFlights = () => {
       setStep4(true);
       setStep5(false);
     }
-    if (step === 3) {
-      setBack(false);
+    else if (step === 7){
+      setStep5(true);
+      setStep6(false)
+    }
+    else if (step === 8){
+      setStep6(true);
+      setStep7(false)
     }
   };
   const onNext = () => {
@@ -197,26 +187,21 @@ const GUChooseFlights = () => {
         .then((res) => {
           setBookedRetSeats(res.data[0].reservedSeats);
           if (returnCabin === "Economy") {
-            setReturnSeats(res.data[0].economySeats);
+            setRetSeats(res.data[0].economySeats);
           } else if (departureCabin === "Business") {
-            setReturnSeats(res.data[0].businessSeats);
+            setRetSeats(res.data[0].businessSeats);
           } else {
-            setReturnSeats(res.data[0].firstClassSeats);
+            setRetSeats(res.data[0].firstClassSeats);
           }
         });
     } else if (step === 6) {
       setStep5(false);
       setStep6(true);
-    }
-    else if (step === 7 ){
+    } else if (step === 7) {
       setStep6(false);
       setStep7(true);
     }
   };
-  const ContinueReservation = () => {
-    if (step === 3) setTotalPrice(tempPrice);
-  };
-
   return (
     <div className="PageGrid">
       <div className="FlightsContainer">
@@ -236,7 +221,14 @@ const GUChooseFlights = () => {
             ></SeatReservation>
           </div>
         )}
-        {step3 && <div>Personal Info</div>}
+        {step3 && (
+          <div className="SeatsContainer">
+            <ReservationInfo
+              count={departureSeats}
+              departure={true}
+            ></ReservationInfo>
+          </div>
+        )}
         {step4 && (
           <GUAllFlights
             Flights={returnFlights}
@@ -246,14 +238,21 @@ const GUChooseFlights = () => {
         {step5 && (
           <div className="SeatsContainer">
             <SeatReservation
-              count={returnSeats}
+              count={RetSeats}
               booked={BookedRetSeats}
               departure={false}
               cabin={returnCabin}
             ></SeatReservation>
           </div>
         )}
-        {step6 && <div>Personal Info</div>}
+        {step6 && (
+          <div className="SeatsContainer">
+            <ReservationInfo
+              count={returnSeats}
+              departure={false}
+            ></ReservationInfo>
+          </div>
+        )}
         {step7 && !role && (
           <div className="SeatsContainer">
             <Login></Login>
@@ -282,9 +281,9 @@ const GUChooseFlights = () => {
       </div>
       <div className="Summary">
         <h1>Summary</h1>
-        <h5>From: {}</h5>
+        {/* <h5>From: {}</h5>
         <h5>To: {}</h5>
-        <h5>Total Price: {button ? tempPrice : totalPrice}</h5>
+        <h5>Total Price: {button ? tempPrice : totalPrice}</h5> */}
       </div>
       <div className="buttonChoose">
         {button && (
@@ -296,7 +295,6 @@ const GUChooseFlights = () => {
           <button
             disabled
             className="disabledButton"
-            onClick={ContinueReservation}
           >
             Next
           </button>
@@ -305,8 +303,8 @@ const GUChooseFlights = () => {
         <br></br>
         {back && (
           <button className="buttonNext" onClick={onBack}>
-            {" "}
-            Back{" "}
+            
+            Back
           </button>
         )}
       </div>
