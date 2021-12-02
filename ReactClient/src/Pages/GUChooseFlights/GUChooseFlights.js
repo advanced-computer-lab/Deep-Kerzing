@@ -11,44 +11,19 @@ const GUChooseFlights = () => {
   const {
     departureFlights,
     returnFlights,
-    setDepartureFlights,
-    setReturnFlights,
     departureCabin,
-    setDepartureCabin,
     returnCabin,
-    setReturnCabin,
     departureSeats,
-    setDepartureSeats,
     returnSeats,
-    setReturnSeats,
     chosenDepartureFlight,
-    setChosenDepartureFlight,
-    setChosenReturnFlight,
     chosenReturnFlight,
     setTotalPrice,
     departurePassengers,
-    setDeparturePassengers,
     returnPassengers,
-    setReturnPassengers,
     totalPrice,
-    departureFlight_id,
-    setDepartureFlight_id,
-    returnFlight_id,
-    setReturnFlight_id,
-    departureAirport,
-    setDepartureAirport,
-    arrivalAirport,
-    setArrivalAirport,
-    departureDate,
-    setDepartureDate,
-    arrivalDate,
     DepSeatsValid,
     RetSeatsValid,
-    DepartureForm,
-    setDepartureForm,
     ReturnForm,
-    setReturnForm,
-    setArrivalDate,
     departurePassengersValid,
     returnPassengersValid,
     role,
@@ -60,7 +35,6 @@ const GUChooseFlights = () => {
   const [RetSeats, setRetSeats] = useState();
 
   const [step, setStep] = useState(2);
-  const [tempPrice, setTempPrice] = useState(totalPrice);
   const [button, setButton] = useState(false);
   const [back, setBack] = useState(false);
 
@@ -230,10 +204,6 @@ const GUChooseFlights = () => {
       setStep7(true);
     }
   };
-  const ContinueReservation = () => {
-    if (step === 3) setTotalPrice(tempPrice);
-  };
-
   return (
     <div className="PageGrid">
       <div className="FlightsContainer">
@@ -313,9 +283,9 @@ const GUChooseFlights = () => {
       </div>
       <div className="Summary">
         <h1>Summary</h1>
-        <h5>From: {}</h5>
+        {/* <h5>From: {}</h5>
         <h5>To: {}</h5>
-        <h5>Total Price: {button ? tempPrice : totalPrice}</h5>
+        <h5>Total Price: {button ? tempPrice : totalPrice}</h5> */}
       </div>
       <div className="buttonChoose">
         {button && (
