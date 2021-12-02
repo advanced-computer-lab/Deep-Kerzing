@@ -1,8 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useContext } from "react";
 import "../../Components/searchFlight/adminSearchFlight.css";
+
+import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
+import useToken from "../../useToken";
 import AuthContext from "../../Store/auth-context";
+
+// import { useHistory } from "react-router";
 
 async function loginUser(credentials) {
   return fetch("http://localhost:8000/api/user/login", {
@@ -14,7 +19,7 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-const Login = (props) => {
+const LoginChecker = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -33,7 +38,7 @@ const Login = (props) => {
         password: password,
       });
       const expirationTime = new Date(new Date().getTime() + +3600 * 10000000);
-      authCtx.login(token, expirationTime.toISOString() , props.checker);
+      authCtx.login(token, expirationTime.toISOString(),props.checker);
     } catch (e) {
       setError(true);
     }
@@ -81,4 +86,4 @@ const Login = (props) => {
     </div>
   );
 };
-export default Login;
+export default LoginChecker;

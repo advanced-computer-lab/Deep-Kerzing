@@ -12,7 +12,6 @@ const GUAllFlights = (props) => {
     chosenReturnFlight,
     departureChosenSeats,
   } = useContext(UserContext);
-  console.log("Chosen",departureChosenSeats);
   return (
     <div>
       <UserContext.Provider

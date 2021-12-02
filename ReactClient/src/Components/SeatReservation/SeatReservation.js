@@ -54,7 +54,6 @@ const SeatReservation = (props) => {
           setRetSeatsValid(true);
         }
       }
-      console.log(returnSeats, numberChosenReturn);
 
     }
   };

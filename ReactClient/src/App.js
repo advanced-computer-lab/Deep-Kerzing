@@ -22,25 +22,22 @@ import UserContext from "./Components/UserContext/UserContext";
 import GuestHomepage from "./Pages/GuestHomePage/Homepage";
 import ViewReservedFlights from "./Components/GuestViewReservedFlights/ViewReservedFlights";
 import UserHomePage from "./Pages/UserHomepage/UserHomepage";
+import Review from "./Pages/GUChooseFlights/Review";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
   const isAuthenticated = authCtx.isLoggedIn;
   const role = authCtx.role;
-  console.log("this is" + role);
   const [currentId, setCurrentId] = useState(null);
   const dispatch = useDispatch();
-
   const [chosenDepartureFlight, setChosenDepartureFlight] = useState([]);
   const [chosenReturnFlight, setChosenReturnFlight] = useState([]);
   const [departureCabin, setDepartureCabin] = useState("Economy");
   const [returnCabin, setReturnCabin] = useState("Economy");
   const [departureSeats, setDepartureSeats] = useState(1);
   const [returnSeats, setReturnSeats] = useState(1);
-
   const [departurePassengers, setDeparturePassengers] = useState({});
   const [returnPassengers, setReturnPassengers] = useState({});
-
   const [departureFlights, setDepartureFlights] = useState([]);
   const [returnFlights, setReturnFlights] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -60,8 +57,35 @@ const App = () => {
   const [returnPassengersValid, setreturnPassengersValid] = useState(false);
   useEffect(() => {
     dispatch(getFlights());
-  }, [currentId, dispatch]);
+  }, [currentId, dispatch,role]);
 
+  const reset = () => {
+    setChosenDepartureFlight([]);
+    setChosenReturnFlight([]);
+    setDepartureCabin("Economy");
+    setReturnCabin("Economy");
+    setDepartureSeats(1);
+    setReturnSeats(1);
+    setDeparturePassengers({});
+    setReturnPassengers({});
+    setDepartureFlights([]);
+    setReturnFlights([]);
+    setTotalPrice(0);
+    setDepartureFlight_id();
+    setReturnFlight_id();
+    setDepartureAirport("");
+    setArrivalAirport("");
+    setDepartureDate();
+    setReturnDate();
+    setdepartureChosenSeats([]);
+    setReturnChosenSeats([]);
+    setDepSeatsValid(false);
+    setRetSeatsValid(false);
+    setDepartureForm(false);
+    setReturnForm(false);
+    setdeparturePassengersValid(true);
+    setreturnPassengersValid(false);
+  };
   return (
     <Layout user={role}>
       <UserContext.Provider
@@ -122,12 +146,12 @@ const App = () => {
         <Switch>
           {!isAuthenticated && (
             <Route exact path="/">
-              <GuestHomepage></GuestHomepage>
+              <GuestHomepage reset={reset}></GuestHomepage>
             </Route>
           )}
           {!isAuthenticated && (
             <Route exact path="/login">
-              <Login></Login>
+              <Login checker={false}></Login>
             </Route>
           )}
           {!isAuthenticated && (
@@ -135,11 +159,16 @@ const App = () => {
               <GUFlightDetails></GUFlightDetails>
             </Route>
           )}
-          {!isAuthenticated && (
-            <Route exact path="/GUAllFlights">
-              <GUChooseFlights></GUChooseFlights>
+
+          <Route exact path="/GUAllFlights">
+            <GUChooseFlights></GUChooseFlights>
+          </Route>
+
+          {/* {!isAuthenticated && (
+            <Route exact path="/Confirmation">
+              <Review></Review>
             </Route>
-          )}
+          )} */}
           {isAuthenticated && role === "Admin" && (
             <Route path="/" exact>
               <AdminHomePage></AdminHomePage>
@@ -168,9 +197,15 @@ const App = () => {
 
           {isAuthenticated && role === "user" && (
             <Route path="/" exact>
+              <GuestHomepage reset={reset}></GuestHomepage>
+            </Route>
+          )}
+          {isAuthenticated && role === "user" && (
+            <Route path="/ViewReservations" exact>
               <ViewReservedFlights></ViewReservedFlights>
             </Route>
           )}
+
           {/* {isAuthenticated && role === "user" && (
             <Route path="/user" exact>
               <UserHomePage></UserHomePage>

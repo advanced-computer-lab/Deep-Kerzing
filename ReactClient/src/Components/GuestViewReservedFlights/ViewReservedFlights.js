@@ -42,15 +42,15 @@ const ViewReservedFlights = () => {
   // }, [location]);
 
   useEffect(async () => {
-    await axios
+    axios
       .get("http://localhost:8000/api/user/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(async (resOne) => {
+      .then((resOne) => {
         setUserId(resOne.data.data._id);
-        await axios
+        axios
           .get(
             `http://localhost:8000/api/user/getReservations/${resOne.data.data._id}`
           )
@@ -66,7 +66,7 @@ const ViewReservedFlights = () => {
       .catch((err) => {
         console.log("Error Can not Get the profile");
       });
-  }, [userId, reservations]);
+  }, [userId]);
 
   return (
     <div>

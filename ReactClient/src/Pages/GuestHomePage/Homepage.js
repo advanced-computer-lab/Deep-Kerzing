@@ -1,6 +1,11 @@
+import { useEffect } from "react";
 import GUSearchFlight from "../../Components/GUSearchFlight/GUSearchFlight";
 import "../../Components/searchFlight/adminSearchFlight.css";
-const GuestHomepage = () => {
+const GuestHomepage = (props) => {
+  useEffect(() => {
+    props.reset();
+  }, []);
+
   return (
     <div className="GuestHomePage">
       <div className="GuestSearchFlight">

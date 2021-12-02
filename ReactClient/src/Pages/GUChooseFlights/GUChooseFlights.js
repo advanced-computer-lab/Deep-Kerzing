@@ -7,6 +7,8 @@ import SeatReservation from "../../Components/SeatReservation/SeatReservation";
 import Login from "../Login/Login";
 import axios from "axios";
 import ReservationInfo from "../../Components/ReservationInfo/ReservationInfo";
+import Review from "./Review";
+import LoginChecker from "./LoginChecker";
 const GUChooseFlights = () => {
   const {
     departureFlights,
@@ -98,7 +100,6 @@ const GUChooseFlights = () => {
     } else if (step === 3 && !DepSeatsValid) {
       setButton(false);
     }
-    console.log(step);
     if (step === 4) {
       if (
         Object.keys(departurePassengers).length + "" === departureSeats + "" &&
@@ -112,7 +113,6 @@ const GUChooseFlights = () => {
     if (step === 5 && chosenReturnFlight.length !== 0) {
       setButton(true);
     }
-    console.log("Ret" , RetSeatsValid)
     if (step === 6 && RetSeatsValid) {
       setButton(true);
     } else if (step === 6 && !RetSeatsValid) {
@@ -140,14 +140,12 @@ const GUChooseFlights = () => {
     } else if (step === 6) {
       setStep4(true);
       setStep5(false);
-    }
-    else if (step === 7){
+    } else if (step === 7) {
       setStep5(true);
-      setStep6(false)
-    }
-    else if (step === 8){
+      setStep6(false);
+    } else if (step === 8) {
       setStep6(true);
-      setStep7(false)
+      setStep7(false);
     }
   };
   const onNext = () => {
@@ -253,14 +251,14 @@ const GUChooseFlights = () => {
             ></ReservationInfo>
           </div>
         )}
-        {step7 && !role && (
+        {step7 && role === undefined && (
           <div className="SeatsContainer">
-            <Login></Login>
+            <LoginChecker checker = {true}></LoginChecker>
           </div>
         )}
-        {step7 && role && (
+        {step7 && role === "user" && (
           <div className="SeatsContainer">
-            <h1>Reviewing</h1>
+            <Review></Review>
           </div>
         )}
       </div>
@@ -292,10 +290,7 @@ const GUChooseFlights = () => {
           </button>
         )}
         {!button && (
-          <button
-            disabled
-            className="disabledButton"
-          >
+          <button disabled className="disabledButton">
             Next
           </button>
         )}
@@ -303,7 +298,6 @@ const GUChooseFlights = () => {
         <br></br>
         {back && (
           <button className="buttonNext" onClick={onBack}>
-            
             Back
           </button>
         )}
