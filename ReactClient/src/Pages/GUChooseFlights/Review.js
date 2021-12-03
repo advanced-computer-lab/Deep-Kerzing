@@ -26,8 +26,8 @@ const Review = () => {
       returnCabin,
       departureSeats,
       returnSeats,
-      chosenDepartureFlight._id,
-      chosenReturnFlight._id,
+      chosenDepartureFlight,
+      chosenReturnFlight,
       departurePassengers,
       returnPassengers,
       departureChosenSeats,
@@ -52,7 +52,7 @@ const Review = () => {
         },
       })
       .then((resOne) => {
-          console.log(resOne)
+        console.log(resOne);
         const inputs = {
           departureFlight_id: chosenDepartureFlight._id,
           returnFlight_id: chosenReturnFlight._id,
@@ -79,6 +79,30 @@ const Review = () => {
   };
   return (
     <div>
+      <h4>Departure Flight Details</h4>
+      <p>
+        <b>Flight Number:</b> {chosenDepartureFlight.flightNumber}<br></br>
+        <b>From:</b> {chosenDepartureFlight.departure}<br></br>
+        <b>To:</b> {chosenDepartureFlight.arrival}<br></br>
+        <b>Departure Date:</b> {chosenDepartureFlight.depDate}<br></br>
+        <b>Departure Time:</b> {chosenDepartureFlight.depTime}<br></br>
+        <b>Arrival Time: </b>{chosenDepartureFlight.arrTime}<br></br>
+        <b>Chosen Seats:</b> {departureChosenSeats}<br></br>
+        <b>Cabin: </b>{departureCabin}
+      </p>
+      <hr></hr>
+      <h4>Return Flight Details</h4>
+      <p>
+        <b>Flight Number:</b>  {chosenReturnFlight.flightNumber}<br></br>
+        <b>From:</b> {chosenReturnFlight.departure}<br></br>
+        <b>To:</b> {chosenReturnFlight.arrival}<br></br>
+        <b>Departure Date:</b> {chosenReturnFlight.depDate}<br></br>
+        <b>Departure Time:</b>  {chosenReturnFlight.arrTime}<br></br>
+        <b>Arrival Time: </b> {chosenReturnFlight.depTime}<br></br>
+        <b>Chosen Seats:</b> {returnChosenSeats}<br></br>
+        <b>Cabin: </b> {returnCabin}
+      </p>
+
       <button onClick={onSubmitHandler}>Confirm</button>
     </div>
   );
