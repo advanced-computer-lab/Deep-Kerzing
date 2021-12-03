@@ -30,13 +30,13 @@ const SharedInfo = (props) => {
       )
       .then((res) => {
         console.log(res);
+        props.updateState();
       })
       .catch((err) => {
         console.log("Error in delete");
       });
     setOpen(false);
-    // window.location.reload(false);
-    history.push("/" + props.userId);
+    props.setLoading(false);
   };
 
   return (
@@ -44,9 +44,6 @@ const SharedInfo = (props) => {
       <div className="sharedInfo">
         <div>
           <h3>Price:{props.price}</h3>
-        </div>
-        <div>
-          <h3>Class:{props.cabin}</h3>
         </div>
         <div>
           {date < props.depDateDep && (

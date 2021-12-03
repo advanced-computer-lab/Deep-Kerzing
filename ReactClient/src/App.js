@@ -23,6 +23,7 @@ import GuestHomepage from "./Pages/GuestHomePage/Homepage";
 import ViewReservedFlights from "./Components/GuestViewReservedFlights/ViewReservedFlights";
 import UserHomePage from "./Pages/UserHomepage/UserHomepage";
 import Review from "./Pages/GUChooseFlights/Review";
+import UserProfile from "./Components/Profile/UserProfile";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -53,11 +54,12 @@ const App = () => {
   const [RetSeatsValid, setRetSeatsValid] = useState(false);
   const [DepartureForm, setDepartureForm] = useState(false);
   const [ReturnForm, setReturnForm] = useState(false);
-  const [departurePassengersValid, setdeparturePassengersValid] = useState(true);
+  const [departurePassengersValid, setdeparturePassengersValid] =
+    useState(true);
   const [returnPassengersValid, setreturnPassengersValid] = useState(false);
   useEffect(() => {
     dispatch(getFlights());
-  }, [currentId, dispatch,role]);
+  }, [currentId, dispatch, role]);
 
   const reset = () => {
     setChosenDepartureFlight([]);
@@ -205,12 +207,11 @@ const App = () => {
               <ViewReservedFlights></ViewReservedFlights>
             </Route>
           )}
-
-          {/* {isAuthenticated && role === "user" && (
+          {isAuthenticated && role === "user" && (
             <Route path="/user" exact>
-              <UserHomePage></UserHomePage>
+              <UserProfile></UserProfile>
             </Route>
-          )} */}
+          )}
           {isAuthenticated && role === "user" && (
             <Route exact path="/GUFlightDetails">
               <GUFlightDetails></GUFlightDetails>
