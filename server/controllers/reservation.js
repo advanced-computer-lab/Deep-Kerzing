@@ -22,8 +22,20 @@ exports.getReservation = catchAsync(async (req, res, next) => {
 });
 
 exports.reserveFlight = catchAsync(async (req, res, next) => {
-  const { departureFlight_id, returnFlight_id, user_id, departureCabin, returnCabin,departureSeats,returnSeats, price,departurePassengers,returnPassengers,returnSeatsCount,departureSeatsCount} =
-    req.body;
+  const {
+    departureFlight_id,
+    returnFlight_id,
+    user_id,
+    departureCabin,
+    returnCabin,
+    departureSeats,
+    returnSeats,
+    price,
+    departurePassengers,
+    returnPassengers,
+    returnSeatsCount,
+    departureSeatsCount,
+  } = req.body;
   let userReserve = await User.findById(user_id);
   let departureFlight = await Flight.findById(departureFlight_id);
   let returnFlight = await Flight.findById(returnFlight_id);
@@ -33,37 +45,48 @@ exports.reserveFlight = catchAsync(async (req, res, next) => {
     user_id: user_id,
     departureCabin: departureCabin,
     returnCabin: returnCabin,
-    departureSeats:departureSeats,
-    returnSeats:returnSeats,
-    returnSeatsCount:returnSeatsCount,
-    departureSeatsCount:departureSeatsCount,
-    departurePassengers:departurePassengers,
-    returnPassengers:returnPassengers,
+    departureSeats: departureSeats,
+    returnSeats: returnSeats,
+    returnSeatsCount: returnSeatsCount,
+    departureSeatsCount: departureSeatsCount,
+    departurePassengers: departurePassengers,
+    returnPassengers: returnPassengers,
     price: price,
-
   });
 
-  if(departureCabin.toLowerCase()==="economy"){
-    departureFlight.economySeats-=departureSeatsCount;
-  }
-  else if(departureCabin.toLowerCase()==="firstclass"){
-    departureFlight.firstClassSeats-=departureSeatsCount;
-  }
-  else if(departureCabin.toLowerCase()==="business"){ 
-    departureFlight.businessSeats-=departureSeatsCount;
-  }
-
-  if(returnCabin.toLowerCase()==="economy"){
-    returnFlight.economySeats-=returnSeatsCount;
-  }
-  else if(returnCabin.toLowerCase()==="firstclass"){
-    returnFlight.firstClassSeats-=returnSeatsCount;
-  }
-  else if(returnCabin.toLowerCase()==="business"){
-    returnFlight.businessSeats-=returnSeatsCount;
+  if (departureCabin.toLowerCase() === "economy") {
+    departureFlight.economySeats -= departureSeatsCount;
+    for (let flight of departureSeats) {
+      departureFlight.reservedSeats.push(flight);
+    }
+  } else if (departureCabin.toLowerCase() === "firstclass") {
+    departureFlight.firstClassSeats -= departureSeatsCount;
+    for (let flight of departureSeats) {
+      departureFlight.reservedSeats.push(flight);
+    }
+  } else if (departureCabin.toLowerCase() === "business") {
+    departureFlight.businessSeats -= departureSeatsCount;
+    for (let flight of departureSeats) {
+      departureFlight.reservedSeats.push(flight);
+    }
   }
 
-
+  if (returnCabin.toLowerCase() === "economy") {
+    returnFlight.economySeats -= returnSeatsCount;
+    for (let flight of returnSeats) {
+      returnFlight.reservedSeats.push(flight);
+    }
+  } else if (returnCabin.toLowerCase() === "firstclass") {
+    returnFlight.firstClassSeats -= returnSeatsCount;
+    for (let flight of returnSeats) {
+      returnFlight.reservedSeats.push(flight);
+    }
+  } else if (returnCabin.toLowerCase() === "business") {
+    returnFlight.businessSeats -= returnSeatsCount;
+    for (let flight of returnSeats) {
+      returnFlight.reservedSeats.push(flight);
+    }
+  }
 
   userReserve.reservations.push(reservation);
   await userReserve.save();
@@ -104,32 +127,45 @@ exports.cancelFlight = catchAsync(async (req, res, next) => {
     return next(new ErrorResponse("Email could not be sent", 500));
   }
 
-  if(reservation.departureCabin.toLowerCase()==="economy"){
-    departureFlight.economySeats+=reservation.departureSeatsCount;
-  }
-  else if(reservation.departureCabin.toLowerCase()==="firstclass"){
-    departureFlight.firstClassSeats+=reservation.departureSeatsCount;
-  }
-  else if(reservation.departureCabin.toLowerCase()==="business"){ 
-    departureFlight.businessSeats+=reservation.departureSeatsCount;
-  }
-
-  if(reservation.returnCabin.toLowerCase()==="economy"){
-    returnFlight.economySeats+=reservation.returnSeatsCount;
-  }
-  else if(reservation.returnCabin.toLowerCase()==="firstclass"){
-    returnFlight.firstClassSeats+=reservation.returnSeatsCount;
-  }
-  else if(reservation.returnCabin.toLowerCase()==="business"){
-    returnFlight.businessSeats+=reservation.returnSeatsCount;
+  if (reservation.departureCabin.toLowerCase() === "economy") {
+    departureFlight.economySeats += reservation.departureSeatsCount;
+    for (let flight of reservation.departureSeats) {
+      departureFlight.reservedSeats.pull(flight);
+    }
+  } else if (reservation.departureCabin.toLowerCase() === "firstclass") {
+    departureFlight.firstClassSeats += reservation.departureSeatsCount;
+    for (let flight of reservation.departureSeats) {
+      departureFlight.reservedSeats.pull(flight);
+    }
+  } else if (reservation.departureCabin.toLowerCase() === "business") {
+    departureFlight.businessSeats += reservation.departureSeatsCount;
+    for (let flight of reservation.departureSeats) {
+      departureFlight.reservedSeats.pull(flight);
+    }
   }
 
+  if (reservation.returnCabin.toLowerCase() === "economy") {
+    returnFlight.economySeats += reservation.returnSeatsCount;
+    for (let flight of reservation.returnSeats) {
+      returnFlight.reservedSeats.pull(flight);
+    }
+  } else if (reservation.returnCabin.toLowerCase() === "firstclass") {
+    returnFlight.firstClassSeats += reservation.returnSeatsCount;
+    for (let flight of reservation.returnSeats) {
+      returnFlight.reservedSeats.pull(flight);
+    }
+  } else if (reservation.returnCabin.toLowerCase() === "business") {
+    returnFlight.businessSeats += reservation.returnSeatsCount;
+    for (let flight of reservation.returnSeats) {
+      returnFlight.reservedSeats.pull(flight);
+    }
+  }
 
   await User.findByIdAndUpdate(user, { $pull: { reservations: reserveId } });
   await Reserve.findByIdAndDelete(reserveId);
   await departureFlight.save();
   await returnFlight.save();
-  res.status(200).json({
-    success: true,
-  });
+  // res.status(200).json({
+  //   success: true,
+  // });
 });

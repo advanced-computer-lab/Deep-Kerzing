@@ -1,10 +1,10 @@
 import GUViewFlights from "./GUViewFlights";
-import { useContext , useState } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../UserContext/UserContext";
 
 const GUAllFlights = (props) => {
   const departure = props.departure;
-  const [selected,setSelected] = useState();
+  const [selected, setSelected] = useState();
   const {
     chosenDepartureFlight,
     setChosenDepartureFlight,
