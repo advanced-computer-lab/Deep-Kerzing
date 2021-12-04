@@ -13,6 +13,12 @@ const GUViewFlights = (props) => {
     chosenReturnFlight,
     chosenDepartureFlight,
     selected,
+    DeparturePrice,
+    setDeparturePrice,
+    ReturnPrice,
+    departureCabin,
+    returnCabin,
+    setReturnPrice,
     setSelected,
   } = useContext(UserContext);
 
@@ -20,8 +26,27 @@ const GUViewFlights = (props) => {
     setSelected(props._id);
     if (props.departureCheck) {
       setChosenDepartureFlight(value);
+      console.log(departureCabin)
+      if(departureCabin === "Economy"){
+        setDeparturePrice(value.priceEconomy);
+      }
+      else if (departureCabin === "First"){
+        setDeparturePrice(value.priceFirst)
+      }
+      else if (departureCabin === "Business"){
+        setDeparturePrice(value.priceBusiness)
+      }
+      console.log(value)
+      console.log("Price",DeparturePrice)
     } else {
       setChosenReturnFlight(value);
+      if (returnCabin === "Economy") {
+        setReturnPrice(value.priceEconomy);
+      } else if (returnCabin === "First") {
+        setReturnPrice(value.priceFirst);
+      } else if (returnCabin === "Business") {
+        setReturnPrice(value.priceBusiness);
+      }
     }
   };
   console.log(chosenReturnFlight);

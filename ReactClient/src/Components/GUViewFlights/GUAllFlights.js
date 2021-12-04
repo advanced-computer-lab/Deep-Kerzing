@@ -11,6 +11,12 @@ const GUAllFlights = (props) => {
     setChosenReturnFlight,
     chosenReturnFlight,
     departureChosenSeats,
+    DeparturePrice,
+    setDeparturePrice,
+    departureCabin,
+    returnCabin,
+    ReturnPrice,
+    setReturnPrice,
   } = useContext(UserContext);
   return (
     <div>
@@ -22,6 +28,12 @@ const GUAllFlights = (props) => {
           setChosenReturnFlight,
           chosenReturnFlight,
           chosenDepartureFlight,
+          DeparturePrice,
+          setDeparturePrice,
+          ReturnPrice,
+          setReturnPrice,
+          departureCabin,
+          returnCabin,
         }}
       >
         <div className="containerCardChooseFlight">

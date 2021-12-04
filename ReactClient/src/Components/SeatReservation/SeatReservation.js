@@ -67,86 +67,92 @@ const SeatReservation = (props) => {
             <li className="seat">
               <input
                 type="checkbox"
-                id={number + "A"}
+                id={"E" + number + "A"}
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "A")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "A"))
+                    departureChosenSeats.includes("E" + number + "A")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("E" + number + "A"))
                 }
-                disabled={seats.includes(number + "A")}
+                disabled={seats.includes("E" + number + "A")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "A"}>{number + "A"}</label>
+              <label for={"E" + number + "A"}>{"E" + number + "A"}</label>
             </li>
             <li className="seat">
               <input
                 type="checkbox"
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "B")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "B"))
+                    departureChosenSeats.includes("E" + number + "B")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("E" + number + "B"))
                 }
-                id={number + "B"}
-                disabled={seats.includes(number + "B")}
+                id={"E" + number + "B"}
+                disabled={seats.includes("E" + number + "B")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "B"}>{number + "B"}</label>
+              <label for={"E" + number + "B"}>{"E" + number + "B"}</label>
             </li>
             <li className="seat">
               <input
                 type="checkbox"
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "C")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "C"))
+                    departureChosenSeats.includes("E" + number + "C")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("E" + number + "C"))
                 }
-                id={number + "C"}
-                disabled={seats.includes(number + "C")}
+                id={"E" + number + "C"}
+                disabled={seats.includes("E" + number + "C")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "C"}>{number + "C"}</label>
+              <label for={"E" + number + "C"}>{"E" + number + "C"}</label>
             </li>
             <li className="seat">
               <input
                 type="checkbox"
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "D")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "D"))
+                    departureChosenSeats.includes("E" + number + "D")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("E" + number + "D"))
                 }
-                id={number + "D"}
-                disabled={seats.includes(number + "D")}
+                id={"E" + number + "D"}
+                disabled={seats.includes("E" + number + "D")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "D"}>{number + "D"}</label>
+              <label for={"E" + number + "D"}>{"E" + number + "D"}</label>
             </li>
             <li className="seat">
               <input
                 type="checkbox"
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "E")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "E"))
+                    departureChosenSeats.includes("E" + number + "E")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("E" + number + "E"))
                 }
-                id={number + "E"}
-                disabled={seats.includes(number + "E")}
+                id={"E" + number + "E"}
+                disabled={seats.includes("E" + number + "E")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "E"}>{number + "E"}</label>
+              <label for={"E" + number + "E"}>{"E" + number + "E"}</label>
             </li>
             <li className="seat">
               <input
                 type="checkbox"
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "F")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "F"))
+                    departureChosenSeats.includes("E" + number + "F")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("E" + number + "F"))
                 }
-                id={number + "F"}
-                disabled={seats.includes(number + "F")}
+                id={"E" + number + "F"}
+                disabled={seats.includes("E" + number + "F")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "F"}>{number + "F"}</label>
+              <label for={"E" + number + "F"}>{"E" + number + "F"}</label>
             </li>
           </ol>
         </li>
@@ -161,66 +167,70 @@ const SeatReservation = (props) => {
             <li className="seat">
               <input
                 type="checkbox"
-                id={number + "A"}
+                id={"F" + number + "A"}
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "A")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "A"))
+                    departureChosenSeats.includes("F" + number + "A")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("F" + number + "A"))
                 }
-                disabled={seats.includes(number + "A")}
+                disabled={seats.includes("F" + number + "A")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "A"}>{number + "A"}</label>
+              <label for={"F" + number + "A"}>{"F" + number + "A"}</label>
             </li>
             <li className="seat">
-              <input type="checkbox" id={number + "B"} disabled />
-              <label for={number + "B"}>{number + "B"}</label>
+              <input type="checkbox" id={"F" + number + "B"} disabled />
+              <label for={"F" + number + "F"}>{"F" + number + "B"}</label>
             </li>
             <li className="seat">
               <input
                 type="checkbox"
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "C")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "C"))
+                    departureChosenSeats.includes("F" + number + "C")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("F" + number + "C"))
                 }
-                id={number + "C"}
-                disabled={seats.includes(number + "C")}
+                id={"F" + number + "C"}
+                disabled={seats.includes("F" + number + "C")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "C"}>{number + "C"}</label>
+              <label for={"F" + number + "C"}>{"F" + number + "C"}</label>
             </li>
             <li className="seat">
               <input
                 type="checkbox"
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "D")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "D"))
+                    departureChosenSeats.includes("F" + number + "D")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("F" + number + "D"))
                 }
-                id={number + "D"}
-                disabled={seats.includes(number + "D")}
+                id={"F" + number + "D"}
+                disabled={seats.includes("F" + number + "D")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "D"}>{number + "D"}</label>
+              <label for={"F" + number + "D"}>{"F" + number + "D"}</label>
             </li>
             <li className="seat">
-              <input type="checkbox" id={number + "E"} disabled />
-              <label for={number + "E"}>{number + "E"}</label>
+              <input type="checkbox" id={"F" + number + "E"} disabled />
+              <label for={"F" + number + "E"}>{"F" + number + "E"}</label>
             </li>
             <li className="seat">
               <input
                 type="checkbox"
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "F")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "F"))
+                    departureChosenSeats.includes("F" + number + "F")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("F" + number + "F"))
                 }
-                id={number + "F"}
-                disabled={seats.includes(number + "F")}
+                id={"F" + number + "F"}
+                disabled={seats.includes("F" + number + "F")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "F"}>{number + "F"}</label>
+              <label for={"F" + number + "F"}>{"F" + number + "F"}</label>
             </li>
           </ol>
         </li>
@@ -235,46 +245,48 @@ const SeatReservation = (props) => {
             <li className="seat">
               <input
                 type="checkbox"
-                id={number + "A"}
+                id={"B" + number + "A"}
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "A")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "A"))
+                    departureChosenSeats.includes("B" + number + "A")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("B" + number + "A"))
                 }
-                disabled={seats.includes(number + "A")}
+                disabled={seats.includes("B" + number + "A")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "A"}>{number + "A"}</label>
+              <label for={"B" + number + "A"}>{"B" + number + "A"}</label>
             </li>
             <li className="seat">
-              <input type="checkbox" id={number + "B"} disabled />
-              <label for={number + "B"}>{number + "B"}</label>
+              <input type="checkbox" id={"B" + number + "B"} disabled />
+              <label for={"B" + number + "B"}>{"B" + number + "B"}</label>
             </li>
             <li className="seat">
-              <input type="checkbox" id={number + "C"} disabled />
-              <label for={number + "C"}>{number + "C"}</label>
+              <input type="checkbox" id={"B" + number + "C"} disabled />
+              <label for={"B" + number + "C"}>{"B" + number + "C"}</label>
             </li>
             <li className="seat">
-              <input type="checkbox" id={number + "D"} disabled />
-              <label for={number + "D"}>{number + "D"}</label>
+              <input type="checkbox" id={"B" + number + "D"} disabled />
+              <label for={"B" + number + "D"}>{"B" + number + "D"}</label>
             </li>
             <li className="seat">
-              <input type="checkbox" id={number + "E"} disabled />
-              <label for={number + "E"}>{number + "E"}</label>
+              <input type="checkbox" id={"B" + number + "E"} disabled />
+              <label for={"B" + number + "E"}>{"B" + number + "E"}</label>
             </li>
             <li className="seat">
               <input
                 type="checkbox"
                 checked={
                   (props.departure &&
-                    departureChosenSeats.includes(number + "F")) ||
-                  (!props.departure && returnChosenSeats.includes(number + "F"))
+                    departureChosenSeats.includes("B" + number + "F")) ||
+                  (!props.departure &&
+                    returnChosenSeats.includes("B" + number + "F"))
                 }
-                id={number + "F"}
-                disabled={seats.includes(number + "F")}
+                id={"B" + number + "F"}
+                disabled={seats.includes("B" + number + "F")}
                 onClick={(event) => seatChoice(event.target.id)}
               />
-              <label for={number + "F"}>{number + "F"}</label>
+              <label for={"B" + number + "F"}>{"B" + number + "F"}</label>
             </li>
           </ol>
         </li>

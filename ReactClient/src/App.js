@@ -42,6 +42,9 @@ const App = () => {
   const [departureFlights, setDepartureFlights] = useState([]);
   const [returnFlights, setReturnFlights] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [DeparturePrice, setDeparturePrice] = useState(0);
+  const [ReturnPrice, setReturnPrice] = useState(0);
+
   const [departureFlight_id, setDepartureFlight_id] = useState();
   const [returnFlight_id, setReturnFlight_id] = useState();
   const [departureAirport, setDepartureAirport] = useState("");
@@ -73,6 +76,8 @@ const App = () => {
     setDepartureFlights([]);
     setReturnFlights([]);
     setTotalPrice(0);
+    setDeparturePrice(0);
+    setReturnPrice(0);
     setDepartureFlight_id();
     setReturnFlight_id();
     setDepartureAirport("");
@@ -101,6 +106,10 @@ const App = () => {
           returnCabin,
           setReturnCabin,
           departureSeats,
+          DeparturePrice,
+          setDeparturePrice,
+          ReturnPrice,
+          setReturnPrice,
           setDepartureSeats,
           returnSeats,
           setReturnSeats,

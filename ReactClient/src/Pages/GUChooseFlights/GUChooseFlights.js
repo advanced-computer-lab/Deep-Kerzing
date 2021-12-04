@@ -16,6 +16,7 @@ const GUChooseFlights = () => {
     departureCabin,
     returnCabin,
     departureSeats,
+  
     returnSeats,
     chosenDepartureFlight,
     chosenReturnFlight,
@@ -23,6 +24,10 @@ const GUChooseFlights = () => {
     returnPassengers,
     DepSeatsValid,
     RetSeatsValid,
+    DeparturePrice,
+    setDeparturePrice,
+    ReturnPrice,
+    setReturnPrice,
     ReturnForm,
     departurePassengersValid,
     returnPassengersValid,
@@ -33,7 +38,6 @@ const GUChooseFlights = () => {
   const [BookedRetSeats, setBookedRetSeats] = useState([]);
   const [DepSeats, setDepSeats] = useState();
   const [RetSeats, setRetSeats] = useState();
-
   const [step, setStep] = useState(2);
   const [button, setButton] = useState(false);
   const [back, setBack] = useState(false);
@@ -253,7 +257,7 @@ const GUChooseFlights = () => {
         )}
         {step7 && role === undefined && (
           <div className="SeatsContainer">
-            <LoginChecker checker = {true}></LoginChecker>
+            <LoginChecker checker={true}></LoginChecker>
           </div>
         )}
         {step7 && role === "user" && (
@@ -278,18 +282,36 @@ const GUChooseFlights = () => {
         />
       </div>
       <div className="Summary">
-        <h1>Summary</h1>
-        {/* <h5>From: {}</h5>
-        <h5>To: {}</h5>
-        <h5>Total Price: {button ? tempPrice : totalPrice}</h5> */}
+        <h4>Departure Flight</h4>
+        <h6>Price per seat: {DeparturePrice}</h6>
+        <h6>
+          {departureCabin === "Economy"
+            ? "Baggage: 23KG x1"
+            : departureCabin === "First"
+            ? "Baggage: 27KG x2"
+            : "Baggage: 30KG x2"}
+        </h6>
+        <hr></hr>
+        <h4>Return Flight</h4>
+        <h6>Price per seat: {ReturnPrice}</h6>
+        <h6>
+          {returnCabin === "Economy"
+            ? "Baggage: 23KG x1"
+            : returnCabin === "First"
+            ? "Baggage: 27KG x2"
+            : "Baggage: 30KG x2"}
+        </h6>
+        <hr></hr>
+        {/* <h5>Total Price: {DeparturePrice + ReturnPrice}</h5> */}
+        <p>*Children tickets are reduced by 50%.</p>
       </div>
       <div className="buttonChoose">
-        {button && (
+        {button && !step7 && (
           <button className="buttonNext" onClick={onNext}>
             Next
           </button>
         )}
-        {!button && (
+        {!button && !step7 && (
           <button disabled className="disabledButton">
             Next
           </button>
