@@ -1,11 +1,20 @@
 import UserContext from "../../Components/UserContext/UserContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../Store/auth-context";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import "reactjs-popup/dist/index.css";
+import * as React from "react";
+import { useHistory } from "react-router-dom";
 
 import axios from "axios";
 
 const Review = () => {
   const authCtx = useContext(AuthContext);
+  const [id, setId] = useState("");
+
   const token = authCtx.token;
   const {
     departureCabin,
@@ -17,24 +26,49 @@ const Review = () => {
     departurePassengers,
     returnPassengers,
     departureChosenSeats,
+    setTotalPrice,
+    DeparturePrice,
+    ReturnPrice,
+    totalPrice,
     returnChosenSeats,
   } = useContext(UserContext);
   useEffect(() => {
-    console.log("Now We Are Testing");
-    console.log(
-      departureCabin,
-      returnCabin,
-      departureSeats,
-      returnSeats,
-      chosenDepartureFlight,
-      chosenReturnFlight,
-      departurePassengers,
-      returnPassengers,
-      departureChosenSeats,
-      returnChosenSeats
-    );
-    console.log("Now We Finished Testing");
+    var KidsDeparture = 0;
+    var AdultsDeparture = 0;
+    for (var i = 1; i <= departureSeats; i++) {
+      console.log(departurePassengers);
+      if (departurePassengers[i + ""][3] === "adult") {
+        AdultsDeparture++;
+      } else if (departurePassengers[i + ""][3] === "child") {
+        KidsDeparture++;
+      }
+    }
+    var KidsReturn = 0;
+    var AdultsReturn = 0;
+    for (var i = 1; i <= returnSeats; i++) {
+      console.log(returnPassengers);
+      if (returnPassengers[i + ""][3] === "adult") {
+        AdultsReturn++;
+      } else if (returnPassengers[i + ""][3] === "child") {
+        KidsReturn++;
+      }
+    }
+    var totalPrice1 =
+      DeparturePrice * AdultsDeparture +
+      DeparturePrice * 0.5 * KidsDeparture +
+      ReturnPrice * AdultsReturn +
+      ReturnPrice * 0.5 * KidsReturn;
+
+    setTotalPrice(totalPrice);
   }, []);
+
+  const history = useHistory();
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+    history.push("/");
+  };
+
   const onSubmitHandler = () => {
     var departurePass = [];
     for (const [key, value] of Object.entries(departurePassengers)) {
@@ -63,7 +97,7 @@ const Review = () => {
           returnCabin: returnCabin,
           departureSeats: departureChosenSeats,
           returnSeats: returnChosenSeats,
-          price: 0,
+          price: totalPrice,
           departurePassengers: departurePass,
           returnPassengers: returnPass,
         };
@@ -71,6 +105,8 @@ const Review = () => {
           .post("http://localhost:8000/api/reservation/reserve", inputs)
           .then((res) => {
             console.log(res.data);
+            setId(res.data.data._id);
+            setOpen(true);
           })
           .catch((err) => {
             console.log("Error from ShowuserList");
@@ -79,31 +115,66 @@ const Review = () => {
   };
   return (
     <div>
-      <h4>Departure Flight Details</h4>
-      <p>
-        <b>Flight Number:</b> {chosenDepartureFlight.flightNumber}<br></br>
-        <b>From:</b> {chosenDepartureFlight.departure}<br></br>
-        <b>To:</b> {chosenDepartureFlight.arrival}<br></br>
-        <b>Departure Date:</b> {chosenDepartureFlight.depDate}<br></br>
-        <b>Departure Time:</b> {chosenDepartureFlight.depTime}<br></br>
-        <b>Arrival Time: </b>{chosenDepartureFlight.arrTime}<br></br>
-        <b>Chosen Seats:</b> {departureChosenSeats}<br></br>
-        <b>Cabin: </b>{departureCabin}
-      </p>
-      <hr></hr>
-      <h4>Return Flight Details</h4>
-      <p>
-        <b>Flight Number:</b>  {chosenReturnFlight.flightNumber}<br></br>
-        <b>From:</b> {chosenReturnFlight.departure}<br></br>
-        <b>To:</b> {chosenReturnFlight.arrival}<br></br>
-        <b>Departure Date:</b> {chosenReturnFlight.depDate}<br></br>
-        <b>Departure Time:</b>  {chosenReturnFlight.arrTime}<br></br>
-        <b>Arrival Time: </b> {chosenReturnFlight.depTime}<br></br>
-        <b>Chosen Seats:</b> {returnChosenSeats}<br></br>
-        <b>Cabin: </b> {returnCabin}
-      </p>
+      <div>
+        <h4>Departure Flight Details</h4>
+        <p>
+          <b>Flight Number:</b> {chosenDepartureFlight.flightNumber}
+          <br></br>
+          <b>From:</b> {chosenDepartureFlight.departure}
+          <br></br>
+          <b>To:</b> {chosenDepartureFlight.arrival}
+          <br></br>
+          <b>Departure Date:</b> {chosenDepartureFlight.depDate}
+          <br></br>
+          <b>Departure Time:</b> {chosenDepartureFlight.depTime}
+          <br></br>
+          <b>Arrival Time: </b>
+          {chosenDepartureFlight.arrTime}
+          <br></br>
+          <b>Chosen Seats:</b> {departureChosenSeats}
+          <br></br>
+          <b>Cabin: </b>
+          {departureCabin}
+        </p>
+        <hr></hr>
+        <h4>Return Flight Details</h4>
+        <p>
+          <b>Flight Number:</b> {chosenReturnFlight.flightNumber}
+          <br></br>
+          <b>From:</b> {chosenReturnFlight.departure}
+          <br></br>
+          <b>To:</b> {chosenReturnFlight.arrival}
+          <br></br>
+          <b>Departure Date:</b> {chosenReturnFlight.depDate}
+          <br></br>
+          <b>Departure Time:</b> {chosenReturnFlight.arrTime}
+          <br></br>
+          <b>Arrival Time: </b> {chosenReturnFlight.depTime}
+          <br></br>
+          <b>Chosen Seats:</b> {returnChosenSeats}
+          <br></br>
+          <b>Cabin: </b> {returnCabin}
+        </p>
 
-      <button onClick={onSubmitHandler}>Confirm</button>
+        <button className="button" onClick={onSubmitHandler}>
+          Confirm
+        </button>
+      </div>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          <h3>Your reservation is done successfully</h3>
+          <p>Reservation id is : {id}</p>
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose}>Done</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
