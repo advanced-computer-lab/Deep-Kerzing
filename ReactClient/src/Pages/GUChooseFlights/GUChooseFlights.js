@@ -4,7 +4,6 @@ import UserContext from "../../Components/UserContext/UserContext";
 import { useContext, useEffect, useState } from "react";
 import Stepper from "./Stepper";
 import SeatReservation from "../../Components/SeatReservation/SeatReservation";
-import Login from "../Login/Login";
 import axios from "axios";
 import ReservationInfo from "../../Components/ReservationInfo/ReservationInfo";
 import Review from "./Review";
@@ -16,7 +15,6 @@ const GUChooseFlights = () => {
     departureCabin,
     returnCabin,
     departureSeats,
-  
     returnSeats,
     chosenDepartureFlight,
     chosenReturnFlight,
@@ -25,9 +23,7 @@ const GUChooseFlights = () => {
     DepSeatsValid,
     RetSeatsValid,
     DeparturePrice,
-    setDeparturePrice,
     ReturnPrice,
-    setReturnPrice,
     ReturnForm,
     departurePassengersValid,
     returnPassengersValid,
@@ -44,7 +40,6 @@ const GUChooseFlights = () => {
 
   useEffect(() => {
     ButtonChecker();
-    checkPrice();
   }, [
     chosenDepartureFlight,
     chosenReturnFlight,
@@ -52,40 +47,13 @@ const GUChooseFlights = () => {
     step,
     back,
     DepSeatsValid,
+    RetSeatsValid,
     departurePassengersValid,
     returnPassengersValid,
     departurePassengers,
     returnPassengers,
   ]);
 
-  const checkPrice = () => {
-    // if (chosenDepartureFlight.length === 0 || chosenReturnFlight.length === 0) {
-    //   setTempPrice(totalPrice);
-    // }
-    // if (cabinChosen === "Economy") {
-    //   if (chosenDepartureFlight.length !== 0) {
-    //     setTempPrice(totalPrice + chosenDepartureFlight.priceEconomy);
-    //   }
-    //   if (chosenReturnFlight.length !== 0) {
-    //     setTempPrice(totalPrice + chosenReturnFlight.priceEconomy);
-    //   }
-    // } else if (cabinChosen === "First") {
-    //   if (chosenDepartureFlight.length !== 0) {
-    //     setTempPrice(totalPrice + chosenDepartureFlight.priceFirst);
-    //   }
-    //   if (chosenReturnFlight.length !== 0) {
-    //     setTempPrice(totalPrice + chosenReturnFlight.priceFirst);
-    //   }
-    // } else if (cabinChosen === "Business") {
-    //   if (chosenDepartureFlight.length !== 0) {
-    //     setTempPrice(totalPrice + chosenDepartureFlight.priceBusiness);
-    //   }
-    //   if (chosenReturnFlight.length !== 0) {
-    //     setTempPrice(totalPrice + chosenReturnFlight.priceBusiness);
-    //   }
-    // }
-    // console.log(tempPrice, totalPrice);
-  };
   const [activeStep, setActiveStep] = useState(0);
   const [step1, setStep1] = useState(true);
   const [step2, setStep2] = useState(false);
@@ -98,6 +66,8 @@ const GUChooseFlights = () => {
   const ButtonChecker = () => {
     if (step === 2 && chosenDepartureFlight.length !== 0) {
       setButton(true);
+    } else if (step === 2 && chosenDepartureFlight.length === 0) {
+      setButton(false);
     }
     if (step === 3 && DepSeatsValid) {
       setButton(true);
@@ -116,6 +86,8 @@ const GUChooseFlights = () => {
     }
     if (step === 5 && chosenReturnFlight.length !== 0) {
       setButton(true);
+    } else if (step === 5 && chosenReturnFlight.length === 0) {
+      setButton(false);
     }
     if (step === 6 && RetSeatsValid) {
       setButton(true);
@@ -123,9 +95,14 @@ const GUChooseFlights = () => {
       setButton(false);
     }
     if (step === 7) {
-      setButton(true);
-    } else if (step === 7 && !ReturnForm) {
-      setButton(false);
+      if (
+        Object.keys(returnPassengers).length + "" === returnSeats + "" &&
+        returnPassengersValid
+      ) {
+        setButton(true);
+      } else {
+        setButton(false);
+      }
     }
   };
   const onBack = () => {

@@ -2,55 +2,62 @@ import "../searchFlight/adminSearchFlight.css";
 import * as React from "react";
 import "./Checkbox.css";
 import UserContext from "../../Components/UserContext/UserContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 
 const InfoCard = (props) => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [passportNumber, setPassportNumber] = useState("");
-  const [type, setType] = useState("");
   const {
     departurePassengers,
     setDeparturePassengers,
     setReturnPassengers,
+    depPassChecker,
+    setdepPassChecker,
+    setretPassChecker,
+    retPassChecker,
     returnPassengers,
-    setdeparturePassengersValid,
-    setreturnPassengersValid,
-    departurePassengersValid,
   } = useContext(UserContext);
+  const [email, setEmail] = useState(
+    props.passengers ? props.passengers[0] : ""
+  );
+  const [name, setName] = useState(props.passengers ? props.passengers[1] : "");
+  const [passportNumber, setPassportNumber] = useState(
+    props.passengers ? props.passengers[2] : ""
+  );
+  const [type, setType] = useState(props.passengers ? props.passengers[3] : "");
 
-  const checker = () => {
-    setdeparturePassengersValid(true);
-    if (email === "" || name === "" || passportNumber === "" || type === "") {
-      if (props.departure) {
-        setdeparturePassengersValid(false);
-      } else {
-        setreturnPassengersValid(false);
-      }
-    } else if (props.departure) {
-      setdeparturePassengersValid(true);
+  useEffect(() => {
+    if (props.departure) {
       departurePassengers[props.id] = [email, name, passportNumber, type];
       setDeparturePassengers(departurePassengers);
-    } else {
-      setreturnPassengersValid(true);
+    } else if (!props.departure) {
       returnPassengers[props.id] = [email, name, passportNumber, type];
       setReturnPassengers(returnPassengers);
     }
-  };
-  // const onsubmitHandler = () => {
-  //   if (props.departure) {
-  //     console.log("clicked", departurePassengers);
-  //     departurePassengers[props.id] = [email, name, passportNumber, type];
-  //     setDeparturePassengers(departurePassengers);
-  //   } else {
-  //     returnPassengers[props.id] = [email, name, passportNumber, type];
-  //     setReturnPassengers(returnPassengers);
-  //     // returnPassengers[props.id] = [email, name, passportNumber, type];
-  //   }
-  //   setdeparturePassengersValid(false);
-  //   checker();
-  //   console.log("clicked", departurePassengers);
-  // };
+    if (props.departure) {
+      depPassChecker[props.id] = true;
+      setdepPassChecker(depPassChecker);
+    } else {
+      retPassChecker[props.id] = true;
+      setretPassChecker(retPassChecker);
+    }
+    if (
+      email.length <= 1 ||
+      name.length <= 1 ||
+      passportNumber.length <= 1 ||
+      type === ""
+    ) {
+      if (props.departure) {
+        depPassChecker[props.id] = false;
+        setdepPassChecker(depPassChecker);
+      } else {
+        retPassChecker[props.id] = false;
+        setretPassChecker(retPassChecker);
+      }
+    }
+    console.log(retPassChecker);
+
+    props.checker();
+  }, [email, name, passportNumber, type]);
+
   return (
     <div>
       <form>
@@ -58,6 +65,7 @@ const InfoCard = (props) => {
           onChange={(event) => setEmail(event.target.value)}
           type="email"
           placeholder="Email"
+          defaultValue={props.passengers ? props.passengers[0] : email}
           required
         />
 
@@ -66,12 +74,14 @@ const InfoCard = (props) => {
           type="text"
           placeholder="Full Name"
           required
+          defaultValue={props.passengers ? props.passengers[1] : name}
         />
 
         <input
-          onInput={(event) => setPassportNumber(event.target.value)}
+          onChange={(event) => setPassportNumber(event.target.value)}
           type="text"
           placeholder="Passport Number"
+          defaultValue={props.passengers ? props.passengers[2] : passportNumber}
           required
         />
         <div>
@@ -79,6 +89,12 @@ const InfoCard = (props) => {
             <input
               type="radio"
               value="adult"
+              defaultChecked={
+                props.passengers && props.passengers[3] === "adult"
+                  ? true
+                  : false
+              }
+              name="Age"
               onChange={(event) => setType(event.target.value)}
             />
             <span className="label"></span>Adult
@@ -88,13 +104,18 @@ const InfoCard = (props) => {
             <input
               type="radio"
               value="child"
+              name="Age"
+              defaultChecked={
+                props.passengers && props.passengers[3] === "child"
+                  ? true
+                  : false
+              }
               onChange={(event) => setType(event.target.value)}
             />
             <span className="label"></span>Child
           </label>
         </div>
       </form>
-      {checker()}
     </div>
   );
 };
