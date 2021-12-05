@@ -47,7 +47,7 @@ const Login = (props) => {
           <h1>Login</h1>
           <div className="input-group input-group-icon">
             <input
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(event) => setUsername(event.target.value.toLowerCase())}
               type="email"
               placeholder="Email"
               required
