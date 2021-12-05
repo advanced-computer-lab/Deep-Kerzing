@@ -7,14 +7,16 @@ import { MdWork } from "react-icons/md";
 import { useLocation, useHistory } from "react-router-dom";
 import * as ReactBootStrap from "react-bootstrap";
 import logo2 from "../GuestNavbar/logo2.png";
+import PopUp from "../PopUp/popUp";
 
 const UserProfile = () => {
-  const [user, setUserId] = useState(null);
   const authCtx = useContext(AuthContext);
   const token = authCtx.token;
   const history = useHistory();
   const [loading, setLoading] = useState(false);
-  console.log(token);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
 
   useEffect(async () => {
     await axios
@@ -24,14 +26,35 @@ const UserProfile = () => {
         },
       })
       .then((resOne) => {
-        setUserId(resOne.data.data);
+        setEmail(resOne.data.data.email);
+        setName(resOne.data.data.name);
+        setRole(resOne.data.data.role);
         setLoading(true);
-        console.log(resOne.data.data);
       })
       .catch((err) => {
         console.log("Error Can not Get the profile");
       });
   }, []);
+
+  let inputs = {
+    email: email,
+    name: name,
+  };
+
+  const handleSubmit = async () => {
+    await axios
+      .put("http://localhost:8000/api/user/updatedetails", inputs, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((resOne) => {
+        history.push("/user");
+      })
+      .catch((err) => {
+        console.log("Error update data");
+      });
+  };
 
   return (
     <div>
@@ -44,12 +67,11 @@ const UserProfile = () => {
           <h1>Profile</h1>
           <div className="input-group input-group-icon">
             <input
-              //   onChange={(event) => setName(event.target.value)}
               type="text"
               placeholder="Name"
-              defaultValue={user.name}
+              value={name}
               required
-              disabled
+              onChange={(event) => setName(event.target.value)}
             />
             <div className="input-icon">
               <FaUser></FaUser>
@@ -57,10 +79,10 @@ const UserProfile = () => {
           </div>
           <div className="input-group input-group-icon">
             <input
-              //   onChange={(event) => setEmail(event.target.value)}
               type="email"
-              value={user.email}
-              disabled
+              value={email}
+              required
+              onChange={(event) => setEmail(event.target.value)}
             />
 
             <div className="input-icon">
@@ -69,36 +91,27 @@ const UserProfile = () => {
           </div>
           <div className="input-group input-group-icon">
             <input
-              //   onChange={(event) => setName(event.target.value)}
               type="text"
               placeholder="Name"
-              defaultValue={user.role}
+              defaultValue={role}
               required
               disabled
             />
             <div className="input-icon">
               <MdWork></MdWork>
             </div>
-          </div>{" "}
-          <div>
-            <button
-              className="buttonCancel"
-              onClick={() => {
-                history.push("/user/UpdateProfile");
-              }}
-            >
-              Edit Profile
-            </button>
-
-            <button
-              className="button"
-              onClick={() => {
-                history.push("/user/UpdatePassword");
-              }}
-            >
-              Change Password
-            </button>
           </div>
+          <button
+            className="buttonCancel"
+            onClick={() => {
+              history.push("/user");
+            }}
+          >
+            Cancel
+          </button>
+          <button className="button" onClick={handleSubmit}>
+            Update
+          </button>
         </div>
       ) : (
         <div className="containerCard">

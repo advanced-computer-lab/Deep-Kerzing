@@ -24,6 +24,8 @@ import ViewReservedFlights from "./Components/GuestViewReservedFlights/ViewReser
 import UserHomePage from "./Pages/UserHomepage/UserHomepage";
 import Review from "./Pages/GUChooseFlights/Review";
 import UserProfile from "./Components/Profile/UserProfile";
+import UpdateProfile from "./Components/Profile/UpdateProfile";
+import UpdatePassword from "./Components/Profile/UpdatePassword";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -221,6 +223,18 @@ const App = () => {
               <UserProfile></UserProfile>
             </Route>
           )}
+          {isAuthenticated && role === "user" && (
+            <Route path="/user/UpdateProfile" exact>
+              <UpdateProfile></UpdateProfile>
+            </Route>
+          )}
+
+          {isAuthenticated && role === "user" && (
+            <Route path="/user/UpdatePassword" exact>
+              <UpdatePassword></UpdatePassword>
+            </Route>
+          )}
+
           {isAuthenticated && role === "user" && (
             <Route exact path="/GUFlightDetails">
               <GUFlightDetails></GUFlightDetails>
