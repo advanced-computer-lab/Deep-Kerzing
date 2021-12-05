@@ -161,7 +161,7 @@ const GUChooseFlights = () => {
       setStep5(true);
       axios
         .get(
-          `http://localhost:8000/api/flights?_id=${chosenDepartureFlight._id}`
+          `http://localhost:8000/api/flights?_id=${chosenReturnFlight._id}`
         )
         .then((res) => {
           setBookedRetSeats(res.data[0].reservedSeats);

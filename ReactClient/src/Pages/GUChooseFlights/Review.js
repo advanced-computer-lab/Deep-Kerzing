@@ -85,6 +85,8 @@ const Review = () => {
       })
       .then((resOne) => {
         console.log(resOne);
+        console.log(totalPrice,"total Price")
+        console.log(DeparturePrice + ReturnPrice , "Total Price 2");
         const inputs = {
           departureFlight_id: chosenDepartureFlight._id,
           returnFlight_id: chosenReturnFlight._id,
@@ -95,7 +97,7 @@ const Review = () => {
           returnCabin: returnCabin,
           departureSeats: departureChosenSeats,
           returnSeats: returnChosenSeats,
-          price: totalPrice,
+          price: DeparturePrice + ReturnPrice,
           departurePassengers: departurePass,
           returnPassengers: returnPass,
         };
