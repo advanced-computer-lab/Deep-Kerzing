@@ -36,7 +36,6 @@ const Review = () => {
     var KidsDeparture = 0;
     var AdultsDeparture = 0;
     for (var i = 1; i <= departureSeats; i++) {
-      console.log(departurePassengers);
       if (departurePassengers[i + ""][3] === "adult") {
         AdultsDeparture++;
       } else if (departurePassengers[i + ""][3] === "child") {
@@ -46,7 +45,6 @@ const Review = () => {
     var KidsReturn = 0;
     var AdultsReturn = 0;
     for (var i = 1; i <= returnSeats; i++) {
-      console.log(returnPassengers);
       if (returnPassengers[i + ""][3] === "adult") {
         AdultsReturn++;
       } else if (returnPassengers[i + ""][3] === "child") {
@@ -135,6 +133,8 @@ const Review = () => {
           <br></br>
           <b>Cabin: </b>
           {departureCabin}
+          <br></br>
+          <b>Price:</b> {DeparturePrice}
         </p>
         <hr></hr>
         <h4>Return Flight Details</h4>
@@ -154,11 +154,16 @@ const Review = () => {
           <b>Chosen Seats:</b> {returnChosenSeats}
           <br></br>
           <b>Cabin: </b> {returnCabin}
+          <br></br>
+          <b>Price:</b> {ReturnPrice}
         </p>
-
-        <button className="button" onClick={onSubmitHandler}>
-          Confirm
-        </button>
+        <hr></hr>
+        <div>
+          <h3>
+            <b>Total Price:</b> {DeparturePrice + ReturnPrice}{" "}
+            <button className = "button" onClick={onSubmitHandler}>Confirm</button>
+          </h3>
+        </div>
       </div>
 
       <Dialog

@@ -10,7 +10,6 @@ const GUAllFlights = (props) => {
     setChosenDepartureFlight,
     setChosenReturnFlight,
     chosenReturnFlight,
-    departureChosenSeats,
     DeparturePrice,
     setDeparturePrice,
     departureCabin,
