@@ -52,6 +52,46 @@ exports.getMe = catchAsync(async (req, res, next) => {
   });
 });
 
+// @desc      Update password
+// @route     PUT /api/user/updatedetails
+// @access    Private
+
+exports.updateDetails = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+  const fieldsToUpdate = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
+// @desc      Update password
+// @route     PUT /api/user/updatepassword
+// @access    Private
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+  const user = await User.findById(req.user.id).select("+password");
+
+  // Check current password
+  if (!(await user.matchPassword(req.body.currentPassword))) {
+    return next(new ErrorResponse("Password is incorrect", 401));
+  }
+
+  user.password = req.body.newPassword;
+  await user.save();
+
+  sendTokenResponse(user, 200, res);
+});
+
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token
   const token = user.getSignedJwtToken();
