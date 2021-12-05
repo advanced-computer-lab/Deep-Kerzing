@@ -279,7 +279,6 @@ const GUChooseFlights = () => {
             : "Baggage: 30KG x2"}
         </h6>
         <hr></hr>
-        {/* <h5>Total Price: {DeparturePrice + ReturnPrice}</h5> */}
         <p>*Children tickets are reduced by 50%.</p>
       </div>
       <div className="buttonChoose">
