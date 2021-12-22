@@ -18,7 +18,7 @@ const GUAllFlights = (props) => {
     setReturnPrice,
     selectedReservation,
   } = useContext(UserContext);
-  console.log(selectedReservation)
+  console.log(selectedReservation , " Hello Hello")
   return (
     <div>
       <UserContext.Provider

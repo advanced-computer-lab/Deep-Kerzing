@@ -23,20 +23,13 @@ const ReservationCard = (props) => {
     setReturnChosenSeats,
     setDepartureSeats,
     setReturnSeats,
-    departureSeats,
-    returnSeats,
-    departureCabin,
     setDepartureCabin,
-    returnCabin,
     setReturnCabin,
-    departureAirport,
     setDepartureAirport,
-    arrivalAirport,
     setArrivalAirport,
-    departureDate,
     setDepartureDate,
-    returnDate,
     setReturnDate,
+    selectedReservation
   } = useContext(UserContext);
   const [openDep, setOpenDep] = React.useState(false);
   const [openArr, setOpenArr] = React.useState(false);
@@ -44,8 +37,14 @@ const ReservationCard = (props) => {
     setOpenDep(true);
   };
   const history = useHistory();
+
   const onUpdateHandler = () => {
+
+    
+    console.log(props.reservation, " I am the reservation");
     setSelectedReservation(props.reservation);
+
+
     const cabinNameDeparture =
       props.reservation.departureCabin.toLowerCase() + "Seats" + "[gte]";
     const cabinNameReturn =
@@ -61,7 +60,7 @@ const ReservationCard = (props) => {
       .get(urlDeparture)
       .then((res) => {
         setDepartureFlights(res.data);
-        console.log(props.reservation);
+        console.log(res.data);
         setDepartureAirport(props.reservation.departureFlight_id.from);
         setArrivalAirport(props.reservation.departureFlight_id.to);
         setChosenDepartureFlight(props.reservation.departureFlight_id);

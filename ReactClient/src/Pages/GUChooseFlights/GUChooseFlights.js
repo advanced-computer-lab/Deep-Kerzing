@@ -37,7 +37,6 @@ const GUChooseFlights = () => {
   const [step, setStep] = useState(2);
   const [button, setButton] = useState(false);
   const [back, setBack] = useState(false);
-
   useEffect(() => {
     ButtonChecker();
   }, [

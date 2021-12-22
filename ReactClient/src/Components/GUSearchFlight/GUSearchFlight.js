@@ -43,6 +43,9 @@ const GUSearchFlight = () => {
     setReturnDate,
     selectedReservation,
   } = useContext(UserContext);
+
+  console.log(selectedReservation, "I am 2 ");
+  
   const cabins = [
     {
       value: "Economy",
@@ -58,19 +61,18 @@ const GUSearchFlight = () => {
     },
   ];
   const submitSearch = (event) => {
+    console.log(selectedReservation ,"Reservation");
     event.preventDefault();
     setFlightsError(false);
     setFlightsNull(false);
     setDatesError(false);
-    console.log(departureDate, " Hello");
-
-    if (!departureAirport || !arrivalAirport) {
-      setFlightsNull(true);
-    } else if (departureAirport.name === arrivalAirport.name) {
-      setFlightsError(true);
-    } else if (!departureDate || !returnDate) {
-      setDatesError(true);
-    } else {
+    // if (!departureAirport || !arrivalAirport) {
+    //   setFlightsNull(true);
+    // } else if (departureAirport === arrivalAirport) {
+    //   setFlightsError(true);
+    // } else if (departureDate === undefined || returnDate === undefined) {
+    //   setDatesError(true);
+    // } else {
       const cabinNameDeparture =
         departureCabin.toLowerCase() + "Seats" + "[gte]";
       const cabinNameReturn = returnCabin.toLowerCase() + "Seats" + "[gte]";
@@ -82,15 +84,10 @@ const GUSearchFlight = () => {
       const urlArrival =
         base +
         `from=${arrivalAirport.name}&to=${departureAirport.name}&departureDate=${returnDate}&${cabinNameReturn}=${returnSeats}`;
-      console.log(urlDeparture);
-      console.log(urlArrival);
-
-      // setCabinChosen(cabin);
-      // setNumSeats(numberOfseats);
+      
       axios
         .get(urlDeparture)
         .then((res) => {
-          console.log("data", res.data);
           setDepartureFlights(res.data);
         })
         .catch((err) => {
@@ -99,14 +96,13 @@ const GUSearchFlight = () => {
       axios
         .get(urlArrival)
         .then((res) => {
-          console.log("Return", res.data);
           setReturnFlights(res.data);
         })
         .catch((err) => {
           console.log("Error from Airport Api");
         });
       history.push("/GUAllFlights");
-    }
+    // }
   };
   const getDates = (event, picker) => {
     setSelected(true);
