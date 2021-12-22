@@ -4,21 +4,95 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-
 import DialogTitle from "@mui/material/DialogTitle";
 import "reactjs-popup/dist/index.css";
 import * as React from "react";
 import SharedInfo from "./SharedInfo";
-import { style } from "@mui/system";
-
+import { useContext } from "react";
+import UserContext from "../UserContext/UserContext";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import axios from "axios";
 const ReservationCard = (props) => {
+  const {
+    setSelectedReservation,
+    setDepartureFlights,
+    setReturnFlights,
+    setChosenDepartureFlight,
+    setChosenReturnFlight,
+    setdepartureChosenSeats,
+    setReturnChosenSeats,
+    setDepartureSeats,
+    setReturnSeats,
+    departureSeats,
+    returnSeats,
+    departureCabin,
+    setDepartureCabin,
+    returnCabin,
+    setReturnCabin,
+    departureAirport,
+    setDepartureAirport,
+    arrivalAirport,
+    setArrivalAirport,
+    departureDate,
+    setDepartureDate,
+    returnDate,
+    setReturnDate,
+  } = useContext(UserContext);
   const [openDep, setOpenDep] = React.useState(false);
   const [openArr, setOpenArr] = React.useState(false);
-  let count = 0;
   const handleClickOpenDep = () => {
     setOpenDep(true);
   };
+  const history = useHistory();
+  const onUpdateHandler = () => {
+    setSelectedReservation(props.reservation);
+    const cabinNameDeparture =
+      props.reservation.departureCabin.toLowerCase() + "Seats" + "[gte]";
+    const cabinNameReturn =
+      props.reservation.returnCabin.toLowerCase() + "Seats" + "[gte]";
+    const base = "http://localhost:8000/api/flights/?";
+    const urlDeparture =
+      base +
+      `from=${props.reservation.departureFlight_id.from}&to=${props.reservation.departureFlight_id.to}&departureDate=${props.reservation.departureFlight_id.departureDate}&${cabinNameDeparture}=${props.reservation.departureSeatsCount}`;
+    const urlArrival =
+      base +
+      `from=${props.reservation.departureFlight_id.to}&to=${props.reservation.departureFlight_id.from}&departureDate=${props.reservation.returnFlight_id.departureDate}&${cabinNameReturn}=${props.reservation.returnSeatsCount}`;
+    axios
+      .get(urlDeparture)
+      .then((res) => {
+        setDepartureFlights(res.data);
+        console.log(props.reservation);
+        setDepartureAirport(props.reservation.departureFlight_id.from);
+        setArrivalAirport(props.reservation.departureFlight_id.to);
+        setChosenDepartureFlight(props.reservation.departureFlight_id);
+        setDepartureCabin(props.reservation.departureCabin);
+        setReturnCabin(props.reservation.returnCabin);
+        setDepartureSeats(props.reservation.departureSeatsCount);
+        setReturnSeats(props.reservation.returnSeatsCount);
+        setDepartureDate(props.reservation.departureFlight_id.departureDate);
+        setReturnDate(props.reservation.returnFlight_id.departureDate);
+        var temp = [];
+        props.reservation.departureSeats.map((element) => temp.push(element));
+        setdepartureChosenSeats(temp);
+      })
+      .catch((err) => {
+        console.log("Error from Airport Api");
+      });
+    axios
+      .get(urlArrival)
+      .then((res) => {
+        setReturnFlights(res.data);
+        setChosenReturnFlight(props.reservation.returnFlight_id);
+        var temp = [];
+        props.reservation.returnSeats.map((element) => temp.push(element));
+        setReturnChosenSeats(temp);
+      })
+      .catch((err) => {
+        console.log("Error from Airport Api");
+      });
 
+    history.push("/");
+  };
   const handleCloseDep = () => {
     setOpenDep(false);
   };
@@ -35,7 +109,6 @@ const ReservationCard = (props) => {
       <div className="reserveContainerCard">
         <div className="resCardOne">
           <div className="departureTime">
-            {/*1,1*/}
             <h4>{props.depTimeDep}</h4>
           </div>
           <div className="arrivalTime">
@@ -71,7 +144,11 @@ const ReservationCard = (props) => {
           <button className="Update" onClick={handleClickOpenDep}>
             Details
           </button>
-          {/*6,2*/}
+          <div>
+            <button className="" onClick={onUpdateHandler}>
+              Update
+            </button>
+          </div>
         </div>
 
         {/* second Flight */}

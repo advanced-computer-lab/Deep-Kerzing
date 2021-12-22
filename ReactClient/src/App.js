@@ -46,7 +46,6 @@ const App = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [DeparturePrice, setDeparturePrice] = useState(0);
   const [ReturnPrice, setReturnPrice] = useState(0);
-
   const [departureFlight_id, setDepartureFlight_id] = useState();
   const [returnFlight_id, setReturnFlight_id] = useState();
   const [departureAirport, setDepartureAirport] = useState("");
@@ -59,6 +58,7 @@ const App = () => {
   const [RetSeatsValid, setRetSeatsValid] = useState(false);
   const [DepartureForm, setDepartureForm] = useState(false);
   const [ReturnForm, setReturnForm] = useState(false);
+  const [selectedReservation, setSelectedReservation] = useState();
   const [departurePassengersValid, setdeparturePassengersValid] =
     useState(true);
   const [returnPassengersValid, setreturnPassengersValid] = useState(false);
@@ -94,6 +94,7 @@ const App = () => {
     setReturnForm(false);
     setdeparturePassengersValid(true);
     setreturnPassengersValid(false);
+    setSelectedReservation(undefined);
   };
   return (
     <Layout user={role}>
@@ -154,6 +155,8 @@ const App = () => {
           departurePassengersValid,
           returnPassengersValid,
           role,
+          selectedReservation,
+          setSelectedReservation,
         }}
       >
         <Switch>

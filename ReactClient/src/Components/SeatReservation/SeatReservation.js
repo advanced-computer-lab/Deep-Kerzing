@@ -11,19 +11,34 @@ const SeatReservation = (props) => {
     RetSeatsValid,
     setDepSeatsValid,
     setRetSeatsValid,
+    selectedReservation,
   } = useContext(UserContext);
   const [numberChosen, setnumberChosen] = useState(0);
   const [numberChosenReturn, setnumberChosenReturn] = useState(0);
-  console.log(DepSeatsValid, departureChosenSeats, departureSeats);
   const count = props.count;
-  const seats = props.booked;
+  var seats = props.booked;
   var number = 1;
   var rows = [];
-
+  console.log("Entered ", departureChosenSeats)
+  if (selectedReservation !== undefined) {
+    console.log(seats, " before", selectedReservation.departureSeats);
+    var seatsFiltered;
+    selectedReservation.departureSeats.map((element) => {
+      seatsFiltered = seats.filter((element2) => element2 !== element);
+    });
+    seats = seatsFiltered;
+    console.log(seats, " after");
+  }
+  console.log("Valid or not ", departureChosenSeats, departureSeats);
+  if (departureChosenSeats.length + "" === departureSeats + "") {
+    setDepSeatsValid(true);
+  }
+  if (returnChosenSeats.length + "" === returnSeats + "") {
+    setRetSeatsValid(true);
+  }
   const seatChoice = (event) => {
     setDepSeatsValid(false);
     setRetSeatsValid(false);
-
     if (props.departure) {
       if (departureChosenSeats.includes(event)) {
         var index = departureChosenSeats.indexOf(event);
@@ -43,7 +58,7 @@ const SeatReservation = (props) => {
         setnumberChosenReturn(numberChosenReturn + 1);
       }
     }
-
+    console.log("Valid or not ", departureChosenSeats, departureSeats);
     if (departureChosenSeats.length + "" === departureSeats + "") {
       setDepSeatsValid(true);
     }
@@ -51,7 +66,6 @@ const SeatReservation = (props) => {
       setRetSeatsValid(true);
     }
   };
-
   //Drawing the cabins
   if (props.cabin === "Economy") {
     for (var i = 0; i < count; i = i + 6) {

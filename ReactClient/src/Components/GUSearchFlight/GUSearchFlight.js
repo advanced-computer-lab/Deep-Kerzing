@@ -41,6 +41,7 @@ const GUSearchFlight = () => {
     setDepartureDate,
     returnDate,
     setReturnDate,
+    selectedReservation,
   } = useContext(UserContext);
   const cabins = [
     {
@@ -61,6 +62,7 @@ const GUSearchFlight = () => {
     setFlightsError(false);
     setFlightsNull(false);
     setDatesError(false);
+    console.log(departureDate, " Hello");
 
     if (!departureAirport || !arrivalAirport) {
       setFlightsNull(true);
@@ -159,7 +161,6 @@ const GUSearchFlight = () => {
                   }}
                 />
               )}
-              getOptionLabel={(option) => option.name || ""}
               onChange={(_event, depAirport) => {
                 setDepartureAirport(depAirport);
               }}
@@ -191,7 +192,6 @@ const GUSearchFlight = () => {
                   }}
                 />
               )}
-              getOptionLabel={(option) => option.name || ""}
               onChange={(_event, arrAirport) => {
                 setArrivalAirport(arrAirport);
               }}
@@ -223,6 +223,7 @@ const GUSearchFlight = () => {
               required={true}
               errorText={""}
               defaultValue={1}
+              value={departureSeats}
               placeholder="Departure Number of Seats"
               type="number"
               variant="outlined"
@@ -261,6 +262,7 @@ const GUSearchFlight = () => {
               required={true}
               errorText={""}
               defaultValue={1}
+              value={returnSeats}
               placeholder="Return Number of Seats"
               type="number"
               variant="outlined"
@@ -276,9 +278,7 @@ const GUSearchFlight = () => {
           <div className="GU9">
             <DateRangePicker onEvent={getDates}>
               <button className="selectDates" onClick={datesHandler}>
-                {!selected
-                  ? "Select Dates"
-                  : departureDate + " > " + returnDate}
+                {departureDate === undefined ? "Select Dates" : departureDate + " > " + returnDate} 
               </button>
             </DateRangePicker>
           </div>

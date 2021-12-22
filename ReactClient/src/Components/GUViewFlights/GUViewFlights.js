@@ -15,7 +15,6 @@ const GUViewFlights = (props) => {
     selected,
     DeparturePrice,
     setDeparturePrice,
-    ReturnPrice,
     departureCabin,
     returnCabin,
     setReturnPrice,
@@ -49,12 +48,13 @@ const GUViewFlights = (props) => {
       }
     }
   };
-  console.log(chosenReturnFlight);
 
   return (
     <div onClick={() => handleClickOpen(props)}>
       <div
         className={
+          // (selectedReservation !== undefined  && props.departure && props._id === selectedReservation.departureFlight_id._id)||
+          // (selectedReservation !== undefined  && !props.departure && props._id === selectedReservation.returnFlight_id._id)||
           props._id === selected ||
           props._id === chosenDepartureFlight._id ||
           props._id === chosenReturnFlight._id
