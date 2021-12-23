@@ -110,7 +110,7 @@ export default function PaymentForm() {
       try {
         const { id } = paymentMethod;
         const response = await axios.post("http://localhost:8000/api/payment", {
-          amount: 1000,
+          amount: (DeparturePrice + ReturnPrice) *100 ,
           id,
         });
 
