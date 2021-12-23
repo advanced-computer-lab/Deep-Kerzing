@@ -38,7 +38,7 @@ const LoginChecker = (props) => {
         password: password,
       });
       const expirationTime = new Date(new Date().getTime() + +3600 * 10000000);
-      authCtx.login(token, expirationTime.toISOString(),props.checker);
+      authCtx.login2(token, expirationTime.toISOString(), props.checker);
     } catch (e) {
       setError(true);
     }
@@ -52,7 +52,9 @@ const LoginChecker = (props) => {
           <h1>Login</h1>
           <div className="input-group input-group-icon">
             <input
-              onChange={(event) => setUsername(event.target.value.toLowerCase())}
+              onChange={(event) =>
+                setUsername(event.target.value.toLowerCase())
+              }
               type="email"
               placeholder="Email"
               required

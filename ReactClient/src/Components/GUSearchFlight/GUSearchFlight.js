@@ -42,10 +42,9 @@ const GUSearchFlight = () => {
     returnDate,
     setReturnDate,
     selectedReservation,
+    setSelectedReservation,
   } = useContext(UserContext);
 
-  console.log(selectedReservation, "I am 2 ");
-  
   const cabins = [
     {
       value: "Economy",
@@ -60,8 +59,12 @@ const GUSearchFlight = () => {
       label: "First Class",
     },
   ];
+
+  console.log(selectedReservation, "Reservation");
+  // useEffect(() => {
+  //   setSelectedReservation(selectedReservation);
+  // }, []);
   const submitSearch = (event) => {
-    console.log(selectedReservation ,"Reservation");
     event.preventDefault();
     setFlightsError(false);
     setFlightsNull(false);
@@ -73,35 +76,50 @@ const GUSearchFlight = () => {
     // } else if (departureDate === undefined || returnDate === undefined) {
     //   setDatesError(true);
     // } else {
-      const cabinNameDeparture =
-        departureCabin.toLowerCase() + "Seats" + "[gte]";
-      const cabinNameReturn = returnCabin.toLowerCase() + "Seats" + "[gte]";
+    const cabinNameDeparture = departureCabin.toLowerCase() + "Seats" + "[gte]";
+    const cabinNameReturn = returnCabin.toLowerCase() + "Seats" + "[gte]";
 
-      const base = "http://localhost:8000/api/flights/?";
-      const urlDeparture =
+    const base = "http://localhost:8000/api/flights/?";
+    let urlDeparture =
+      base +
+      `from=${departureAirport.name}&to=${arrivalAirport.name}&departureDate=${departureDate}&${cabinNameDeparture}=${departureSeats}`;
+    let urlArrival =
+      base +
+      `from=${arrivalAirport.name}&to=${departureAirport.name}&departureDate=${returnDate}&${cabinNameReturn}=${returnSeats}`;
+    if (departureAirport.name === undefined) {
+      urlDeparture =
         base +
-        `from=${departureAirport.name}&to=${arrivalAirport.name}&departureDate=${departureDate}&${cabinNameDeparture}=${departureSeats}`;
-      const urlArrival =
+        `from=${departureAirport}&to=${arrivalAirport}&departureDate=${departureDate}&${cabinNameDeparture}=${departureSeats}`;
+      urlArrival =
         base +
-        `from=${arrivalAirport.name}&to=${departureAirport.name}&departureDate=${returnDate}&${cabinNameReturn}=${returnSeats}`;
-      
-      axios
-        .get(urlDeparture)
-        .then((res) => {
-          setDepartureFlights(res.data);
-        })
-        .catch((err) => {
-          console.log("Error from Airport Api");
-        });
-      axios
-        .get(urlArrival)
-        .then((res) => {
-          setReturnFlights(res.data);
-        })
-        .catch((err) => {
-          console.log("Error from Airport Api");
-        });
-      history.push("/GUAllFlights");
+        `from=${arrivalAirport}&to=${departureAirport}&departureDate=${returnDate}&${cabinNameReturn}=${returnSeats}`;
+    }
+    setSelectedReservation(selectedReservation);
+    console.log("check", selectedReservation);
+    axios
+      .get(urlDeparture)
+      .then((res) => {
+        console.log(departureAirport);
+        console.log(arrivalAirport);
+        console.log(urlDeparture);
+        setDepartureFlights(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log("Error from Airport Api");
+      });
+    axios
+      .get(urlArrival)
+      .then((res) => {
+        console.log(urlArrival);
+        setReturnFlights(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log("Error from Airport Api");
+      });
+
+    history.push("/GUAllFlights");
     // }
   };
   const getDates = (event, picker) => {
@@ -124,7 +142,7 @@ const GUSearchFlight = () => {
       .catch((err) => {
         console.log("Error from Airport Api");
       });
-  }, [departureAirport, arrivalAirport, departureDate, returnDate]);
+  }, []);
 
   return (
     <div className="containerCardGuest">
@@ -274,7 +292,9 @@ const GUSearchFlight = () => {
           <div className="GU9">
             <DateRangePicker onEvent={getDates}>
               <button className="selectDates" onClick={datesHandler}>
-                {departureDate === undefined ? "Select Dates" : departureDate + " > " + returnDate} 
+                {departureDate === undefined
+                  ? "Select Dates"
+                  : departureDate + " > " + returnDate}
               </button>
             </DateRangePicker>
           </div>

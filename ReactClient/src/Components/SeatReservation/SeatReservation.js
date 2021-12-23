@@ -19,7 +19,8 @@ const SeatReservation = (props) => {
   var seats = props.booked;
   var number = 1;
   var rows = [];
-  console.log("Entered ", departureChosenSeats)
+  console.log("Entered ", departureChosenSeats);
+
   if (selectedReservation !== undefined) {
     console.log(seats, " before", selectedReservation.departureSeats);
     var seatsFiltered;

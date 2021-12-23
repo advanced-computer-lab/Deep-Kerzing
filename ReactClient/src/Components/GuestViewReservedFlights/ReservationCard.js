@@ -29,7 +29,7 @@ const ReservationCard = (props) => {
     setArrivalAirport,
     setDepartureDate,
     setReturnDate,
-    selectedReservation
+    selectedReservation,
   } = useContext(UserContext);
   const [openDep, setOpenDep] = React.useState(false);
   const [openArr, setOpenArr] = React.useState(false);
@@ -39,11 +39,7 @@ const ReservationCard = (props) => {
   const history = useHistory();
 
   const onUpdateHandler = () => {
-
-    
     console.log(props.reservation, " I am the reservation");
-    setSelectedReservation(props.reservation);
-
 
     const cabinNameDeparture =
       props.reservation.departureCabin.toLowerCase() + "Seats" + "[gte]";
@@ -70,6 +66,7 @@ const ReservationCard = (props) => {
         setReturnSeats(props.reservation.returnSeatsCount);
         setDepartureDate(props.reservation.departureFlight_id.departureDate);
         setReturnDate(props.reservation.returnFlight_id.departureDate);
+        setSelectedReservation(props.reservation);
         var temp = [];
         props.reservation.departureSeats.map((element) => temp.push(element));
         setdepartureChosenSeats(temp);
@@ -89,7 +86,6 @@ const ReservationCard = (props) => {
       .catch((err) => {
         console.log("Error from Airport Api");
       });
-
     history.push("/");
   };
   const handleCloseDep = () => {

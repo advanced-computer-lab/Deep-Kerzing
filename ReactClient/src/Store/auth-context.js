@@ -77,6 +77,21 @@ export const AuthContextProvider = (props) => {
     }
   };
 
+  const loginHandler2 = (token, expirationTime, checker) => {
+    setToken(token.token);
+    setRole(token.role);
+    localStorage.setItem("token", JSON.stringify(token));
+    localStorage.setItem("expirationTime", expirationTime);
+    const remainingTime = calculateRemainingTime(expirationTime);
+    logoutTimer = setTimeout(logoutHandler, remainingTime);
+    console.log("I am the checker", checker);
+
+    if (!checker) {
+      console.log("I am the checker", checker);
+      window.location.pathname = "/";
+    }
+  };
+
   useEffect(() => {
     if (tokenData) {
       console.log(tokenData.duration);
@@ -89,6 +104,7 @@ export const AuthContextProvider = (props) => {
     isLoggedIn: userIsLoggedIn,
     role: role,
     login: loginHandler,
+    login2: loginHandler2,
     logout: logoutHandler,
   };
 
