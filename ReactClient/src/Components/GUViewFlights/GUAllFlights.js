@@ -16,7 +16,9 @@ const GUAllFlights = (props) => {
     returnCabin,
     ReturnPrice,
     setReturnPrice,
+    selectedReservation,
   } = useContext(UserContext);
+  console.log(selectedReservation)
   return (
     <div>
       <UserContext.Provider
@@ -33,6 +35,7 @@ const GUAllFlights = (props) => {
           setReturnPrice,
           departureCabin,
           returnCabin,
+          selectedReservation,
         }}
       >
         <div className="containerCardChooseFlight">

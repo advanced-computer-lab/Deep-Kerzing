@@ -41,6 +41,7 @@ const GUSearchFlight = () => {
     setDepartureDate,
     returnDate,
     setReturnDate,
+    selectedReservation,
   } = useContext(UserContext);
   const cabins = [
     {
@@ -61,10 +62,12 @@ const GUSearchFlight = () => {
     setFlightsError(false);
     setFlightsNull(false);
     setDatesError(false);
-
+    console.log(departureDate, " Hello");
+    console.log(departureAirport, " Hello", arrivalAirport);
+    
     if (!departureAirport || !arrivalAirport) {
       setFlightsNull(true);
-    } else if (departureAirport.name === arrivalAirport.name) {
+    } else if (departureAirport === arrivalAirport) {
       setFlightsError(true);
     } else if (!departureDate || !returnDate) {
       setDatesError(true);
@@ -72,19 +75,21 @@ const GUSearchFlight = () => {
       const cabinNameDeparture =
         departureCabin.toLowerCase() + "Seats" + "[gte]";
       const cabinNameReturn = returnCabin.toLowerCase() + "Seats" + "[gte]";
-
       const base = "http://localhost:8000/api/flights/?";
-      const urlDeparture =
+      let urlDeparture =
         base +
         `from=${departureAirport.name}&to=${arrivalAirport.name}&departureDate=${departureDate}&${cabinNameDeparture}=${departureSeats}`;
-      const urlArrival =
+      let urlArrival =
         base +
         `from=${arrivalAirport.name}&to=${departureAirport.name}&departureDate=${returnDate}&${cabinNameReturn}=${returnSeats}`;
-      console.log(urlDeparture);
-      console.log(urlArrival);
-
-      // setCabinChosen(cabin);
-      // setNumSeats(numberOfseats);
+      if (departureAirport.name === undefined) {
+        urlDeparture =
+          base +
+          `from=${departureAirport}&to=${arrivalAirport}&departureDate=${departureDate}&${cabinNameDeparture}=${departureSeats}`;
+        urlArrival =
+          base +
+          `from=${arrivalAirport}&to=${departureAirport}&departureDate=${returnDate}&${cabinNameReturn}=${returnSeats}`;
+      }
       axios
         .get(urlDeparture)
         .then((res) => {
@@ -117,6 +122,7 @@ const GUSearchFlight = () => {
     event.preventDefault();
     setSelected(false);
   };
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/airport")
@@ -159,7 +165,6 @@ const GUSearchFlight = () => {
                   }}
                 />
               )}
-              getOptionLabel={(option) => option.name || ""}
               onChange={(_event, depAirport) => {
                 setDepartureAirport(depAirport);
               }}
@@ -191,7 +196,6 @@ const GUSearchFlight = () => {
                   }}
                 />
               )}
-              getOptionLabel={(option) => option.name || ""}
               onChange={(_event, arrAirport) => {
                 setArrivalAirport(arrAirport);
               }}
@@ -223,6 +227,7 @@ const GUSearchFlight = () => {
               required={true}
               errorText={""}
               defaultValue={1}
+              value={departureSeats}
               placeholder="Departure Number of Seats"
               type="number"
               variant="outlined"
@@ -261,6 +266,7 @@ const GUSearchFlight = () => {
               required={true}
               errorText={""}
               defaultValue={1}
+              value={returnSeats}
               placeholder="Return Number of Seats"
               type="number"
               variant="outlined"
@@ -276,7 +282,7 @@ const GUSearchFlight = () => {
           <div className="GU9">
             <DateRangePicker onEvent={getDates}>
               <button className="selectDates" onClick={datesHandler}>
-                {!selected
+                {departureDate === undefined
                   ? "Select Dates"
                   : departureDate + " > " + returnDate}
               </button>
