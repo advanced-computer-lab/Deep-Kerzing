@@ -13,6 +13,7 @@ const auth = require("./routes/auth");
 const flights = require("./routes/flights");
 const airports = require("./routes/airports");
 const reserve = require("./routes/reservation");
+const payment = require("./routes/payment");
 
 const app = express();
 app.use(cors());
@@ -36,6 +37,9 @@ app.use("/api/user", auth);
 app.use("/api/flights", flights);
 app.use("/api/airport", airports);
 app.use("/api/reservation", reserve);
+app.use("/api/payment",cors(), payment);
+
+
 
 app.listen(8000, () => {
   console.log("Serving on port 8000");

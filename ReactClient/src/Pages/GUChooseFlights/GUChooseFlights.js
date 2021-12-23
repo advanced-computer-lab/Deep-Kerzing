@@ -8,6 +8,8 @@ import axios from "axios";
 import ReservationInfo from "../../Components/ReservationInfo/ReservationInfo";
 import Review from "./Review";
 import LoginChecker from "./LoginChecker";
+import StripeContainer from "../../Components/Payment/StripeContainer";
+import Payment from "../../Components/Payment/Payment";
 const GUChooseFlights = () => {
   const {
     departureFlights,
@@ -28,6 +30,7 @@ const GUChooseFlights = () => {
     departurePassengersValid,
     returnPassengersValid,
     role,
+    paid
   } = useContext(UserContext);
 
   const [BookedDepSeats, setBookedDepSeats] = useState([]);
@@ -237,11 +240,16 @@ const GUChooseFlights = () => {
             <LoginChecker checker={true}></LoginChecker>
           </div>
         )}
+       
         {step7 && role === "user" && (
           <div className="SeatsContainer">
             <Review></Review>
           </div>
         )}
+         {step7 && role == "user" && !paid && 
+          <div>
+          <Payment></Payment>
+          </div>}
       </div>
       <div className="ChooseHeader">
         <h1>Flight Reservation</h1>
