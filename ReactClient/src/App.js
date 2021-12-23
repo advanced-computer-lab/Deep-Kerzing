@@ -26,6 +26,7 @@ import Review from "./Pages/GUChooseFlights/Review";
 import UserProfile from "./Components/Profile/UserProfile";
 import UpdateProfile from "./Components/Profile/UpdateProfile";
 import UpdatePassword from "./Components/Profile/UpdatePassword";
+import Payment from "./Components/Payment/Payment";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -46,7 +47,7 @@ const App = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [DeparturePrice, setDeparturePrice] = useState(0);
   const [ReturnPrice, setReturnPrice] = useState(0);
-
+  const [paid, setPaid] = useState(false);
   const [departureFlight_id, setDepartureFlight_id] = useState();
   const [returnFlight_id, setReturnFlight_id] = useState();
   const [departureAirport, setDepartureAirport] = useState("");
@@ -94,6 +95,7 @@ const App = () => {
     setReturnForm(false);
     setdeparturePassengersValid(true);
     setreturnPassengersValid(false);
+    setPaid(false);
   };
   return (
     <Layout user={role}>
@@ -104,6 +106,7 @@ const App = () => {
           setDepartureFlights,
           setReturnFlights,
           departureCabin,
+          paid, setPaid,
           setDepartureCabin,
           returnCabin,
           setReturnCabin,
@@ -243,6 +246,11 @@ const App = () => {
           {isAuthenticated && role === "user" && (
             <Route exact path="/GUAllFlights">
               <GUChooseFlights></GUChooseFlights>
+            </Route>
+          )}
+          {isAuthenticated && role === "user" && (
+            <Route exact path="/payment">
+              <Payment/>
             </Route>
           )}
           <Route path="*">
