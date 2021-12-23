@@ -60,6 +60,8 @@ const App = () => {
   const [RetSeatsValid, setRetSeatsValid] = useState(false);
   const [DepartureForm, setDepartureForm] = useState(false);
   const [ReturnForm, setReturnForm] = useState(false);
+  const [selectedReservation, setSelectedReservation] = useState();
+
   const [departurePassengersValid, setdeparturePassengersValid] =
     useState(true);
   const [returnPassengersValid, setreturnPassengersValid] = useState(false);
@@ -96,6 +98,7 @@ const App = () => {
     setdeparturePassengersValid(true);
     setreturnPassengersValid(false);
     setPaid(false);
+    setSelectedReservation(undefined);
   };
   return (
     <Layout user={role}>
@@ -106,7 +109,9 @@ const App = () => {
           setDepartureFlights,
           setReturnFlights,
           departureCabin,
-          paid, setPaid,
+          paid,
+          setPaid,
+          departureFlight_id,
           setDepartureCabin,
           returnCabin,
           setReturnCabin,
@@ -130,7 +135,6 @@ const App = () => {
           departureChosenSeats,
           setdepartureChosenSeats,
           totalPrice,
-          departureFlight_id,
           setDepartureFlight_id,
           returnFlight_id,
           setReturnFlight_id,
@@ -157,6 +161,8 @@ const App = () => {
           departurePassengersValid,
           returnPassengersValid,
           role,
+          selectedReservation,
+          setSelectedReservation,
         }}
       >
         <Switch>
@@ -250,7 +256,7 @@ const App = () => {
           )}
           {isAuthenticated && role === "user" && (
             <Route exact path="/payment">
-              <Payment/>
+              <Payment />
             </Route>
           )}
           <Route path="*">
