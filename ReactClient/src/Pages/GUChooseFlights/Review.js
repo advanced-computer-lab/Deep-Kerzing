@@ -33,6 +33,7 @@ const Review = () => {
     returnChosenSeats,
   } = useContext(UserContext);
   useEffect(() => {
+    console.log(chosenDepartureFlight);
     var KidsDeparture = 0;
     var AdultsDeparture = 0;
     for (var i = 1; i <= departureSeats; i++) {
@@ -160,12 +161,12 @@ const Review = () => {
           <b>Price:</b> {ReturnPrice}
         </p>
         <hr></hr>
-        <div>
+        {/* <div>
           <h3>
             <b>Total Price:</b> {DeparturePrice + ReturnPrice}{" "}
             <button className = "button" onClick={onSubmitHandler}>Confirm</button>
           </h3>
-        </div>
+        </div> */}
       </div>
 
       <Dialog

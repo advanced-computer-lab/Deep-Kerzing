@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import jwt from "jsonwebtoken"
 let logoutTimer;
 
 const AuthContext = React.createContext({
@@ -42,7 +43,8 @@ export const AuthContextProvider = (props) => {
   if (tokenData) {
     console.log(tokenData);
     initialToken = JSON.parse(tokenData.token).token;
-    initialRole = JSON.parse(tokenData.token).role;
+    initialRole=jwt.decode(initialToken).role;
+    //initialRole = JSON.parse(tokenData.token).role;
     console.log(initialToken);
     console.log(initialRole);
   }

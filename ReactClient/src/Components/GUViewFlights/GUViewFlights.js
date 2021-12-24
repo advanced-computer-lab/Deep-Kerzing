@@ -15,7 +15,6 @@ const GUViewFlights = (props) => {
     selected,
     DeparturePrice,
     setDeparturePrice,
-    ReturnPrice,
     departureCabin,
     returnCabin,
     setReturnPrice,
@@ -49,7 +48,6 @@ const GUViewFlights = (props) => {
       }
     }
   };
-  console.log(chosenReturnFlight);
 
   return (
     <div onClick={() => handleClickOpen(props)}>

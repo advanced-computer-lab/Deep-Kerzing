@@ -27,6 +27,7 @@ import UserProfile from "./Components/Profile/UserProfile";
 import UpdateProfile from "./Components/Profile/UpdateProfile";
 import UpdatePassword from "./Components/Profile/UpdatePassword";
 import SignUp from "./Components/GuestSignup/SignUp";
+import Payment from "./Components/Payment/Payment";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -47,7 +48,7 @@ const App = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [DeparturePrice, setDeparturePrice] = useState(0);
   const [ReturnPrice, setReturnPrice] = useState(0);
-
+  const [paid, setPaid] = useState(false);
   const [departureFlight_id, setDepartureFlight_id] = useState();
   const [returnFlight_id, setReturnFlight_id] = useState();
   const [departureAirport, setDepartureAirport] = useState("");
@@ -60,6 +61,8 @@ const App = () => {
   const [RetSeatsValid, setRetSeatsValid] = useState(false);
   const [DepartureForm, setDepartureForm] = useState(false);
   const [ReturnForm, setReturnForm] = useState(false);
+  const [selectedReservation, setSelectedReservation] = useState();
+
   const [departurePassengersValid, setdeparturePassengersValid] =
     useState(true);
   const [returnPassengersValid, setreturnPassengersValid] = useState(false);
@@ -95,6 +98,8 @@ const App = () => {
     setReturnForm(false);
     setdeparturePassengersValid(true);
     setreturnPassengersValid(false);
+    setPaid(false);
+    setSelectedReservation(undefined);
   };
   return (
     <Layout user={role}>
@@ -105,6 +110,9 @@ const App = () => {
           setDepartureFlights,
           setReturnFlights,
           departureCabin,
+          paid,
+          setPaid,
+          departureFlight_id,
           setDepartureCabin,
           returnCabin,
           setReturnCabin,
@@ -128,7 +136,6 @@ const App = () => {
           departureChosenSeats,
           setdepartureChosenSeats,
           totalPrice,
-          departureFlight_id,
           setDepartureFlight_id,
           returnFlight_id,
           setReturnFlight_id,
@@ -155,6 +162,8 @@ const App = () => {
           departurePassengersValid,
           returnPassengersValid,
           role,
+          selectedReservation,
+          setSelectedReservation,
         }}
       >
         <Switch>
@@ -249,6 +258,13 @@ const App = () => {
            <Route path="/register" exact>
            <SignUp></SignUp>
           </Route>
+
+          {isAuthenticated && role === "user" && (
+            <Route exact path="/payment">
+              <Payment />
+            </Route>
+          )}
+
           <Route path="*">
             <Redirect to="/" />
           </Route>

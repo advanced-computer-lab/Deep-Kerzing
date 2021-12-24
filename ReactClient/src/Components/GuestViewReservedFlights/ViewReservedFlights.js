@@ -144,6 +144,7 @@ const ViewReservedFlights = () => {
             key={element._id}
             updateState={updateState}
             setLoading={setLoading}
+            reservation = {element}
           ></ReservationCard>
         ))}
     </div>
