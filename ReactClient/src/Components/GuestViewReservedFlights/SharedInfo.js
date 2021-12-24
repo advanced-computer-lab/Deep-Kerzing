@@ -7,6 +7,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import "reactjs-popup/dist/index.css";
 import * as React from "react";
+import PopUp from "../PopUp/popUp";
+import ReservationCard from "./ReservationCard";
 
 const SharedInfo = (props) => {
   const current = new Date();
@@ -15,12 +17,10 @@ const SharedInfo = (props) => {
   }-${current.getDate()}`;
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const [open2, setOpen2] = React.useState(false);
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen2(false);
   };
 
   const deleteHandler = () => {
@@ -30,13 +30,25 @@ const SharedInfo = (props) => {
       )
       .then((res) => {
         console.log(res);
-        props.updateState();
+        // props.updateState();
+        setOpen(true);
       })
       .catch((err) => {
         console.log("Error in delete");
       });
-    setOpen(false);
     props.setLoading(false);
+  };
+
+  const reservationHandler = () => {
+    axios
+      .get("http://localhost:8000/api/reservation/send/" + props.reservationId)
+      .then((res) => {
+        console.log(res);
+        setOpen2(true);
+      })
+      .catch((err) => {
+        console.log("Error in delete");
+      });
   };
 
   return (
@@ -47,25 +59,37 @@ const SharedInfo = (props) => {
         </div>
         <div>
           {date < props.depDateDep && (
-            <button className="reserveDelete" onClick={handleClickOpen}>
+            <button className="reserveDelete" onClick={deleteHandler}>
               Delete Reservation
             </button>
           )}
         </div>
+        <div>
+          <button className="reserveDelete" onClick={reservationHandler}>
+            Send Reservation
+          </button>
+        </div>
       </div>
 
+      {open && (
+        <PopUp
+          message="Reservation Cancelled"
+          content="Your reservation has been cancelled."
+          path="/ViewReservations"
+        ></PopUp>
+      )}
+
       <Dialog
-        open={open}
+        open={open2}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Are You Sure,You Want To Cancel Your Reservation ?"}
+          {"Your reservation details have been sent to your email.."}
         </DialogTitle>
         <DialogActions>
-          <Button onClick={deleteHandler}>Yes</Button>
-          <Button onClick={handleClose}>NO</Button>
+          <Button onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
     </div>

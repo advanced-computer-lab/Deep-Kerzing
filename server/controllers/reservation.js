@@ -55,7 +55,9 @@ exports.reserveFlight = catchAsync(async (req, res, next) => {
   });
 
   if (departureCabin.toLowerCase() === "economy") {
+    console.log(departureFlight.economySeats);
     departureFlight.economySeats -= departureSeatsCount;
+    console.log(departureFlight.economySeats);
     for (let flight of departureSeats) {
       departureFlight.reservedSeats.push(flight);
     }
@@ -128,7 +130,9 @@ exports.cancelFlight = catchAsync(async (req, res, next) => {
   }
 
   if (reservation.departureCabin.toLowerCase() === "economy") {
+    console.log(departureFlight.economySeats);
     departureFlight.economySeats += reservation.departureSeatsCount;
+    console.log(departureFlight.economySeats);
     for (let flight of reservation.departureSeats) {
       departureFlight.reservedSeats.pull(flight);
     }
@@ -145,7 +149,9 @@ exports.cancelFlight = catchAsync(async (req, res, next) => {
   }
 
   if (reservation.returnCabin.toLowerCase() === "economy") {
+    console.log(returnFlight.economySeats);
     returnFlight.economySeats += reservation.returnSeatsCount;
+    console.log(returnFlight.economySeats);
     for (let flight of reservation.returnSeats) {
       returnFlight.reservedSeats.pull(flight);
     }
@@ -165,7 +171,115 @@ exports.cancelFlight = catchAsync(async (req, res, next) => {
   await Reserve.findByIdAndDelete(reserveId);
   await departureFlight.save();
   await returnFlight.save();
-  // res.status(200).json({
-  //   success: true,
-  // });
+});
+
+exports.sendReservation = catchAsync(async (req, res, next) => {
+  const { reserveId } = req.params;
+  const reservation = await Reserve.findById(reserveId)
+    .populate("user_id")
+    .populate("departureFlight_id")
+    .populate("returnFlight_id");
+
+  const user = reservation.user_id._id;
+  const userEmail = reservation.user_id.email;
+
+  if (!userEmail) {
+    return next(new ErrorResponse("There is no user with that email", 404));
+  }
+
+  const message = `${reservation}`;
+
+  try {
+    await sendEmail({
+      email: userEmail,
+      subject: "Reservation Details",
+      message,
+    });
+
+    res.status(200).json({ success: true, data: "Email sent" });
+  } catch (err) {
+    console.log(err);
+
+    return next(new ErrorResponse("Email could not be sent", 500));
+  }
+});
+
+exports.refundEmail = catchAsync(async (req, res, next) => {
+  const { userId } = req.params;
+
+  console.log(req);
+  const user = await User.findById(userId);
+  const userEmail = user.email;
+
+  if (!userEmail) {
+    return next(new ErrorResponse("There is no user with that email", 404));
+  }
+
+  const message = `Due to the reservation update , we would like to inform you the ${req.body.refund} will be refunded within 2-3 days.`;
+
+  try {
+    await sendEmail({
+      email: userEmail,
+      subject: "Refund Email",
+      message,
+    });
+
+    res.status(200).json({ success: true, data: "Email sent" });
+  } catch (err) {
+    console.log(err);
+
+    return next(new ErrorResponse("Email could not be sent", 500));
+  }
+});
+
+exports.updateReservation = catchAsync(async (req, res, next) => {
+  const { reserveId } = req.params;
+  const reservation = await Reserve.findById(reserveId).populate("user_id");
+  let departureFlight = await Flight.findById(reservation.departureFlight_id);
+  let returnFlight = await Flight.findById(reservation.returnFlight_id);
+
+  const user = reservation.user_id._id;
+
+  if (reservation.departureCabin.toLowerCase() === "economy") {
+    console.log(departureFlight.economySeats);
+    departureFlight.economySeats += reservation.departureSeatsCount;
+    console.log(departureFlight.economySeats);
+    for (let flight of reservation.departureSeats) {
+      departureFlight.reservedSeats.pull(flight);
+    }
+  } else if (reservation.departureCabin.toLowerCase() === "firstclass") {
+    departureFlight.firstClassSeats += reservation.departureSeatsCount;
+    for (let flight of reservation.departureSeats) {
+      departureFlight.reservedSeats.pull(flight);
+    }
+  } else if (reservation.departureCabin.toLowerCase() === "business") {
+    departureFlight.businessSeats += reservation.departureSeatsCount;
+    for (let flight of reservation.departureSeats) {
+      departureFlight.reservedSeats.pull(flight);
+    }
+  }
+
+  if (reservation.returnCabin.toLowerCase() === "economy") {
+    console.log(returnFlight.economySeats);
+    returnFlight.economySeats += reservation.returnSeatsCount;
+    console.log(returnFlight.economySeats);
+    for (let flight of reservation.returnSeats) {
+      returnFlight.reservedSeats.pull(flight);
+    }
+  } else if (reservation.returnCabin.toLowerCase() === "firstclass") {
+    returnFlight.firstClassSeats += reservation.returnSeatsCount;
+    for (let flight of reservation.returnSeats) {
+      returnFlight.reservedSeats.pull(flight);
+    }
+  } else if (reservation.returnCabin.toLowerCase() === "business") {
+    returnFlight.businessSeats += reservation.returnSeatsCount;
+    for (let flight of reservation.returnSeats) {
+      returnFlight.reservedSeats.pull(flight);
+    }
+  }
+
+  await User.findByIdAndUpdate(user, { $pull: { reservations: reserveId } });
+  await Reserve.findByIdAndDelete(reserveId);
+  await departureFlight.save();
+  await returnFlight.save();
 });

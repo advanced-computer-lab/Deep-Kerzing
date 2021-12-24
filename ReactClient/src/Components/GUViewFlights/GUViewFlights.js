@@ -24,27 +24,26 @@ const GUViewFlights = (props) => {
   const handleClickOpen = (value) => {
     setSelected(props._id);
     if (props.departureCheck) {
+      console.log(value);
       setChosenDepartureFlight(value);
-      console.log(departureCabin)
-      if(departureCabin === "Economy"){
-        setDeparturePrice(value.priceEconomy);
+      console.log(departureCabin);
+      if (departureCabin === "Economy") {
+        setDeparturePrice(value.economyPrice);
+      } else if (departureCabin === "First") {
+        setDeparturePrice(value.firstClassPrice);
+      } else if (departureCabin === "Business") {
+        setDeparturePrice(value.businessPrice);
       }
-      else if (departureCabin === "First"){
-        setDeparturePrice(value.priceFirst)
-      }
-      else if (departureCabin === "Business"){
-        setDeparturePrice(value.priceBusiness)
-      }
-      console.log(value)
-      console.log("Price",DeparturePrice)
+      console.log(value);
+      console.log("Price", DeparturePrice);
     } else {
       setChosenReturnFlight(value);
       if (returnCabin === "Economy") {
-        setReturnPrice(value.priceEconomy);
+        setReturnPrice(value.economyPrice);
       } else if (returnCabin === "First") {
-        setReturnPrice(value.priceFirst);
+        setReturnPrice(value.firstClassPrice);
       } else if (returnCabin === "Business") {
-        setReturnPrice(value.priceBusiness);
+        setReturnPrice(value.businessPrice);
       }
     }
   };
@@ -61,25 +60,25 @@ const GUViewFlights = (props) => {
         }
       >
         <div className="departureTime">
-          <h4>{props.depTime}</h4>
+          <h4>{props.departureTime}</h4>
         </div>
         <div className="arrivalTime">
-          <h4>{props.arrTime}</h4>
+          <h4>{props.arrivalTime}</h4>
         </div>
         <div className="departure">
           <h3>
-            {props.departure.substring(
-              props.departure.indexOf("(") + 1,
-              props.departure.indexOf("(") + 4
+            {props.from.substring(
+              props.from.indexOf("(") + 1,
+              props.from.indexOf("(") + 4
             )}
           </h3>
         </div>
 
         <div className="arrival">
           <h3>
-            {props.arrival.substring(
-              props.arrival.indexOf("(") + 1,
-              props.arrival.indexOf("(") + 4
+            {props.to.substring(
+              props.to.indexOf("(") + 1,
+              props.to.indexOf("(") + 4
             )}
           </h3>
         </div>
@@ -87,11 +86,11 @@ const GUViewFlights = (props) => {
         <h2 className="Icon">
           <IoAirplaneOutline></IoAirplaneOutline>
         </h2>
-        <h6 className="economy">Economy: ${props.priceEconomy}</h6>
-        <div className="business">Business: ${props.priceBusiness}</div>
-        <h6 className="depDate">Departure: {props.depDate}</h6>
-        <div className="arrDate">Arrival: {props.arrDate}</div>
-        <div className="TripDuration"> First: ${props.priceFirst} </div>
+        <h6 className="economy">Economy: ${props.economyPrice}</h6>
+        <div className="business">Business: ${props.businessPrice}</div>
+        <h6 className="depDate">Departure: {props.departureDate}</h6>
+        <div className="arrDate">Arrival: {props.arrivalDate}</div>
+        <div className="TripDuration"> First: ${props.firstClassPrice} </div>
       </div>
     </div>
   );

@@ -1,33 +1,57 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
+import React from "react";
+import { PropTypes } from "prop-types";
 
-import Step from './Step';
+import Step from "./Step";
 
 const styles = {
   root: {
-    width: '100%',
+    width: "100%",
     minHeight: 0,
   },
   stepper: {
-    display: 'table',
-    width: '100%',
+    display: "table",
+    width: "100%",
   },
 };
 
 function Stepper({
-  activeStep, steps, disabledSteps,
-  activeColor, completeColor, defaultColor, circleFontColor,
-  activeTitleColor, completeTitleColor, defaultTitleColor,
-  size, circleFontSize, titleFontSize,
-  circleTop, titleTop, completeOpacity, activeOpacity, defaultOpacity,
-  completeTitleOpacity, activeTitleOpacity, defaultTitleOpacity, barStyle,
-  defaultBorderColor, completeBorderColor, activeBorderColor, defaultBorderStyle,
-  completeBorderStyle, activeBorderStyle, defaultBarColor, completeBarColor, lineMarginOffset, defaultBorderWidth
+  activeStep,
+  steps,
+  disabledSteps,
+  activeColor,
+  completeColor,
+  defaultColor,
+  circleFontColor,
+  activeTitleColor,
+  completeTitleColor,
+  defaultTitleColor,
+  size,
+  circleFontSize,
+  titleFontSize,
+  circleTop,
+  titleTop,
+  completeOpacity,
+  activeOpacity,
+  defaultOpacity,
+  completeTitleOpacity,
+  activeTitleOpacity,
+  defaultTitleOpacity,
+  barStyle,
+  defaultBorderColor,
+  completeBorderColor,
+  activeBorderColor,
+  defaultBorderStyle,
+  completeBorderStyle,
+  activeBorderStyle,
+  defaultBarColor,
+  completeBarColor,
+  lineMarginOffset,
+  defaultBorderWidth,
 }) {
   return (
-    <div style={ styles.root }>
-      <div style={ styles.stepper }>
-        { steps.map((step, index) => (
+    <div style={styles.root}>
+      <div style={styles.stepper}>
+        {steps.map((step, index) => (
           <Step
             key={index}
             width={100 / steps.length}
@@ -35,8 +59,12 @@ function Stepper({
             icon={step.icon}
             href={step.href}
             onClick={step.onClick}
-            active={!(disabledSteps || []).includes(index) && index === activeStep}
-            completed={!(disabledSteps || []).includes(index) && index < activeStep}
+            active={
+              !(disabledSteps || []).includes(index) && index === activeStep
+            }
+            completed={
+              !(disabledSteps || []).includes(index) && index < activeStep
+            }
             first={index === 0}
             isLast={index === steps.length - 1}
             index={index}
@@ -70,7 +98,7 @@ function Stepper({
             completeBarColor={completeBarColor}
             lineMarginOffset={lineMarginOffset}
           />
-        )) }
+        ))}
       </div>
     </div>
   );
@@ -111,7 +139,7 @@ Stepper.propTypes = {
   completeBorderStyle: PropTypes.string,
   activeBorderStyle: PropTypes.string,
   lineMarginOffset: PropTypes.number,
-  defaultBorderWidth: PropTypes.number
+  defaultBorderWidth: PropTypes.number,
 };
 
 export default Stepper;

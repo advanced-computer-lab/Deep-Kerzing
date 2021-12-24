@@ -47,82 +47,186 @@ export default function PaymentForm() {
     departurePassengers,
     returnPassengers,
     departureChosenSeats,
-    setTotalPrice,
     DeparturePrice,
     ReturnPrice,
     totalPrice,
     returnChosenSeats,
+    selectedReservation,
   } = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    var departurePass = [];
-    for (const [key, value] of Object.entries(departurePassengers)) {
-      departurePass = [...departurePass, ...value];
-    }
-    console.log(departurePass);
-    var returnPass = [];
-    for (const [key, value] of Object.entries(returnPassengers)) {
-      returnPass = [...returnPass, ...value];
-    }
-    axios
-      .get("http://localhost:8000/api/user/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((resOne) => {
-        console.log(resOne);
-        console.log(totalPrice, "total Price");
-        console.log(DeparturePrice + ReturnPrice, "Total Price 2");
-        const inputs = {
-          departureFlight_id: chosenDepartureFlight._id,
-          returnFlight_id: chosenReturnFlight._id,
-          user_id: resOne.data.data._id,
-          departureSeatsCount: departureSeats,
-          returnSeatsCount: returnSeats,
-          departureCabin: departureCabin,
-          returnCabin: returnCabin,
-          departureSeats: departureChosenSeats,
-          returnSeats: returnChosenSeats,
-          price: DeparturePrice + ReturnPrice,
-          departurePassengers: departurePass,
-          returnPassengers: returnPass,
-        };
-        axios
-          .post("http://localhost:8000/api/reservation/reserve", inputs)
-          .then((res) => {
-            console.log(res.data);
-            setId(res.data.data._id);
-          })
-          .catch((err) => {
-            console.log("Error from ShowuserList");
-          });
-      });
-
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement),
-    });
-
-    if (!error) {
-      try {
-        const { id } = paymentMethod;
-        const response = await axios.post("http://localhost:8000/api/payment", {
-          amount: (DeparturePrice + ReturnPrice) *100 ,
-          id,
+    console.log(selectedReservation);
+    if (selectedReservation !== undefined) {
+      var oldPrice = selectedReservation.price;
+      var userId = selectedReservation.user_id;
+      // handle payment of update
+      console.log(selectedReservation);
+      // delete the old reservation
+      axios
+        .delete(
+          "http://localhost:8000/api/reservation/update/" +
+            selectedReservation._id
+        )
+        .then(async (res) => {})
+        .catch((err) => {
+          console.log("Error in delete");
+        });
+      // add the new one
+      var departurePass = [];
+      for (const [key, value] of Object.entries(departurePassengers)) {
+        departurePass = [...departurePass, ...value];
+      }
+      console.log(departurePass);
+      var returnPass = [];
+      for (const [key, value] of Object.entries(returnPassengers)) {
+        returnPass = [...returnPass, ...value];
+      }
+      axios
+        .get("http://localhost:8000/api/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((resOne) => {
+          const inputs = {
+            departureFlight_id: chosenDepartureFlight._id,
+            returnFlight_id: chosenReturnFlight._id,
+            user_id: resOne.data.data._id,
+            departureSeatsCount: departureSeats,
+            returnSeatsCount: returnSeats,
+            departureCabin: departureCabin,
+            returnCabin: returnCabin,
+            departureSeats: departureChosenSeats,
+            returnSeats: returnChosenSeats,
+            price: totalPrice,
+            departurePassengers: departurePass,
+            returnPassengers: returnPass,
+          };
+          axios
+            .post("http://localhost:8000/api/reservation/reserve", inputs)
+            .then((res) => {
+              console.log(res.data);
+              setId(res.data.data._id);
+            })
+            .catch((err) => {
+              console.log("Error from ShowuserList");
+            });
         });
 
-        if (response.data.success) {
-          console.log("Successful payment");
-          setSuccess(true);
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardElement),
+      });
+
+      var pricePaid = 1;
+      if (totalPrice - selectedReservation.price > 0) {
+        pricePaid = totalPrice - selectedReservation.price;
+      } else {
+        console.log(pricePaid);
+        axios
+          .post("http://localhost:8000/api/reservation/reserve/" + userId, {
+            refund: (totalPrice - selectedReservation.price) * -1,
+          })
+          .then((res) => {})
+          .catch((err) => {
+            console.log("Error in delete");
+          });
+      }
+
+      if (!error) {
+        try {
+          const { id } = paymentMethod;
+          const response = await axios.post(
+            "http://localhost:8000/api/payment",
+            {
+              amount: pricePaid * 100,
+              id,
+            }
+          );
+
+          if (response.data.success) {
+            console.log("Successful payment");
+            setSuccess(true);
+          }
+        } catch (error) {
+          console.log("Error", error);
         }
-      } catch (error) {
-        console.log("Error", error);
+      } else {
+        console.log(error.message);
       }
     } else {
-      console.log(error.message);
+      var departurePass = [];
+      for (const [key, value] of Object.entries(departurePassengers)) {
+        departurePass = [...departurePass, ...value];
+      }
+      console.log(departurePass);
+      var returnPass = [];
+      for (const [key, value] of Object.entries(returnPassengers)) {
+        returnPass = [...returnPass, ...value];
+      }
+      axios
+        .get("http://localhost:8000/api/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((resOne) => {
+          console.log(resOne);
+          console.log(totalPrice, "total Price");
+          console.log(DeparturePrice + ReturnPrice, "Total Price 2");
+          const inputs = {
+            departureFlight_id: chosenDepartureFlight._id,
+            returnFlight_id: chosenReturnFlight._id,
+            user_id: resOne.data.data._id,
+            departureSeatsCount: departureSeats,
+            returnSeatsCount: returnSeats,
+            departureCabin: departureCabin,
+            returnCabin: returnCabin,
+            departureSeats: departureChosenSeats,
+            returnSeats: returnChosenSeats,
+            price: totalPrice,
+            departurePassengers: departurePass,
+            returnPassengers: returnPass,
+          };
+          axios
+            .post("http://localhost:8000/api/reservation/reserve", inputs)
+            .then((res) => {
+              console.log(res.data);
+              setId(res.data.data._id);
+            })
+            .catch((err) => {
+              console.log("Error from ShowuserList");
+            });
+        });
+
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardElement),
+      });
+
+      if (!error) {
+        try {
+          const { id } = paymentMethod;
+          const response = await axios.post(
+            "http://localhost:8000/api/payment",
+            {
+              amount: totalPrice * 100,
+              id,
+            }
+          );
+
+          if (response.data.success) {
+            console.log("Successful payment");
+            setSuccess(true);
+          }
+        } catch (error) {
+          console.log("Error", error);
+        }
+      } else {
+        console.log(error.message);
+      }
     }
   };
 

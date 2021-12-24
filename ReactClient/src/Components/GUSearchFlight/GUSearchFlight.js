@@ -42,6 +42,8 @@ const GUSearchFlight = () => {
     returnDate,
     setReturnDate,
     selectedReservation,
+    ReturnPrice,
+    DeparturePrice,
   } = useContext(UserContext);
   const cabins = [
     {
@@ -64,7 +66,7 @@ const GUSearchFlight = () => {
     setDatesError(false);
     console.log(departureDate, " Hello");
     console.log(departureAirport, " Hello", arrivalAirport);
-    
+
     if (!departureAirport || !arrivalAirport) {
       setFlightsNull(true);
     } else if (departureAirport === arrivalAirport) {
@@ -90,9 +92,14 @@ const GUSearchFlight = () => {
           base +
           `from=${arrivalAirport}&to=${departureAirport}&departureDate=${returnDate}&${cabinNameReturn}=${returnSeats}`;
       }
+
       axios
         .get(urlDeparture)
         .then((res) => {
+          console.log(DeparturePrice);
+          console.log(ReturnPrice);
+          console.log(urlDeparture);
+          console.log(urlArrival);
           console.log("data", res.data);
           setDepartureFlights(res.data);
         })

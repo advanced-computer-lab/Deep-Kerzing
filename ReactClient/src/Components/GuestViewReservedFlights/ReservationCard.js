@@ -37,6 +37,10 @@ const ReservationCard = (props) => {
     setDepartureDate,
     returnDate,
     setReturnDate,
+    setDeparturePrice,
+    setReturnPrice,
+    ReturnPrice,
+    DeparturePrice,
   } = useContext(UserContext);
   const [openDep, setOpenDep] = React.useState(false);
   const [openArr, setOpenArr] = React.useState(false);
@@ -59,13 +63,37 @@ const ReservationCard = (props) => {
     axios
       .get(urlDeparture)
       .then((res) => {
+        console.log(props.reservation.departureFlight_id);
         setSelectedReservation(props.reservation);
         setDepartureFlights(res.data);
         setDepartureAirport(props.reservation.departureFlight_id.from);
         setArrivalAirport(props.reservation.departureFlight_id.to);
         setChosenDepartureFlight(props.reservation.departureFlight_id);
         setDepartureCabin(props.reservation.departureCabin);
+        if (props.reservation.departureCabin.toLowerCase() === "economy") {
+          setDeparturePrice(props.reservation.departureFlight_id.economyPrice);
+        } else if (
+          props.reservation.departureCabin.toLowerCase() === "firstclass"
+        ) {
+          setDeparturePrice(
+            props.reservation.departureFlight_id.firstClassPrice
+          );
+        } else if (
+          props.reservation.departureCabin.toLowerCase() === "business"
+        ) {
+          setDeparturePrice(props.reservation.departureFlight_id.businessPrice);
+        }
         setReturnCabin(props.reservation.returnCabin);
+        if (props.reservation.returnCabin.toLowerCase() === "economy") {
+          setReturnPrice(props.reservation.returnFlight_id.economyPrice);
+        } else if (
+          props.reservation.returnCabin.toLowerCase() === "firstclass"
+        ) {
+          setReturnPrice(props.reservation.returnFlight_id.firstClassPrice);
+        } else if (props.reservation.returnCabin.toLowerCase() === "business") {
+          setReturnPrice(props.reservation.returnFlight_id.businessPrice);
+        }
+
         setDepartureSeats(props.reservation.departureSeatsCount);
         setReturnSeats(props.reservation.returnSeatsCount);
         setDepartureDate(props.reservation.departureFlight_id.departureDate);
@@ -73,6 +101,8 @@ const ReservationCard = (props) => {
         var temp = [];
         props.reservation.departureSeats.map((element) => temp.push(element));
         setdepartureChosenSeats(temp);
+        console.log(props.reservation.departureFlight_id);
+        console.log(props.reservation.returnFlight_id);
       })
       .catch((err) => {
         console.log("Error from Airport Api");
@@ -144,7 +174,7 @@ const ReservationCard = (props) => {
             Details
           </button>
           <div>
-            <button className="" onClick={onUpdateHandler}>
+            <button className="Update" onClick={onUpdateHandler}>
               Update
             </button>
           </div>
@@ -200,6 +230,7 @@ const ReservationCard = (props) => {
           depDateDep={props.depDateDep}
           updateState={props.updateState}
           setLoading={props.setLoading}
+          reservation={props.reservation}
         ></SharedInfo>
       </div>
 

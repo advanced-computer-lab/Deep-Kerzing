@@ -267,8 +267,8 @@ const GUChooseFlights = () => {
           activeStep={activeStep}
         />
       </div>
-      {(!step7) && (
-        <div className = "Summary">
+      {!step7 && (
+        <div className="Summary">
           <h4>Departure Flight</h4>
           <h6>Price per seat: {DeparturePrice}</h6>
           <h6>

@@ -18,7 +18,8 @@ const GUAllFlights = (props) => {
     setReturnPrice,
     selectedReservation,
   } = useContext(UserContext);
-  console.log(selectedReservation)
+  console.log(chosenReturnFlight);
+  console.log(chosenDepartureFlight);
   return (
     <div>
       <UserContext.Provider
@@ -41,18 +42,18 @@ const GUAllFlights = (props) => {
         <div className="containerCardChooseFlight">
           {props.Flights.map((element) => (
             <GUViewFlights
-              departure={element.from}
-              arrival={element.to}
-              depDate={element.departureDate}
-              arrDate={element.arrivalDate}
-              depTime={element.departureTime}
-              arrTime={element.arrivalTime}
-              seatsEconomy={element.economySeats}
-              seatsBusiness={element.businessSeats}
-              seatsFirst={element.fisrtClassSeats}
-              priceEconomy={element.economyPrice}
-              priceBusiness={element.businessPrice}
-              priceFirst={element.firstClassPrice}
+              from={element.from}
+              to={element.to}
+              departureDate={element.departureDate}
+              arrivalDate={element.arrivalDate}
+              departureTime={element.departureTime}
+              arrivalTime={element.arrivalTime}
+              economySeats={element.economySeats}
+              businessSeats={element.businessSeats}
+              fisrtClassSeats={element.fisrtClassSeats}
+              economyPrice={element.economyPrice}
+              businessPrice={element.businessPrice}
+              firstClassPrice={element.firstClassPrice}
               flightNumber={element.flightNumber}
               _id={element._id}
               key={element._id}

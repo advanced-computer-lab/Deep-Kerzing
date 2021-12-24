@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 let logoutTimer;
 
 const AuthContext = React.createContext({
@@ -43,7 +43,7 @@ export const AuthContextProvider = (props) => {
   if (tokenData) {
     console.log(tokenData);
     initialToken = JSON.parse(tokenData.token).token;
-    initialRole=jwt.decode(initialToken).role;
+    initialRole = jwt.decode(initialToken).role;
     //initialRole = JSON.parse(tokenData.token).role;
     console.log(initialToken);
     console.log(initialRole);
@@ -79,6 +79,21 @@ export const AuthContextProvider = (props) => {
     }
   };
 
+  const loginHandler2 = (token, expirationTime, checker) => {
+    setToken(token.token);
+    setRole(token.role);
+    localStorage.setItem("token", JSON.stringify(token));
+    localStorage.setItem("expirationTime", expirationTime);
+    const remainingTime = calculateRemainingTime(expirationTime);
+    logoutTimer = setTimeout(logoutHandler, remainingTime);
+    console.log("I am the checker", checker);
+
+    if (!checker) {
+      console.log("I am the checker", checker);
+      window.location.pathname = "/";
+    }
+  };
+
   useEffect(() => {
     if (tokenData) {
       console.log(tokenData.duration);
@@ -91,6 +106,7 @@ export const AuthContextProvider = (props) => {
     isLoggedIn: userIsLoggedIn,
     role: role,
     login: loginHandler,
+    login2: loginHandler2,
     logout: logoutHandler,
   };
 
