@@ -4,6 +4,7 @@ import Navbar from "../GuestNavbar/Navbar";
 import GUSearchFlight from "../GUSearchFlight/GUSearchFlight";
 import ViewReservedFlights from "../GuestViewReservedFlights/ViewReservedFlights";
 import UserNavbar from "../UserNavbar/UserNavbar";
+import SignUp from "../GuestSignup/SignUp"
 const Layout = (props) => {
   console.log(props);
   return (
@@ -16,6 +17,9 @@ const Layout = (props) => {
         <Navbar />
       )}
       <main>{props.children}</main>
+
+         
+
     </Fragment>
   );
 };

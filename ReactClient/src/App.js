@@ -26,6 +26,7 @@ import Review from "./Pages/GUChooseFlights/Review";
 import UserProfile from "./Components/Profile/UserProfile";
 import UpdateProfile from "./Components/Profile/UpdateProfile";
 import UpdatePassword from "./Components/Profile/UpdatePassword";
+import SignUp from "./Components/GuestSignup/SignUp";
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -245,6 +246,9 @@ const App = () => {
               <GUChooseFlights></GUChooseFlights>
             </Route>
           )}
+           <Route path="/register" exact>
+           <SignUp></SignUp>
+          </Route>
           <Route path="*">
             <Redirect to="/" />
           </Route>
