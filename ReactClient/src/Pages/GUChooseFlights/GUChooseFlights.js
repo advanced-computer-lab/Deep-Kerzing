@@ -8,8 +8,6 @@ import axios from "axios";
 import ReservationInfo from "../../Components/ReservationInfo/ReservationInfo";
 import Review from "./Review";
 import LoginChecker from "./LoginChecker";
-import StripeContainer from "../../Components/Payment/StripeContainer";
-import Payment from "../../Components/Payment/Payment";
 const GUChooseFlights = () => {
   const {
     departureFlights,
@@ -246,11 +244,10 @@ const GUChooseFlights = () => {
             <Review></Review>
           </div>
         )}
-        {step7 && role == "user" && !paid && (
+        {/* {step7 && role == "user" && !paid && (
           <div className="Summary">
-            <Payment></Payment>
           </div>
-        )}
+        )} */}
       </div>
       <div className="ChooseHeader">
         <h1>Flight Reservation</h1>
@@ -267,31 +264,31 @@ const GUChooseFlights = () => {
           activeStep={activeStep}
         />
       </div>
-      {!step7 && (
-        <div className="Summary">
-          <h4>Departure Flight</h4>
-          <h6>Price per seat: {DeparturePrice}</h6>
-          <h6>
-            {departureCabin === "Economy"
-              ? "Baggage: 23KG x1"
-              : departureCabin === "First"
-              ? "Baggage: 27KG x2"
-              : "Baggage: 30KG x2"}
-          </h6>
-          <hr></hr>
-          <h4>Return Flight</h4>
-          <h6>Price per seat: {ReturnPrice}</h6>
-          <h6>
-            {returnCabin === "Economy"
-              ? "Baggage: 23KG x1"
-              : returnCabin === "First"
-              ? "Baggage: 27KG x2"
-              : "Baggage: 30KG x2"}
-          </h6>
-          <hr></hr>
-          <p>*Children tickets are reduced by 50%.</p>
-        </div>
-      )}
+
+      <div className="Summary">
+        <h4>Departure Flight</h4>
+        <h6>Price per seat: {DeparturePrice}</h6>
+        <h6>
+          {departureCabin === "Economy"
+            ? "Baggage: 23KG x1"
+            : departureCabin === "First"
+            ? "Baggage: 27KG x2"
+            : "Baggage: 30KG x2"}
+        </h6>
+        <hr></hr>
+        <h4>Return Flight</h4>
+        <h6>Price per seat: {ReturnPrice}</h6>
+        <h6>
+          {returnCabin === "Economy"
+            ? "Baggage: 23KG x1"
+            : returnCabin === "First"
+            ? "Baggage: 27KG x2"
+            : "Baggage: 30KG x2"}
+        </h6>
+        <hr></hr>
+        <p>*Children tickets are reduced by 50%.</p>
+      </div>
+
       <div className="buttonChoose">
         {button && !step7 && (
           <button className="buttonNext" onClick={onNext}>

@@ -34,15 +34,16 @@ function Payment() {
 
   return (
     <div className="App1">
-      <h1 className="stripeh">Flight Payment</h1>
       {check ? (
         negative ? (
           <h3>0</h3>
         ) : (
-          <h3>{totalPrice - selectedReservation.price}</h3>
+          <h3>
+            Total Price to be paid: {totalPrice - selectedReservation.price}
+          </h3>
         )
       ) : (
-        <h3>{totalPrice}</h3>
+        <h3>Total Price to be paid: {totalPrice}</h3>
       )}
       <StripeContainer />
     </div>

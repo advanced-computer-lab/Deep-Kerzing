@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import "reactjs-popup/dist/index.css";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-
+import Payment from "../../Components/Payment/Payment";
 import axios from "axios";
 
 const Review = () => {
@@ -122,73 +122,58 @@ const Review = () => {
   };
   return (
     <div>
-      <div>
-        <h4>Departure Flight Details</h4>
-        <p>
-          <b>Flight Number:</b> {chosenDepartureFlight.flightNumber}
-          <br></br>
-          <b>From:</b> {chosenDepartureFlight.from}
-          <br></br>
-          <b>To:</b> {chosenDepartureFlight.to}
-          <br></br>
-          <b>Departure Date:</b> {chosenDepartureFlight.departureDate}
-          <br></br>
-          <b>Departure Time:</b> {chosenDepartureFlight.departureTime}
-          <br></br>
-          <b>Arrival Time: </b>
-          {chosenDepartureFlight.arrivalTime}
-          <br></br>
-          <b>Chosen Seats:</b> {departureChosenSeats}
-          <br></br>
-          <b>Cabin: </b>
-          {departureCabin}
-          <br></br>
-          <b>Price:</b> {DeparturePrice}
-        </p>
-        <hr></hr>
-        <h4>Return Flight Details</h4>
-        <p>
-          <b>Flight Number:</b> {chosenReturnFlight.flightNumber}
-          <br></br>
-          <b>From:</b> {chosenReturnFlight.from}
-          <br></br>
-          <b>To:</b> {chosenReturnFlight.to}
-          <br></br>
-          <b>Departure Date:</b> {chosenReturnFlight.departureDate}
-          <br></br>
-          <b>Departure Time:</b> {chosenReturnFlight.arrivalTime}
-          <br></br>
-          <b>Arrival Time: </b> {chosenReturnFlight.departureTime}
-          <br></br>
-          <b>Chosen Seats:</b> {returnChosenSeats}
-          <br></br>
-          <b>Cabin: </b> {returnCabin}
-          <br></br>
-          <b>Price:</b> {ReturnPrice}
-        </p>
-        <hr></hr>
-        {/* <div>
-          <h3>
-            <b>Total Price:</b> {DeparturePrice + ReturnPrice}{" "}
-            <button className = "button" onClick={onSubmitHandler}>Confirm</button>
-          </h3>
-        </div> */}
+      <h1>{"Flight Review & Payment"}</h1>
+      <hr></hr>
+      <div className="Review">
+        <div className="left">
+          <h4>Departure Flight Details</h4>
+          <p>
+            <b>Flight Number:</b> {chosenDepartureFlight.flightNumber}
+            <br></br>
+            <b>From:</b> {chosenDepartureFlight.from}
+            <br></br>
+            <b>To:</b> {chosenDepartureFlight.to}
+            <br></br>
+            <b>Departure Date:</b> {chosenDepartureFlight.departureDate}
+            <br></br>
+            <b>Departure Time:</b> {chosenDepartureFlight.departureTime}
+            <br></br>
+            <b>Arrival Time: </b>
+            {chosenDepartureFlight.arrivalTime}
+            <br></br>
+            <b>Chosen Seats:</b> {departureChosenSeats}
+            <br></br>
+            <b>Cabin: </b>
+            {departureCabin}
+            <br></br>
+            <b>Price:</b> {DeparturePrice}
+          </p>
+        </div>
+        <div className="right">
+          <h4>Return Flight Details</h4>
+          <p>
+            <b>Flight Number:</b> {chosenReturnFlight.flightNumber}
+            <br></br>
+            <b>From:</b> {chosenReturnFlight.from}
+            <br></br>
+            <b>To:</b> {chosenReturnFlight.to}
+            <br></br>
+            <b>Departure Date:</b> {chosenReturnFlight.departureDate}
+            <br></br>
+            <b>Departure Time:</b> {chosenReturnFlight.arrivalTime}
+            <br></br>
+            <b>Arrival Time: </b> {chosenReturnFlight.departureTime}
+            <br></br>
+            <b>Chosen Seats:</b> {returnChosenSeats}
+            <br></br>
+            <b>Cabin: </b> {returnCabin}
+            <br></br>
+            <b>Price:</b> {ReturnPrice}
+          </p>
+        </div>
       </div>
-
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          <h3>Your reservation is done successfully</h3>
-          <p>Reservation id is : {id}</p>
-        </DialogTitle>
-        <DialogActions>
-          <Button onClick={handleClose}>Done</Button>
-        </DialogActions>
-      </Dialog>
+      <hr></hr>
+      <Payment></Payment>
     </div>
   );
 };
