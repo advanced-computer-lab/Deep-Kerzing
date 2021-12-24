@@ -26,6 +26,7 @@ import Review from "./Pages/GUChooseFlights/Review";
 import UserProfile from "./Components/Profile/UserProfile";
 import UpdateProfile from "./Components/Profile/UpdateProfile";
 import UpdatePassword from "./Components/Profile/UpdatePassword";
+import SignUp from "./Components/GuestSignup/SignUp";
 import Payment from "./Components/Payment/Payment";
 
 const App = () => {
@@ -254,11 +255,16 @@ const App = () => {
               <GUChooseFlights></GUChooseFlights>
             </Route>
           )}
+           <Route path="/register" exact>
+           <SignUp></SignUp>
+          </Route>
+
           {isAuthenticated && role === "user" && (
             <Route exact path="/payment">
               <Payment />
             </Route>
           )}
+
           <Route path="*">
             <Redirect to="/" />
           </Route>
