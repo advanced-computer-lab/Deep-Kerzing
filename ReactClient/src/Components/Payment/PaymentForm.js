@@ -5,9 +5,14 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
 import AuthContext from "../../Store/auth-context";
 import UserContext from "../../Components/UserContext/UserContext";
 import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 const CARD_OPTIONS = {
   iconStyle: "solid",
@@ -36,6 +41,12 @@ export default function PaymentForm() {
   const [id, setId] = useState("");
   const token = authCtx.token;
 
+  const history = useHistory();
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+    history.push("/");
+  };
   const elements = useElements();
   const {
     departureCabin,
@@ -108,6 +119,7 @@ export default function PaymentForm() {
             .post("http://localhost:8000/api/reservation/reserve", inputs)
             .then((res) => {
               console.log(res.data);
+              setOpen(true);
               setId(res.data.data._id);
             })
             .catch((err) => {
@@ -242,10 +254,22 @@ export default function PaymentForm() {
           <button className="btn1">Pay</button>
         </form>
       ) : (
-        <div>
-          <h2>You just paid for your Flight</h2>
-        </div>
+        <div>{/* <h2>You just paid for your Flight</h2> */}</div>
       )}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          <h3>Your reservation is done successfully</h3>
+          <p>Reservation id is : {id}</p>
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose}>Done</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
