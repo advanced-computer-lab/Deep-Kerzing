@@ -32,34 +32,40 @@ const Review = () => {
     totalPrice,
     returnChosenSeats,
   } = useContext(UserContext);
-  useEffect(() => {
-    console.log(chosenDepartureFlight);
-    var KidsDeparture = 0;
-    var AdultsDeparture = 0;
-    for (var i = 1; i <= departureSeats; i++) {
-      if (departurePassengers[i + ""][3] === "adult") {
-        AdultsDeparture++;
-      } else if (departurePassengers[i + ""][3] === "child") {
-        KidsDeparture++;
-      }
-    }
-    var KidsReturn = 0;
-    var AdultsReturn = 0;
-    for (var i = 1; i <= returnSeats; i++) {
-      if (returnPassengers[i + ""][3] === "adult") {
-        AdultsReturn++;
-      } else if (returnPassengers[i + ""][3] === "child") {
-        KidsReturn++;
-      }
-    }
-    var totalPrice1 =
-      DeparturePrice * AdultsDeparture +
-      DeparturePrice * 0.5 * KidsDeparture +
-      ReturnPrice * AdultsReturn +
-      ReturnPrice * 0.5 * KidsReturn;
+  var totalPrice1 = 0;
 
-    setTotalPrice(totalPrice);
-  }, []);
+  console.log(chosenDepartureFlight);
+  var KidsDeparture = 0;
+  var AdultsDeparture = 0;
+  for (var i = 1; i <= departureSeats; i++) {
+    if (departurePassengers[i + ""][3] === "adult") {
+      AdultsDeparture++;
+    } else if (departurePassengers[i + ""][3] === "child") {
+      KidsDeparture++;
+    }
+  }
+  console.log(AdultsDeparture);
+  console.log(KidsDeparture);
+  var KidsReturn = 0;
+  var AdultsReturn = 0;
+  for (var i = 1; i <= returnSeats; i++) {
+    if (returnPassengers[i + ""][3] === "adult") {
+      AdultsReturn++;
+    } else if (returnPassengers[i + ""][3] === "child") {
+      KidsReturn++;
+    }
+  }
+  console.log(AdultsReturn);
+  console.log(KidsReturn);
+  totalPrice1 =
+    DeparturePrice * AdultsDeparture +
+    DeparturePrice * 0.5 * KidsDeparture +
+    ReturnPrice * AdultsReturn +
+    ReturnPrice * 0.5 * KidsReturn;
+  setTotalPrice(totalPrice1);
+  console.log(totalPrice1);
+
+  console.log(totalPrice);
 
   const history = useHistory();
   const [open, setOpen] = useState(false);
@@ -86,8 +92,8 @@ const Review = () => {
       })
       .then((resOne) => {
         console.log(resOne);
-        console.log(totalPrice,"total Price")
-        console.log(DeparturePrice + ReturnPrice , "Total Price 2");
+        console.log(totalPrice, "total Price");
+        console.log(DeparturePrice + ReturnPrice, "Total Price 2");
         const inputs = {
           departureFlight_id: chosenDepartureFlight._id,
           returnFlight_id: chosenReturnFlight._id,
@@ -98,7 +104,7 @@ const Review = () => {
           returnCabin: returnCabin,
           departureSeats: departureChosenSeats,
           returnSeats: returnChosenSeats,
-          price: DeparturePrice + ReturnPrice,
+          price: totalPrice,
           departurePassengers: departurePass,
           returnPassengers: returnPass,
         };
@@ -121,16 +127,16 @@ const Review = () => {
         <p>
           <b>Flight Number:</b> {chosenDepartureFlight.flightNumber}
           <br></br>
-          <b>From:</b> {chosenDepartureFlight.departure}
+          <b>From:</b> {chosenDepartureFlight.from}
           <br></br>
-          <b>To:</b> {chosenDepartureFlight.arrival}
+          <b>To:</b> {chosenDepartureFlight.to}
           <br></br>
-          <b>Departure Date:</b> {chosenDepartureFlight.depDate}
+          <b>Departure Date:</b> {chosenDepartureFlight.departureDate}
           <br></br>
-          <b>Departure Time:</b> {chosenDepartureFlight.depTime}
+          <b>Departure Time:</b> {chosenDepartureFlight.departureTime}
           <br></br>
           <b>Arrival Time: </b>
-          {chosenDepartureFlight.arrTime}
+          {chosenDepartureFlight.arrivalTime}
           <br></br>
           <b>Chosen Seats:</b> {departureChosenSeats}
           <br></br>
@@ -144,15 +150,15 @@ const Review = () => {
         <p>
           <b>Flight Number:</b> {chosenReturnFlight.flightNumber}
           <br></br>
-          <b>From:</b> {chosenReturnFlight.departure}
+          <b>From:</b> {chosenReturnFlight.from}
           <br></br>
-          <b>To:</b> {chosenReturnFlight.arrival}
+          <b>To:</b> {chosenReturnFlight.to}
           <br></br>
-          <b>Departure Date:</b> {chosenReturnFlight.depDate}
+          <b>Departure Date:</b> {chosenReturnFlight.departureDate}
           <br></br>
-          <b>Departure Time:</b> {chosenReturnFlight.arrTime}
+          <b>Departure Time:</b> {chosenReturnFlight.arrivalTime}
           <br></br>
-          <b>Arrival Time: </b> {chosenReturnFlight.depTime}
+          <b>Arrival Time: </b> {chosenReturnFlight.departureTime}
           <br></br>
           <b>Chosen Seats:</b> {returnChosenSeats}
           <br></br>

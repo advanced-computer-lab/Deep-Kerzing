@@ -22,7 +22,6 @@ const GUFlightDetails = (props) => {
   //     });
   // }, []);
 
-
   // const flight = useSelector((state) =>
   //   currentId ? state.Flight.find((message) => message._id === currentId) : null
   // );

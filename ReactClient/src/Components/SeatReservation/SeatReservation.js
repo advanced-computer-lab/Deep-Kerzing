@@ -18,12 +18,9 @@ const SeatReservation = (props) => {
     setReturnChosenSeats,
     setDepartureSeats,
     setReturnSeats,
-    // departureSeats,
-    // returnSeats,
   } = useContext(UserContext);
 
   useEffect(() => {
-    console.log(selectedReservation);
     try {
       if (
         selectedReservation.departureFlight_id._id === chosenDepartureFlight._id
@@ -56,13 +53,19 @@ const SeatReservation = (props) => {
   var rows = [];
   console.log("Entered ", departureChosenSeats);
   if (selectedReservation !== undefined) {
-    console.log(seats, " before", selectedReservation.departureSeats);
-    var seatsFiltered;
-    selectedReservation.departureSeats.map((element) => {
-      seatsFiltered = seats.filter((element2) => element2 !== element);
-    });
-    seats = seatsFiltered;
-    console.log(seats, " after");
+    if (props.departure) {
+      console.log(seats, " before", selectedReservation.departureSeats);
+      selectedReservation.departureSeats.map((element) => {
+        seats = seats.filter((element2) => element2 !== element);
+      });
+      console.log(seats, " after");
+    } else {
+      console.log(seats, " before", selectedReservation.departureSeats);
+      selectedReservation.returnSeats.map((element) => {
+        seats = seats.filter((element2) => element2 !== element);
+      });
+      console.log(seats, " after");
+    }
   }
   console.log("Valid or not ", departureChosenSeats, departureSeats);
   if (departureChosenSeats.length + "" === departureSeats + "") {
