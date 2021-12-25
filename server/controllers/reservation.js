@@ -99,7 +99,18 @@ exports.reserveFlight = catchAsync(async (req, res, next) => {
     return next(new ErrorResponse("There is no user with that email", 404));
   }
 
-  const message = `We are sending this email to confirm the reservation ${reservation._id} . Details : ${reservation} `;
+  const message = `We are sending this email to confirm the reservation ${reservation._id} .Details : 
+  Departure Flight :- \n
+    From :  ${departureFlight.from} \n To :  ${departureFlight.to} \n Seats : ${departureSeats} \n
+    Cabin :  ${departureCabin} \n Passengers : ${departurePassengers}\n
+    --------------------------------------------------------------------------------
+    \n
+    Return Flight :- \n
+    From :  ${returnFlight.from} \n To :  ${returnFlight.to} \n Seats : ${returnSeats} \n 
+    Cabin :  ${returnCabin} \n Passengers : ${returnPassengers}\n
+    ---------------------------------------------------------------------------------\n
+    Price : ${price}
+    `;
 
   try {
     await sendEmail({
@@ -210,7 +221,18 @@ exports.sendReservation = catchAsync(async (req, res, next) => {
     return next(new ErrorResponse("There is no user with that email", 404));
   }
 
-  const message = `${reservation}`;
+  const message = `Details : 
+  Departure Flight :- \n
+    From :  ${reservation.departureFlight_id.from} \n To :  ${reservation.departureFlight_id.to} \n Seats : ${reservation.departureSeats} \n
+    Cabin :  ${reservation.departureCabin} \n Passengers : ${reservation.departurePassengers}\n
+    --------------------------------------------------------------------------------
+    \n
+    Return Flight :- \n
+    From :  ${reservation.returnFlight_id.from} \n To :  ${reservation.returnFlight_id.to} \n Seats : ${reservation.returnSeats} \n 
+    Cabin :  ${reservation.returnCabin} \n Passengers : ${reservation.returnPassengers}\n
+    ---------------------------------------------------------------------------------\n
+    Price : ${reservation.price}
+    `;
 
   try {
     await sendEmail({

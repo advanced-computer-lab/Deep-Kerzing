@@ -12,6 +12,7 @@ import * as React from "react";
 import PopUp from "../PopUp/popUp";
 import ReservationCard from "./ReservationCard";
 import logo2 from "../GuestNavbar/logo2.png";
+import * as ReactBootStrap from "react-bootstrap";
 
 import { useContext } from "react";
 import AuthContext from "../../Store/auth-context";
@@ -24,6 +25,7 @@ const SharedInfo = (props) => {
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const authCtx = useContext(AuthContext);
   const token = authCtx.token;
 
@@ -55,6 +57,7 @@ const SharedInfo = (props) => {
   };
 
   const reservationHandler = () => {
+    setOpen2(true);
     axios
       .get(
         "http://localhost:8000/api/reservation/send/" + props.reservationId,
@@ -66,7 +69,7 @@ const SharedInfo = (props) => {
       )
       .then((res) => {
         console.log(res);
-        setOpen2(true);
+        setLoading(true);
       })
       .catch((err) => {
         console.log("Error in delete");
@@ -113,23 +116,43 @@ const SharedInfo = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          <div>
-            <img src={logo2} className="image" alt="Deep Kerzing" />
-          </div>
-          <div>
-            <p> {"Reservation Details"}</p>
-          </div>
+          {loading ? (
+            <div>
+              {" "}
+              <div>
+                <img src={logo2} className="image" alt="Deep Kerzing" />
+              </div>
+              <div>
+                <p> {"Reservation Details"}</p>
+              </div>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <h5>
-              {" "}
-              {"Your reservation details have been sent to your email.."}
-            </h5>
+            {loading ? (
+              <h5>
+                {" "}
+                {"Your reservation details have been sent to your email.."}
+              </h5>
+            ) : (
+              <h5
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  top: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              >
+                <ReactBootStrap.Spinner animation="border" />
+              </h5>
+            )}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          {loading ? <Button onClick={handleClose}>Close</Button> : <div></div>}
         </DialogActions>
       </Dialog>
     </div>
