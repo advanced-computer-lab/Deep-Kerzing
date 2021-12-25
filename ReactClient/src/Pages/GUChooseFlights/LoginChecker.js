@@ -3,7 +3,6 @@ import { useState, useContext } from "react";
 import "../../Components/searchFlight/adminSearchFlight.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import AuthContext from "../../Store/auth-context";
-import { set } from "mongoose";
 
 async function loginUser(credentials) {
   return fetch("http://localhost:8000/api/user/login", {
@@ -21,7 +20,6 @@ const LoginChecker = (props) => {
   const [error, setError] = useState(false);
   const authCtx = useContext(AuthContext);
 
-
   const LoginHandler = async (event) => {
     event.preventDefault();
     try {
@@ -30,7 +28,7 @@ const LoginChecker = (props) => {
         email: username,
         password: password,
       });
-      const expirationTime = new Date(new Date().getTime()  + 3600 * 10000000);
+      const expirationTime = new Date(new Date().getTime() + 3600 * 10000000);
       authCtx.login2(token, expirationTime.toISOString(), props.checker);
     } catch (e) {
       console.log(e);

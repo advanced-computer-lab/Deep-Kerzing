@@ -48,6 +48,7 @@ const GUSearchFlight = () => {
     selectedReservation,
     ReturnPrice,
     DeparturePrice,
+    setLoader,
   } = useContext(UserContext);
   const cabins = [
     {
@@ -110,6 +111,7 @@ const GUSearchFlight = () => {
           console.log(urlArrival);
           console.log("data", res.data);
           setDepartureFlights(res.data);
+          setLoader(true);
         })
         .catch((err) => {
           console.log("Error from Airport Api");

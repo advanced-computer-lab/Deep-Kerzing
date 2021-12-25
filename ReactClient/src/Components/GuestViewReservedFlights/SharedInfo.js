@@ -5,10 +5,13 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import "reactjs-popup/dist/index.css";
 import * as React from "react";
 import PopUp from "../PopUp/popUp";
 import ReservationCard from "./ReservationCard";
+import logo2 from "../GuestNavbar/logo2.png";
 
 import { useContext } from "react";
 import AuthContext from "../../Store/auth-context";
@@ -26,10 +29,10 @@ const SharedInfo = (props) => {
 
   const handleClose = () => {
     setOpen2(false);
-  };  
-  const updateHandler = () =>{
+  };
+  const updateHandler = () => {
     props.updateHandler();
-  }
+  };
   const deleteHandler = () => {
     axios
       .delete(
@@ -90,7 +93,7 @@ const SharedInfo = (props) => {
         </div>
         <div>
           <button className="reserveDelete" onClick={reservationHandler}>
-            Send Reservation
+            Send Details
           </button>
         </div>
       </div>
@@ -110,8 +113,21 @@ const SharedInfo = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Your reservation details have been sent to your email.."}
+          <div>
+            <img src={logo2} className="image" alt="Deep Kerzing" />
+          </div>
+          <div>
+            <p> {"Reservation Details"}</p>
+          </div>
         </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <h5>
+              {" "}
+              {"Your reservation details have been sent to your email.."}
+            </h5>
+          </DialogContentText>
+        </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>
