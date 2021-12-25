@@ -24,24 +24,14 @@ const ReservationCard = (props) => {
     setReturnChosenSeats,
     setDepartureSeats,
     setReturnSeats,
-    departureSeats,
-    returnSeats,
-    departureCabin,
     setDepartureCabin,
-    returnCabin,
     setReturnCabin,
-    departureAirport,
     setDepartureAirport,
-    arrivalAirport,
     setArrivalAirport,
-    departureDate,
     setDepartureDate,
-    returnDate,
     setReturnDate,
     setDeparturePrice,
     setReturnPrice,
-    ReturnPrice,
-    DeparturePrice,
   } = useContext(UserContext);
   const authCtx = useContext(AuthContext);
   const token = authCtx.token;
@@ -146,7 +136,7 @@ const ReservationCard = (props) => {
   return (
     <div>
       {/* first Flight */}
-      <div className="reserveContainerCard">
+      <div className="resCard">
         <div className="resCardOne">
           <div className="departureTime">
             <h4>{props.depTimeDep}</h4>
@@ -184,11 +174,11 @@ const ReservationCard = (props) => {
           <button className="Update" onClick={handleClickOpenDep}>
             Details
           </button>
-          <div>
+          {/* <div>
             <button className="Update" onClick={onUpdateHandler}>
               Update
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* second Flight */}
@@ -233,16 +223,18 @@ const ReservationCard = (props) => {
           </button>
           {/*6,2*/}
         </div>
-
-        <SharedInfo
-          price={props.price}
-          reservationId={props.reservationId}
-          userId={props.userId}
-          depDateDep={props.depDateDep}
-          updateState={props.updateState}
-          setLoading={props.setLoading}
-          reservation={props.reservation}
-        ></SharedInfo>
+        <div className="sharedInfo">
+          <SharedInfo
+            price={props.price}
+            reservationId={props.reservationId}
+            userId={props.userId}
+            depDateDep={props.depDateDep}
+            updateState={props.updateState}
+            setLoading={props.setLoading}
+            reservation={props.reservation}
+            updateHandler={onUpdateHandler}
+          ></SharedInfo>
+        </div>
       </div>
 
       <Dialog

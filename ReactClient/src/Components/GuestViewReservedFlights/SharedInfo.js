@@ -26,8 +26,10 @@ const SharedInfo = (props) => {
 
   const handleClose = () => {
     setOpen2(false);
-  };
-
+  };  
+  const updateHandler = () =>{
+    props.updateHandler();
+  }
   const deleteHandler = () => {
     axios
       .delete(
@@ -70,16 +72,21 @@ const SharedInfo = (props) => {
 
   return (
     <div>
-      <div className="sharedInfo">
+      <div>
         <div>
           <h3>Price:{props.price}</h3>
         </div>
         <div>
           {date < props.depDateDep && (
             <button className="reserveDelete" onClick={deleteHandler}>
-              Delete Reservation
+              Delete
             </button>
           )}
+        </div>
+        <div>
+          <button className="reserveDelete" onClick={updateHandler}>
+            Update
+          </button>
         </div>
         <div>
           <button className="reserveDelete" onClick={reservationHandler}>
