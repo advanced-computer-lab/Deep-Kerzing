@@ -11,6 +11,7 @@ import SharedInfo from "./SharedInfo";
 import { useContext } from "react";
 import UserContext from "../UserContext/UserContext";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import AuthContext from "../../Store/auth-context";
 import axios from "axios";
 const ReservationCard = (props) => {
   const {
@@ -42,6 +43,8 @@ const ReservationCard = (props) => {
     ReturnPrice,
     DeparturePrice,
   } = useContext(UserContext);
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
   const [openDep, setOpenDep] = React.useState(false);
   const [openArr, setOpenArr] = React.useState(false);
   const handleClickOpenDep = () => {
@@ -61,7 +64,11 @@ const ReservationCard = (props) => {
       base +
       `from=${props.reservation.departureFlight_id.to}&to=${props.reservation.departureFlight_id.from}&departureDate=${props.reservation.returnFlight_id.departureDate}&${cabinNameReturn}=${props.reservation.returnSeatsCount}`;
     axios
-      .get(urlDeparture)
+      .get(urlDeparture, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         console.log(props.reservation.departureFlight_id);
         setSelectedReservation(props.reservation);
@@ -108,7 +115,11 @@ const ReservationCard = (props) => {
         console.log("Error from Airport Api");
       });
     axios
-      .get(urlArrival)
+      .get(urlArrival, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setReturnFlights(res.data);
         setChosenReturnFlight(props.reservation.returnFlight_id);

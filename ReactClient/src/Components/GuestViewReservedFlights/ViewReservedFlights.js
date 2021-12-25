@@ -36,7 +36,12 @@ const ViewReservedFlights = () => {
         setUserId(resOne.data.data._id);
         axios
           .get(
-            `http://localhost:8000/api/user/getReservations/${resOne.data.data._id}`
+            `http://localhost:8000/api/user/getReservations/${resOne.data.data._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           )
           .then((resTwo) => {
             console.log("reservatioons");
@@ -66,7 +71,12 @@ const ViewReservedFlights = () => {
         setUserId(resOne.data.data._id);
         axios
           .get(
-            `http://localhost:8000/api/user/getReservations/${resOne.data.data._id}`
+            `http://localhost:8000/api/user/getReservations/${resOne.data.data._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           )
           .then((resTwo) => {
             console.log("reservatioons");
@@ -144,7 +154,7 @@ const ViewReservedFlights = () => {
             key={element._id}
             updateState={updateState}
             setLoading={setLoading}
-            reservation = {element}
+            reservation={element}
           ></ReservationCard>
         ))}
     </div>

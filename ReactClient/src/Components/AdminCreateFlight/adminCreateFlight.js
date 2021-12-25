@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "../searchFlight/adminSearchFlight.css";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import InputAdornment from "@mui/material/InputAdornment";
 import PopUp from "../PopUp/popUp";
 import axios from "axios";
+import AuthContext from "../../Store/auth-context";
 import { FaPlaneDeparture, FaPlaneArrival, FaTicketAlt } from "react-icons/fa";
 
 import { IoIosAddCircleOutline } from "react-icons/io";
@@ -28,9 +29,16 @@ const AdminCreateFlight = () => {
 
   const [Airport, setAirport] = useState([]);
 
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
+
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/airport")
+      .get("http://localhost:8000/api/airport", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setAirport(res.data);
       })
@@ -59,7 +67,11 @@ const AdminCreateFlight = () => {
 
     console.log(inputs);
     axios
-      .post("http://localhost:8000/api/flights/create", inputs)
+      .post("http://localhost:8000/api/flights/create", inputs, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         console.log(res);
         setOpen(true);

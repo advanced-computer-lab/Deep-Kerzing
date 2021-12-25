@@ -28,18 +28,14 @@ const SeatReservation = (props) => {
         var temp = [];
         selectedReservation.departureSeats.map((element) => temp.push(element));
         setdepartureChosenSeats(temp);
-        // setDepartureSeats(temp.length);
       } else {
-        // setDepartureSeats(0);
         setdepartureChosenSeats([]);
       }
       if (selectedReservation.returnFlight_id._id === chosenReturnFlight._id) {
         var temp = [];
         selectedReservation.returnSeats.map((element) => temp.push(element));
         setReturnChosenSeats(temp);
-        // setReturnSeats(temp.length);
       } else {
-        // setReturnSeats(0);
         setReturnChosenSeats([]);
       }
     } catch (err) {}
@@ -78,6 +74,8 @@ const SeatReservation = (props) => {
     setDepSeatsValid(false);
     setRetSeatsValid(false);
     if (props.departure) {
+      console.log(event);
+      console.log(departureChosenSeats);
       if (departureChosenSeats.includes(event)) {
         var index = departureChosenSeats.indexOf(event);
         departureChosenSeats.splice(index, 1);
@@ -86,6 +84,7 @@ const SeatReservation = (props) => {
         departureChosenSeats.push(event);
         setnumberChosen(numberChosen + 1);
       }
+      console.log(departureChosenSeats);
     } else if (!props.departure) {
       if (returnChosenSeats.includes(event)) {
         var index1 = returnChosenSeats.indexOf(event);

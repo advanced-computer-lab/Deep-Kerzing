@@ -12,6 +12,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { red } from "@material-ui/core/colors";
+import AuthContext from "../../Store/auth-context";
+
 const GUSearchFlight = () => {
   const [Airport, setAirport] = useState([]);
   const [selected, setSelected] = useState(false);
@@ -19,6 +21,8 @@ const GUSearchFlight = () => {
   const [FlightsError, setFlightsError] = useState(false);
   const [FlightsNull, setFlightsNull] = useState(false);
   const [DatesError, setDatesError] = useState(false);
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
 
   const history = useHistory();
 
@@ -94,7 +98,11 @@ const GUSearchFlight = () => {
       }
 
       axios
-        .get(urlDeparture)
+        .get(urlDeparture, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           console.log(DeparturePrice);
           console.log(ReturnPrice);
@@ -107,7 +115,11 @@ const GUSearchFlight = () => {
           console.log("Error from Airport Api");
         });
       axios
-        .get(urlArrival)
+        .get(urlArrival, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           console.log("Return", res.data);
           setReturnFlights(res.data);
@@ -132,7 +144,11 @@ const GUSearchFlight = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/airport")
+      .get("http://localhost:8000/api/airport", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         setAirport(res.data);
       })

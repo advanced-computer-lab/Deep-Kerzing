@@ -40,6 +40,7 @@ const LoginChecker = (props) => {
       const expirationTime = new Date(new Date().getTime() + +3600 * 10000000);
       authCtx.login2(token, expirationTime.toISOString(), props.checker);
     } catch (e) {
+      console.log(e);
       setError(true);
     }
   };

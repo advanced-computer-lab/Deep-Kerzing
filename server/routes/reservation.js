@@ -11,11 +11,16 @@ const {
 const { protect, authorize } = require("../middleware/auth");
 const router = express.Router();
 
-router.get("/:reserveId", getReservation);
-router.post("/reserve", reserveFlight);
-router.delete("/cancel/:reserveId", cancelFlight);
-router.get("/send/:reserveId", sendReservation);
-router.delete("/update/:reserveId", updateReservation);
-router.post("/reserve/:userId", refundEmail);
+router.get("/:reserveId", protect, authorize("user"), getReservation);
+router.post("/reserve", protect, authorize("user"), reserveFlight);
+router.delete("/cancel/:reserveId", protect, authorize("user"), cancelFlight);
+router.get("/send/:reserveId", protect, authorize("user"), sendReservation);
+router.delete(
+  "/update/:reserveId",
+  protect,
+  authorize("user"),
+  updateReservation
+);
+router.post("/reserve/:userId", protect, authorize("user"), refundEmail);
 
 module.exports = router;

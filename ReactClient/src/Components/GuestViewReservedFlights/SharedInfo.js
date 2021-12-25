@@ -10,6 +10,9 @@ import * as React from "react";
 import PopUp from "../PopUp/popUp";
 import ReservationCard from "./ReservationCard";
 
+import { useContext } from "react";
+import AuthContext from "../../Store/auth-context";
+
 const SharedInfo = (props) => {
   const current = new Date();
   const date = `${current.getFullYear()}-${
@@ -18,6 +21,8 @@ const SharedInfo = (props) => {
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
 
   const handleClose = () => {
     setOpen2(false);
@@ -26,7 +31,12 @@ const SharedInfo = (props) => {
   const deleteHandler = () => {
     axios
       .delete(
-        "http://localhost:8000/api/reservation/cancel/" + props.reservationId
+        "http://localhost:8000/api/reservation/cancel/" + props.reservationId,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
       .then((res) => {
         console.log(res);
@@ -41,7 +51,14 @@ const SharedInfo = (props) => {
 
   const reservationHandler = () => {
     axios
-      .get("http://localhost:8000/api/reservation/send/" + props.reservationId)
+      .get(
+        "http://localhost:8000/api/reservation/send/" + props.reservationId,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         setOpen2(true);
