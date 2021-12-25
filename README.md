@@ -15,4 +15,10 @@ Except for the styling, this build is free from errors and all functionalities a
 ### Code Style
 Since it's a react-based frontend, components were created once and reused whenever needed. Communication between components followed these approaches. First one was using props in order to contact between parent and children components. The second approach is useContext, which offered an easy way to communicate between unrelated different components.
 
+### What makes Deep-Kerzing so special?
+Following the "Simpler is Better" concept, Deep-Kerzing offers extremely simple user interface which ensures easy navigation through the website without need of any help or clues.
+Website navigation is fully reversible, without losing any selections made by the user. As a user, being lost during the reservation process is impossible, as a stepper will be your companion during the full process which ensures all data is entered correctly with no missing fields, with the next button is disabled as long as there are missing fields as shown in the picture below.
+
 ![Stepper](https://user-images.githubusercontent.com/65810674/147383752-05ce27c9-1f2d-4a24-b8d8-5f0e0a3cc85d.png)
+
+All ticket information will be visible while choosing the flight card, yet only the relatable information will appear in the summary on the right.
