@@ -22,3 +22,6 @@ Website navigation is fully reversible, without losing any selections made by th
 ![Stepper](https://user-images.githubusercontent.com/65810674/147383752-05ce27c9-1f2d-4a24-b8d8-5f0e0a3cc85d.png)
 
 All ticket information will be visible while choosing the flight card, yet only the relatable information will appear in the summary on the right.
+
+### Framework Used
+
