@@ -14,3 +14,5 @@ Except for the styling, this build is free from errors and all functionalities a
 
 ### Code Style
 Since it's a react-based frontend, components were created once and reused whenever needed. Communication between components followed these approaches. First one was using props in order to contact between parent and children components. The second approach is useContext, which offered an easy way to communicate between unrelated different components.
+
+![Stepper](https://user-images.githubusercontent.com/65810674/147383752-05ce27c9-1f2d-4a24-b8d8-5f0e0a3cc85d.png)
