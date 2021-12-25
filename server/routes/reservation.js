@@ -21,6 +21,6 @@ router.delete(
   authorize("user"),
   updateReservation
 );
-router.post("/reserve/:userId", protect, authorize("user"), refundEmail);
+router.post("/refund/:userId", protect, authorize("user"), refundEmail);
 
 module.exports = router;

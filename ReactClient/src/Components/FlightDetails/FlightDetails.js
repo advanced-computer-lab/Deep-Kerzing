@@ -7,6 +7,9 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import AuthContext from "../../Store/auth-context";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import logo2 from "../GuestNavbar/logo2.png";
 import { useState, useEffect, useContext } from "react";
 
 import DialogTitle from "@mui/material/DialogTitle";
@@ -104,8 +107,18 @@ const FlightDetails = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Are You Sure,You Want To Delete ?"}
+          <div>
+            <img src={logo2} className="image" alt="Deep Kerzing" />
+          </div>
+          <div>
+            <p>{"Delete Flight"} </p>
+          </div>
         </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <h5>{"Are you sure you want to delete ?"}</h5>
+          </DialogContentText>
+        </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={deleteHandler}>Delete</Button>

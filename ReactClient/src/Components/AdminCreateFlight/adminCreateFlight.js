@@ -87,7 +87,7 @@ const AdminCreateFlight = () => {
         <IoIosAddCircleOutline />
       </h1>
       <h1> Create Flight</h1>
-      <form>
+      <form onSubmit={createFlight}>
         <div className="searchFields">
           <div className="input-group input-group-icon">
             <TextField
@@ -316,11 +316,7 @@ const AdminCreateFlight = () => {
         </div>
 
         {/* <div className="searchField"> */}
-        <button
-          id="createFlightButton"
-          className="button"
-          onClick={createFlight}
-        >
+        <button id="createFlightButton" className="button">
           Create
         </button>
       </form>

@@ -18,25 +18,40 @@ const SeatReservation = (props) => {
     setReturnChosenSeats,
     setDepartureSeats,
     setReturnSeats,
+    departureCabin,
+    returnCabin,
   } = useContext(UserContext);
 
   useEffect(() => {
     try {
-      if (
-        selectedReservation.departureFlight_id._id === chosenDepartureFlight._id
-      ) {
-        var temp = [];
-        selectedReservation.departureSeats.map((element) => temp.push(element));
-        setdepartureChosenSeats(temp);
-      } else {
-        setdepartureChosenSeats([]);
+      if (props.departure) {
+        if (
+          selectedReservation.departureFlight_id._id ===
+            chosenDepartureFlight._id &&
+          selectedReservation.departureCabin.toLowerCase() ===
+            departureCabin.toLowerCase()
+        ) {
+          var temp = [];
+          selectedReservation.departureSeats.map((element) =>
+            temp.push(element)
+          );
+          setdepartureChosenSeats(temp);
+        } else {
+          setdepartureChosenSeats([]);
+        }
       }
-      if (selectedReservation.returnFlight_id._id === chosenReturnFlight._id) {
-        var temp = [];
-        selectedReservation.returnSeats.map((element) => temp.push(element));
-        setReturnChosenSeats(temp);
-      } else {
-        setReturnChosenSeats([]);
+      if (!props.departure) {
+        if (
+          selectedReservation.returnFlight_id._id === chosenReturnFlight._id &&
+          selectedReservation.returnCabin.toLowerCase() ===
+            returnCabin.toLowerCase()
+        ) {
+          var temp = [];
+          selectedReservation.returnSeats.map((element) => temp.push(element));
+          setReturnChosenSeats(temp);
+        } else {
+          setReturnChosenSeats([]);
+        }
       }
     } catch (err) {}
   }, [departureSeats, returnSeats]);

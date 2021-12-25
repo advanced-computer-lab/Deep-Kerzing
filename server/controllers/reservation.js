@@ -36,6 +36,8 @@ exports.reserveFlight = catchAsync(async (req, res, next) => {
     returnSeatsCount,
     departureSeatsCount,
   } = req.body;
+
+  console.log(req.body);
   let userReserve = await User.findById(user_id);
   let departureFlight = await Flight.findById(departureFlight_id);
   let returnFlight = await Flight.findById(returnFlight_id);
@@ -90,15 +92,6 @@ exports.reserveFlight = catchAsync(async (req, res, next) => {
     }
   }
 
-  userReserve.reservations.push(reservation);
-  await userReserve.save();
-  await departureFlight.save();
-  await returnFlight.save();
-  await res.status(200).json({
-    success: true,
-    data: reservation,
-  });
-
   const user = userReserve._id;
   const userEmail = userReserve.email;
 
@@ -114,13 +107,20 @@ exports.reserveFlight = catchAsync(async (req, res, next) => {
       subject: "Reservation Confirmation",
       message,
     });
-
-    res.status(200).json({ success: true, data: "Email sent" });
   } catch (err) {
     console.log(err);
 
     return next(new ErrorResponse("Email could not be sent", 500));
   }
+
+  userReserve.reservations.push(reservation);
+  await userReserve.save();
+  await departureFlight.save();
+  await returnFlight.save();
+  await res.status(200).json({
+    success: true,
+    data: reservation,
+  });
 });
 
 exports.cancelFlight = catchAsync(async (req, res, next) => {
@@ -234,24 +234,28 @@ exports.refundEmail = catchAsync(async (req, res, next) => {
   const user = await User.findById(userId);
   const userEmail = user.email;
 
-  if (!userEmail) {
-    return next(new ErrorResponse("There is no user with that email", 404));
-  }
+  if (req.body.refund === 0) {
+    res.status(200).json({ success: true, data: "Done" });
+  } else {
+    if (!userEmail) {
+      return next(new ErrorResponse("There is no user with that email", 404));
+    }
 
-  const message = `Due to the reservation update , we would like to inform you the ${req.body.refund} will be refunded within 2-3 days.`;
+    const message = `Due to the reservation update , we would like to inform you the ${req.body.refund} will be refunded within 2-3 days.`;
 
-  try {
-    await sendEmail({
-      email: userEmail,
-      subject: "Refund Email",
-      message,
-    });
+    try {
+      await sendEmail({
+        email: userEmail,
+        subject: "Refund Email",
+        message,
+      });
 
-    res.status(200).json({ success: true, data: "Email sent" });
-  } catch (err) {
-    console.log(err);
+      res.status(200).json({ success: true, data: "Email sent" });
+    } catch (err) {
+      console.log(err);
 
-    return next(new ErrorResponse("Email could not be sent", 500));
+      return next(new ErrorResponse("Email could not be sent", 500));
+    }
   }
 });
 

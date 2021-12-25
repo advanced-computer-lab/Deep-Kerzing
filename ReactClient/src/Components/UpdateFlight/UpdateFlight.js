@@ -116,8 +116,8 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
       <h1>
         <FaPlaneDeparture></FaPlaneDeparture>
       </h1>
-      <h1> Create Flight</h1>
-      <form>
+      <h1> Update Flight</h1>
+      <form onSubmit={handleSubmit}>
         <div className="searchFields">
           <div className="input-group input-group-icon">
             <TextField
@@ -363,9 +363,7 @@ const UpdateFlight = ({ currentId, setCurrentId }) => {
         >
           Cancel
         </button>
-        <button className="button" onClick={handleSubmit}>
-          Update
-        </button>
+        <button className="button">Update</button>
       </form>
       {open && (
         <PopUp

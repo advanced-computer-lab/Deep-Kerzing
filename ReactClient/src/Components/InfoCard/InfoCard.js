@@ -14,7 +14,10 @@ const InfoCard = (props) => {
     setretPassChecker,
     retPassChecker,
     returnPassengers,
+    departureChosenSeats,
+    chosenDepartureFlight,
   } = useContext(UserContext);
+
   const [email, setEmail] = useState(
     props.passengers ? props.passengers[0] : ""
   );

@@ -62,6 +62,7 @@ const App = () => {
   const [DepartureForm, setDepartureForm] = useState(false);
   const [ReturnForm, setReturnForm] = useState(false);
   const [selectedReservation, setSelectedReservation] = useState();
+  const [loader, setLoader] = useState(false);
 
   const [departurePassengersValid, setdeparturePassengersValid] =
     useState(true);
@@ -255,8 +256,8 @@ const App = () => {
               <GUChooseFlights></GUChooseFlights>
             </Route>
           )}
-           <Route path="/register" exact>
-           <SignUp></SignUp>
+          <Route path="/register" exact>
+            <SignUp></SignUp>
           </Route>
 
           {isAuthenticated && role === "user" && (
