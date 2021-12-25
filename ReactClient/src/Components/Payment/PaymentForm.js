@@ -1,19 +1,14 @@
 import {
   CardElement,
-  Elements,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
 import AuthContext from "../../Store/auth-context";
 import UserContext from "../../Components/UserContext/UserContext";
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-
+import PopUp from "../PopUp/popUp";
 const CARD_OPTIONS = {
   iconStyle: "solid",
   style: {
@@ -119,13 +114,13 @@ export default function PaymentForm() {
             .post("http://localhost:8000/api/reservation/reserve", inputs)
             .then((res) => {
               console.log(res.data);
-              setOpen(true);
               setId(res.data.data._id);
             })
             .catch((err) => {
               console.log("Error from ShowuserList");
             });
         });
+      setOpen(true);
 
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: "card",
@@ -160,6 +155,7 @@ export default function PaymentForm() {
 
           if (response.data.success) {
             console.log("Successful payment");
+
             setSuccess(true);
           }
         } catch (error) {
@@ -254,22 +250,14 @@ export default function PaymentForm() {
           <button className="btn1">Pay</button>
         </form>
       ) : (
-        <div>{/* <h2>You just paid for your Flight</h2> */}</div>
+        <div>
+          <PopUp
+            message="Your reservation is done successfully"
+            content={`Reservation id is : ${id}`}
+            path="/"
+          ></PopUp>
+        </div>
       )}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          <h3>Your reservation is done successfully</h3>
-          <p>Reservation id is : {id}</p>
-        </DialogTitle>
-        <DialogActions>
-          <Button onClick={handleClose}>Done</Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 }

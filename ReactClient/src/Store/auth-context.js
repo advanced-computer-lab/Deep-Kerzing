@@ -87,11 +87,7 @@ export const AuthContextProvider = (props) => {
     const remainingTime = calculateRemainingTime(expirationTime);
     logoutTimer = setTimeout(logoutHandler, remainingTime);
     console.log("I am the checker", checker);
-
-    if (!checker) {
-      console.log("I am the checker", checker);
-      window.location.pathname = "/";
-    }
+    window.location.pathname = "/";
   };
 
   useEffect(() => {

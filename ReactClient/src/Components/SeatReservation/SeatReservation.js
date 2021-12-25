@@ -28,18 +28,14 @@ const SeatReservation = (props) => {
         var temp = [];
         selectedReservation.departureSeats.map((element) => temp.push(element));
         setdepartureChosenSeats(temp);
-        // setDepartureSeats(temp.length);
       } else {
-        // setDepartureSeats(0);
         setdepartureChosenSeats([]);
       }
       if (selectedReservation.returnFlight_id._id === chosenReturnFlight._id) {
         var temp = [];
         selectedReservation.returnSeats.map((element) => temp.push(element));
         setReturnChosenSeats(temp);
-        // setReturnSeats(temp.length);
       } else {
-        // setReturnSeats(0);
         setReturnChosenSeats([]);
       }
     } catch (err) {}

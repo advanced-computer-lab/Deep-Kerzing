@@ -1,10 +1,7 @@
 import "../searchFlight/adminSearchFlight.css";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { FaPlaneDeparture, FaPlaneArrival, FaTicketAlt } from "react-icons/fa";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const GUFlightDetails = (props) => {
@@ -25,7 +22,6 @@ const GUFlightDetails = (props) => {
   // const flight = useSelector((state) =>
   //   currentId ? state.Flight.find((message) => message._id === currentId) : null
   // );
-  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   if (flight) {
