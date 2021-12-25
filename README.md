@@ -9,6 +9,10 @@ Deep-Kerzing website was created using the MERN stack framework, which is one of
 >Geeks for Geeks: MERN Stack is a Javascript Stack that is used for easier and faster deployment of full-stack web applications. MERN Stack comprises of 4 technologies namely: MongoDB, Express, React and Node.js. It is designed to make the development process smoother and easier.
 For more information about MERN Stack [click here.](https://www.geeksforgeeks.org/mern-stack/) 
 
+### API reference
+
+[click here](https://documenter.getpostman.com/view/12793652/UVREj4Dt)
+
 ### Error-Free Build
 Except for the styling, this build is free from errors and all functionalities are functioning as wished.
 
@@ -23,5 +27,19 @@ Website navigation is fully reversible, without losing any selections made by th
 
 All ticket information will be visible while choosing the flight card, yet only the relatable information will appear in the summary on the right.
 
-### Framework Used
+### Installation
+For anyone wants to install the project you need to do this steps:
+1.Open terminal
+2.npm install in ReactClient
+3.npm install in Server
+4.In order to access the .env file please send email to: markfrancis135@gmail.com
+
+### Credits
+Things that helped the team to make this project:
+1.Project Manager :Eng.Ahmed Alaa (teaching assistant in GUC)
+2.React - The Complete Guide course on udemy
+3.Node.js API Masterclass With Express & MongoDB course on udemy
+
+
+
 
