@@ -80,8 +80,9 @@ export const AuthContextProvider = (props) => {
   };
 
   const loginHandler2 = (token, expirationTime, checker) => {
+    initialRole = jwt.decode(token.token).role;
     setToken(token.token);
-    setRole(token.role);
+    setRole(initialRole);
     localStorage.setItem("token", JSON.stringify(token));
     localStorage.setItem("expirationTime", expirationTime);
     const remainingTime = calculateRemainingTime(expirationTime);

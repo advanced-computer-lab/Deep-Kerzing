@@ -109,7 +109,11 @@ const Review = () => {
           returnPassengers: returnPass,
         };
         axios
-          .post("http://localhost:8000/api/reservation/reserve", inputs)
+          .post("http://localhost:8000/api/reservation/reserve", inputs, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
           .then((res) => {
             console.log(res.data);
             setId(res.data.data._id);

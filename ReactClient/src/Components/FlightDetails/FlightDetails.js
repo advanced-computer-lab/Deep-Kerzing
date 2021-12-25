@@ -6,6 +6,8 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
+import AuthContext from "../../Store/auth-context";
+import { useState, useEffect, useContext } from "react";
 
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
@@ -14,10 +16,16 @@ const FlightDetails = (props) => {
   const history = useHistory();
 
   const [open, setOpen] = React.useState(false);
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
 
   const deleteHandler = () => {
     axios
-      .delete("http://localhost:8000/api/flights/delete/" + props._id)
+      .delete("http://localhost:8000/api/flights/delete/" + props._id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         console.log(res);
       })

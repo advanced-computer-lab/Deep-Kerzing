@@ -98,6 +98,29 @@ exports.reserveFlight = catchAsync(async (req, res, next) => {
     success: true,
     data: reservation,
   });
+
+  const user = userReserve._id;
+  const userEmail = userReserve.email;
+
+  if (!userEmail) {
+    return next(new ErrorResponse("There is no user with that email", 404));
+  }
+
+  const message = `We are sending this email to confirm the reservation ${reservation._id} . Details : ${reservation} `;
+
+  try {
+    await sendEmail({
+      email: userEmail,
+      subject: "Reservation Confirmation",
+      message,
+    });
+
+    res.status(200).json({ success: true, data: "Email sent" });
+  } catch (err) {
+    console.log(err);
+
+    return next(new ErrorResponse("Email could not be sent", 500));
+  }
 });
 
 exports.cancelFlight = catchAsync(async (req, res, next) => {

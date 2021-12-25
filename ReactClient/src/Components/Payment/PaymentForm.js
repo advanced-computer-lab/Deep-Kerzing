@@ -78,7 +78,12 @@ export default function PaymentForm() {
       axios
         .delete(
           "http://localhost:8000/api/reservation/update/" +
-            selectedReservation._id
+            selectedReservation._id,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         )
         .then(async (res) => {})
         .catch((err) => {
@@ -116,7 +121,11 @@ export default function PaymentForm() {
             returnPassengers: returnPass,
           };
           axios
-            .post("http://localhost:8000/api/reservation/reserve", inputs)
+            .post("http://localhost:8000/api/reservation/reserve", inputs, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
             .then((res) => {
               console.log(res.data);
               setOpen(true);
@@ -138,9 +147,17 @@ export default function PaymentForm() {
       } else {
         console.log(pricePaid);
         axios
-          .post("http://localhost:8000/api/reservation/reserve/" + userId, {
-            refund: (totalPrice - selectedReservation.price) * -1,
-          })
+          .post(
+            "http://localhost:8000/api/reservation/reserve/" + userId,
+            {
+              refund: (totalPrice - selectedReservation.price) * -1,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
           .then((res) => {})
           .catch((err) => {
             console.log("Error in delete");
@@ -155,6 +172,11 @@ export default function PaymentForm() {
             {
               amount: pricePaid * 100,
               id,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
           );
 
@@ -203,9 +225,14 @@ export default function PaymentForm() {
             returnPassengers: returnPass,
           };
           axios
-            .post("http://localhost:8000/api/reservation/reserve", inputs)
+            .post("http://localhost:8000/api/reservation/reserve", inputs, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
             .then((res) => {
               console.log(res.data);
+              setOpen(true);
               setId(res.data.data._id);
             })
             .catch((err) => {
@@ -226,6 +253,11 @@ export default function PaymentForm() {
             {
               amount: totalPrice * 100,
               id,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
           );
 
